@@ -1,7 +1,8 @@
 package com.drivingschool;
 
 import com.drivingschool.entity.Agreement;
-import com.drivingschool.entity.Agreement;
+import com.drivingschool.entity.Package;
+import com.drivingschool.entity.Student;
 
 import javax.swing.*;
 import java.io.*;
@@ -24,20 +25,21 @@ public class AgreementSvc {
             System.out.printf("\n Tests for Class Agreement\n\n");
             System.out.printf("\n addAgreement() ...\n");
 
-            addAgreement("12","1235","201","2021-02-05");
-            addAgreement("14","3214","203","2021-02-21");
+            addAgreement("45621","116229","1202","2021-01-05");
+            addAgreement("45622","189222","1201","2021-01-05");
+            addAgreement("45623","168337","1204","2021-01-10");
             listAgreements();
 
-            System.out.printf("\n\n\n editAgreement() where ID = 2 \n");
-            editAgreement("14","3214","201","2021-02-10");
+            System.out.printf("\n\n\n editAgreement() Edit start date of agreement of the student with ID 189222\n");
+            editAgreement("45622","189222","1201","2021-01-18");
 
             listAgreements();
 
             System.out.printf("\n\n Backing up...\n");
             backupAgreements();
 
-            System.out.printf("\n deleteAgreement() whose std ID is 1\n");
-            deleteAgreement("12");
+            System.out.printf("\n deleteAgreement()  Cancel agreements with student whose ID=45623\n");
+            deleteAgreement("45623");
             listAgreements();
 
             System.out.printf("\n\n\n Retrieving backed up data...\n");
@@ -50,25 +52,11 @@ public class AgreementSvc {
     }
 
 
-    public static void retrieveAgreements() throws IOException, ClassNotFoundException
-    {
-        File infile  = new File("agreements.dat");
-        FileInputStream infilestream = new FileInputStream(infile);
-        ObjectInputStream inObjectStream = new ObjectInputStream(infilestream);
-        agreements = (ArrayList)inObjectStream.readObject();
-
-        inObjectStream.close();
-
+    public static void retrieveAgreements() throws IOException, ClassNotFoundException {
+        agreements = Helpers.readFile("agreements.dat");
     }
-    public static void backupAgreements() throws IOException
-    {
-        File outfile  = new File("agreements.dat");
-        FileOutputStream outfilestream = new FileOutputStream(outfile);
-        ObjectOutputStream outObjectStream = new ObjectOutputStream(outfilestream);
-
-        outObjectStream.writeObject(agreements);
-        outObjectStream.close();
-
+    public static void backupAgreements() throws IOException {
+       Helpers.writeFile(agreements, "agreements.dat");
     }
 
     public static void addAgreement(String id, String stdID, String pkgID, String startDate) {
@@ -109,22 +97,38 @@ public class AgreementSvc {
         if (found) agreements.remove(p);
     }
 
-    public static void listAgreements() {
-        Agreement a;
-        Iterator <Agreement> itr = agreements.iterator();
+    public static void listAgreements() throws IOException, ClassNotFoundException {
+        Agreement agreement;
+        Student student;
+        Package pkg;
 
-        System.out.printf("\n%-10s %-15s %-15s %-20s", "ID", "Student ID", "Agreement ID", "Start Date");
+        List students = Helpers.readFile("students.dat");
+        List packages = Helpers.readFile("packages.dat");
+
+
+        System.out.printf("\n%-10s %-20s %-15s %-20s", "ID", "Start Date", "Package", "Student Name" );
         Helpers.drawLine(Helpers.LARGE_LINE);
 
-
-
+        Iterator <Agreement> itr = agreements.iterator();
         while (itr.hasNext()) {
-            a = itr.next();
-            System.out.printf("\n%-10s %-15s %-15s %-20s",
-                    a.getID(),
-                    a.getStudentID(),
-                    a.getPackageID(),
-                    a.getStartDate());
+            agreement = itr.next();
+
+            System.out.printf("\n%-10s %-20s ",agreement.getID(), agreement.getStartDate());
+
+            Iterator <Package> pkgItr = packages.iterator();
+            while (pkgItr.hasNext()) {
+                pkg = pkgItr.next();
+                if (pkg.getID().equals(agreement.getPackageID())) {
+                    System.out.printf("%-15s ",pkg.getName());
+                }
+            }
+            Iterator <Student> stdItr = students.iterator();
+            while (stdItr.hasNext()) {
+                student = stdItr.next();
+                if (student.getID().equals(agreement.getStudentID())) {
+                    System.out.print(student.getName()+" "+student.getSurname());
+                }
+            }
         }
         Helpers.drawLine(Helpers.LARGE_LINE);
     }

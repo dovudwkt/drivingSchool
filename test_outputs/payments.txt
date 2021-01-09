@@ -1,0 +1,48 @@
+
+ Tests for Class Package
+
+
+ addPayment() ...
+
+PaymentID  StudentID       Amount       Comment              Timestamp                        Student Name   
+==============================================================================================================
+1234       116229          1500.0       Partial payment      Sat Jan 09 22:54:14 EET 2021     Ali Faisal
+1235       186731          1500.0                            Sat Jan 09 22:54:14 EET 2021     Ayse Kemaller
+1236       168337          2000.0       Two month payment    Sat Jan 09 22:54:14 EET 2021     Muhammad Fahrad
+1321       189222          1800.0                            Sat Jan 09 22:54:14 EET 2021     Fatima  Reshad
+==============================================================================================================
+
+
+ editPayment() edit Ali Faisal's payment amount 
+
+PaymentID  StudentID       Amount       Comment              Timestamp                        Student Name   
+==============================================================================================================
+1234       116229          2000.0       Full payment         Sat Jan 09 22:54:14 EET 2021     Ali Faisal
+1235       186731          1500.0                            Sat Jan 09 22:54:14 EET 2021     Ayse Kemaller
+1236       168337          2000.0       Two month payment    Sat Jan 09 22:54:14 EET 2021     Muhammad Fahrad
+1321       189222          1800.0                            Sat Jan 09 22:54:14 EET 2021     Fatima  Reshad
+==============================================================================================================
+
+ Backing up...
+
+ deletePayment() Delete the Ayse Kemaller’s record from payments
+
+PaymentID  StudentID       Amount       Comment              Timestamp                        Student Name   
+==============================================================================================================
+1234       116229          2000.0       Full payment         Sat Jan 09 22:54:14 EET 2021     Ali Faisal
+1236       168337          2000.0       Two month payment    Sat Jan 09 22:54:14 EET 2021     Muhammad Fahrad
+1321       189222          1800.0                            Sat Jan 09 22:54:14 EET 2021     Fatima  Reshad
+==============================================================================================================
+
+
+ Retrieving backed up data...
+
+PaymentID  StudentID       Amount       Comment              Timestamp                        Student Name   
+==============================================================================================================
+1234       116229          2000.0       Full payment         Sat Jan 09 22:54:14 EET 2021     Ali Faisal
+1235       186731          1500.0                            Sat Jan 09 22:54:14 EET 2021     Ayse Kemaller
+1236       168337          2000.0       Two month payment    Sat Jan 09 22:54:14 EET 2021     Muhammad Fahrad
+1321       189222          1800.0                            Sat Jan 09 22:54:14 EET 2021     Fatima  Reshad
+==============================================================================================================
+
+

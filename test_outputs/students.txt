@@ -1,0 +1,59 @@
+
+ Tests for Class Student
+
+
+ addStudent() ...
+
+Student No Name            Surname         Nationality Birthday        Status          Registered at  
+==============================================================================================================
+116229     Ali             Faisal          Turkey     1993-06-19      beginner        2021-01-09     
+186731     Ayse            Kemaller        Cyprus     1998-09-28      intermediate    2021-01-09     
+168337     Muhammad        Fahrad          Iran       1996-05-30      on hold         2021-01-09     
+189222     Fatima          Reshad          Syria      1998-07-22      beginner        2021-01-09     
+==============================================================================================================
+
+
+ editStudent()
+
+Student No Name            Surname         Nationality Birthday        Status          Registered at  
+==============================================================================================================
+116229     Ali             Faisal          Turkey     1993-06-19      beginner        2021-01-09     
+186731     Ayse            Kemaller        Turkey     1998-09-28      intermediate    2021-01-09     
+168337     Muhammad        Fahrad          Iran       1996-05-30      on hold         2021-01-09     
+189222     Fatima          Reshad          Syria      1998-07-22      beginner        2021-01-09     
+==============================================================================================================
+
+ Backing up...
+
+ deleteStudent() whose std ID is 189222
+
+Student No Name            Surname         Nationality Birthday        Status          Registered at  
+==============================================================================================================
+116229     Ali             Faisal          Turkey     1993-06-19      beginner        2021-01-09     
+186731     Ayse            Kemaller        Turkey     1998-09-28      intermediate    2021-01-09     
+168337     Muhammad        Fahrad          Iran       1996-05-30      on hold         2021-01-09     
+==============================================================================================================
+
+
+ Retrieving backed up data...
+
+Student No Name            Surname         Nationality Birthday        Status          Registered at  
+==============================================================================================================
+116229     Ali             Faisal          Turkey     1993-06-19      beginner        2021-01-09     
+186731     Ayse            Kemaller        Turkey     1998-09-28      intermediate    2021-01-09     
+168337     Muhammad        Fahrad          Iran       1996-05-30      on hold         2021-01-09     
+189222     Fatima          Reshad          Syria      1998-07-22      beginner        2021-01-09     
+==============================================================================================================
+
+
+ ListGrades()
+
+Student No Name            Surname         Lesson No  Date            Grade     
+==============================================================================================================
+116229     Ali             Faisal          1          2021-01-05      90        
+186731     Ayse            Kemaller        
+168337     Muhammad        Fahrad          5          2021-01-10      74        
+189222     Fatima          Reshad          
+==============================================================================================================
+
+

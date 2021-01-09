@@ -1,7 +1,8 @@
 package com.drivingschool;
 
 import com.drivingschool.entity.Lesson;
-import com.drivingschool.entity.Lesson;
+import com.drivingschool.entity.Package;
+import com.drivingschool.entity.Student;
 
 import javax.swing.*;
 import java.io.*;
@@ -14,30 +15,33 @@ import java.util.List;
 public class LessonSvc {
     public static List lessons;
 
-
     public static void main(String[] args) throws ParseException {
         lessons = new ArrayList();
         testLesson();
         System.out.printf("\n");
     }
+
     public static void testLesson() throws ParseException {
         try {
             System.out.printf("\n Tests for Class Lesson\n\n");
             System.out.printf("\n addLesson() ...\n");
 
-            addLesson("1", "201", "17701937",1, "2021-01-09", "8:30", "10:00",0);
+            addLesson("845", "1201", "116229",1, "2021-01-05", "10:00", "10:40",90);
+            addLesson("846", "1201", "116229",2, "2021-01-06", "10:00", "11:00",0);
+            addLesson("891", "1204", "168337",5, "2021-01-10", "14:30", "15:10",74);
 
             listLessons();
 
-            System.out.printf("\n\n\n editLesson() where ID = 2 \n");
-            editLesson("1", "201", "17701937",1, "2021-01-09", "8:30", "10:00",90);
+            System.out.printf("\n\n\n editLesson() Edit grade of second lesson to 89 where id is 846 and student is Ali Faisal   \n");
+            editLesson("846", "1201", "116229",2, "2021-01-06", "10:00", "11:00",89);
+
             listLessons();
 
             System.out.printf("\n\n Backing up...\n");
             backupLessons();
 
-            System.out.printf("\n deleteLesson() whose std ID is 1\n");
-            deleteLesson("1");
+            System.out.printf("\n deleteLesson() Cancel lesson with id 891\n");
+            deleteLesson("891");
             listLessons();
 
             System.out.printf("\n\n\n Retrieving backed up data...\n");
@@ -50,25 +54,12 @@ public class LessonSvc {
     }
 
 
-    public static void retrieveLessons() throws IOException, ClassNotFoundException
-    {
-        File infile  = new File("lessons.dat");
-        FileInputStream infilestream = new FileInputStream(infile);
-        ObjectInputStream inObjectStream = new ObjectInputStream(infilestream);
-        lessons = (ArrayList)inObjectStream.readObject();
-
-        inObjectStream.close();
-
+    public static void retrieveLessons() throws IOException, ClassNotFoundException {
+        lessons = Helpers.readFile("lessons.dat");
     }
-    public static void backupLessons() throws IOException
-    {
-        File outfile  = new File("lessons.dat");
-        FileOutputStream outfilestream = new FileOutputStream(outfile);
-        ObjectOutputStream outObjectStream = new ObjectOutputStream(outfilestream);
 
-        outObjectStream.writeObject(lessons);
-        outObjectStream.close();
-
+    public static void backupLessons() throws IOException {
+        Helpers.writeFile(lessons, "lessons.dat");
     }
 
     public static void addLesson(String id, String pkgID, String stdID, int lessonNo, String date, String startTime, String endtTime, int grade) {
@@ -112,24 +103,46 @@ public class LessonSvc {
         if (found) lessons.remove(p);
     }
 
-    public static void listLessons() {
-        Lesson l;
-        Iterator <Lesson> itr = lessons.iterator();
-        System.out.printf("\n%-10s %-15s %-12s %-12s %-15s %-10s %-10s %-4s", "ID", "Package ID", "Student ID", "Lessons No", "Date", "Start Time", "End Time", "Grade");
+    public static void listLessons() throws IOException, ClassNotFoundException {
+        Lesson lesson;
+        Student student;
+        Package pkg;
+
+        List students = Helpers.readFile("students.dat");
+        List packages = Helpers.readFile("packages.dat");
+
+        System.out.printf("\n%-10s %-12s %-15s %-10s %-10s %-8s %-15s %-22s", "ID", "Lessons No", "Date", "Start Time", "End Time", "Grade", "Package", "Student Name");
         Helpers.drawLine(Helpers.LARGE_LINE);
 
-        while (itr.hasNext()) {
-            l = itr.next();
-            System.out.printf("\n%-10s %-15s %-12s %-12s %-15s %-10s %-10s %-4s",
-                    l.getID(),
-                    l.getPackageID(),
-                    l.getStudentID(),
-                    l.getLessonNo(),
-                    l.getLessonDate(),
-                    l.getStartTime(),
-                    l.getEndTime(),
-                    l.getGrade());
+        Iterator <Lesson> lessonsItr = lessons.iterator();
+        while (lessonsItr.hasNext()) {
+            lesson = lessonsItr.next();
 
+            System.out.printf("\n%-10s %-12s %-15s %-10s %-10s %-8s ",
+                    lesson.getID(),
+                    lesson.getLessonNo(),
+                    lesson.getLessonDate(),
+                    lesson.getStartTime(),
+                    lesson.getEndTime(),
+                    lesson.getGrade());
+
+            Iterator <Package> packagesItr = packages.iterator();
+            while (packagesItr.hasNext()) {
+                pkg = packagesItr.next();
+                if(pkg.getID().equals(lesson.getPackageID())) {
+                    System.out.printf("%-15s ", pkg.getName());
+                    break;
+                }
+            }
+
+            Iterator <Student> studentsItr = students.iterator();
+            while (studentsItr.hasNext()) {
+                student = studentsItr.next();
+                if(student.getID().equals(lesson.getStudentID())) {
+                    System.out.print(student.getName()+" "+student.getSurname());
+                    break;
+                }
+            }
         }
         Helpers.drawLine(Helpers.LARGE_LINE);
     }

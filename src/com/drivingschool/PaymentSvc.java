@@ -1,6 +1,8 @@
 package com.drivingschool;
 
 import com.drivingschool.entity.Payment;
+import com.drivingschool.entity.Student;
+
 import javax.swing.*;
 import java.io.*;
 import java.text.ParseException;
@@ -22,19 +24,21 @@ public class PaymentSvc {
             System.out.printf("\n Tests for Class Package\n\n");
             System.out.printf("\n addPayment() ...\n");
 
-            addPayment("1","17701937",1500.0, "First payment");
-            addPayment("2","12354895",1800.0, "First payment");
+            addPayment("1234","116229",1500.0, "Partial payment");
+            addPayment("1235","186731",1500.0, "");
+            addPayment("1236","168337",2000.0, "Two month payment");
+            addPayment("1321","189222",1800.0, "");
             listPayments();
 
-            System.out.printf("\n\n\n editPayment() where ID = 2 \n");
-            editPayment("2","12354895",1700, "Return 100");
+            System.out.printf("\n\n\n editPayment() edit Ali Faisal's payment amount \n");
+            editPayment("1234","116229",2000.0, "Full payment");
             listPayments();
 
             System.out.printf("\n\n Backing up...\n");
             backupPayments();
 
-            System.out.printf("\n deletePayment() whose std ID is 1\n");
-            deletePayment("1");
+            System.out.printf("\n deletePayment() Delete the Ayse Kemaller’s record from payments\n");
+            deletePayment("1235");
             listPayments();
 
             System.out.printf("\n\n\n Retrieving backed up data...\n");
@@ -47,25 +51,11 @@ public class PaymentSvc {
     }
 
 
-    public static void retrievePayments() throws IOException, ClassNotFoundException
-    {
-        File infile  = new File("payments.dat");
-        FileInputStream infilestream = new FileInputStream(infile);
-        ObjectInputStream inObjectStream = new ObjectInputStream(infilestream);
-        payments = (ArrayList)inObjectStream.readObject();
-
-        inObjectStream.close();
-
+    public static void retrievePayments() throws IOException, ClassNotFoundException {
+        payments = Helpers.readFile("payments.dat");
     }
-    public static void backupPayments() throws IOException
-    {
-        File outfile  = new File("payments.dat");
-        FileOutputStream outfilestream = new FileOutputStream(outfile);
-        ObjectOutputStream outObjectStream = new ObjectOutputStream(outfilestream);
-
-        outObjectStream.writeObject(payments);
-        outObjectStream.close();
-
+    public static void backupPayments() throws IOException {
+        Helpers.writeFile(payments, "payments.dat");
     }
 
     public static void addPayment(String id, String studentID, double amount, String comment) {
@@ -106,20 +96,32 @@ public class PaymentSvc {
         if (found) payments.remove(p);
     }
 
-    public static void listPayments() {
-        Payment p;
-        Iterator <Payment> itr = payments.iterator();
-        System.out.printf("\n%10s %15s %12s %20s %20s", "PaymentID", "StudentID", "Amount","Comment", "Timestamp");
+    public static void listPayments() throws IOException, ClassNotFoundException {
+        Payment payment;
+        Student student;
+
+        List students = Helpers.readFile("students.dat");
+
+        System.out.printf("\n%-10s %-15s %-12s %-20s %-32s %-15s", "PaymentID", "StudentID", "Amount","Comment", "Timestamp", "Student Name");
         Helpers.drawLine(Helpers.LARGE_LINE);
 
+        Iterator <Payment> itr = payments.iterator();
         while (itr.hasNext()) {
-            p = itr.next();
-            System.out.printf("\n%10s %15s %12s %20s %20s",
-                    p.getID(),
-                    p.getStudentID(),
-                    p.getAmount(),
-                    p.getComment(),
-                    p.getTimestamp());
+            payment = itr.next();
+            System.out.printf("\n%-10s %-15s %-12s %-20s %-32s ",
+                    payment.getID(),
+                    payment.getStudentID(),
+                    payment.getAmount(),
+                    payment.getComment(),
+                    payment.getTimestamp());
+
+            Iterator <Student> stdItr = students.iterator();
+            while (stdItr.hasNext()) {
+                student = stdItr.next();
+                if (student.getID().equals(payment.getStudentID())) {
+                    System.out.print(student.getName()+" "+student.getSurname());
+                }
+            }
         }
         Helpers.drawLine(Helpers.LARGE_LINE);
     }
