@@ -1,20 +1,25 @@
 package com.drivingschool.entity;
 
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-public class Student {
+public class Student implements Serializable {
     private String ID;
     private String Name;
     private String Surname;
     private String Nationality;
-    private Date DOB;
+    private LocalDate DOB;
     private String Status;
     private String LicenceType;
     private String LicenceExpire;
     private String LicenceNo;
-    private Date RegisterDate;
+    private LocalDate RegisterDate;
 
-    public Student(String ID, String name, String surname, String nationality, Date DOB, String status, Date registerDate) {
+
+
+    public Student(String ID, String name, String surname, String nationality, LocalDate DOB, String status, LocalDate registerDate) {
         this.ID = ID;
         Name = name;
         Surname = surname;
@@ -24,6 +29,21 @@ public class Student {
         RegisterDate = registerDate;
     }
 
+    public LocalDate getDOB() {
+        return DOB;
+    }
+
+    public void setDOB(LocalDate DOB) {
+        this.DOB = DOB;
+    }
+
+    public LocalDate getRegisterDate() {
+        return RegisterDate;
+    }
+
+    public void setRegisterDate(LocalDate registerDate) {
+        RegisterDate = registerDate;
+    }
     public String getID() {
         return ID;
     }
@@ -54,14 +74,6 @@ public class Student {
 
     public void setNationality(String nationality) {
         Nationality = nationality;
-    }
-
-    public Date getDOB() {
-        return DOB;
-    }
-
-    public void setDOB(Date DOB) {
-        this.DOB = DOB;
     }
 
     public String getStatus() {
@@ -96,11 +108,11 @@ public class Student {
         LicenceNo = licenceNo;
     }
 
-    public Date getRegisterDate() {
-        return RegisterDate;
+    public LocalDate getRegisterDateFormatted() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String text = RegisterDate.format(formatter);
+        LocalDate parsedDate = LocalDate.parse(text, formatter);
+        return parsedDate;
     }
 
-    public void setRegisterDate(Date registerDate) {
-        RegisterDate = registerDate;
-    }
 }
