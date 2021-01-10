@@ -21,7 +21,7 @@ public class PaymentSvc {
 
     public static void testPayment() throws ParseException {
         try {
-            System.out.printf("\n Tests for Class Package\n\n");
+            System.out.printf("\n Tests for Class Payment\n\n");
             System.out.printf("\n addPayment() ...\n");
 
             addPayment("1234","116229",1500.0, "Partial payment");

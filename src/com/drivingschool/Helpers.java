@@ -8,6 +8,7 @@ public class Helpers {
     public static final int SMALL_LINE = 30;
     public static final int MEDIUM_LINE = 70;
     public static final int LARGE_LINE = 110;
+    public static final int EXTRA_LARGE_LINE = 150;
 
     public static void drawLine(int num) {
         String ln="";

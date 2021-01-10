@@ -31,7 +31,7 @@ public class StudentSvc {
 
             listStudents();
             System.out.printf("\n\n\n editStudent()\n");
-            editStudent("186731", "Ayse", "Kemaller", "Turkey", "1998-09-28", "intermediate");
+            editStudent("186731", "Ayse", "Kemaller", "Turkey", "1998-09-28", "intermediate", "Category A", "1232456", "2025-10-22");
             listStudents();
 
             System.out.printf("\n\n Backing up...\n");
@@ -67,7 +67,7 @@ public class StudentSvc {
         students.add(st);
     }
 
-    public static void editStudent(String stdNo, String name, String surname, String nationality, String dob, String status) {
+    public static void editStudent(String stdNo, String name, String surname, String nationality, String dob, String status, String licenceType, String licenceNo, String licenceExpire) {
         Student st = null;
         boolean found = false;
         Iterator<Student> itr = students.iterator();
@@ -84,6 +84,9 @@ public class StudentSvc {
             st.setNationality(nationality);
             st.setDOB(LocalDate.parse(dob));
             st.setStatus(status);
+            st.setLicenceType(licenceType);
+            st.setLicenceNo(licenceNo);
+            st.setLicenceExpire(LocalDate.parse(licenceExpire));
         }
     }
 
@@ -105,21 +108,24 @@ public class StudentSvc {
     public static void listStudents() {
         Student st;
         Iterator <Student> itr = students.iterator();
-        System.out.printf("\n%-10s %-15s %-15s %-10s %-15s %-15s %-15s", "Student No", "Name", "Surname","Nationality", "Birthday", "Status", "Registered at");
-        Helpers.drawLine(Helpers.LARGE_LINE);
+        System.out.printf("\n%-10s %-15s %-15s %-10s %-15s %-15s %-15s %-15s %-15s %-15s", "Student No", "Name", "Surname","Nationality", "Birthday", "Status", "Registered at", "Licence No", "Licence type","Licence Expire");
+        Helpers.drawLine(Helpers.EXTRA_LARGE_LINE);
 
         while (itr.hasNext()) {
             st = itr.next();
-            System.out.printf("\n%-10s %-15s %-15s %-10s %-15s %-15s %-15s",
+            System.out.printf("\n%-10s %-15s %-15s %-10s %-15s %-15s %-15s %-15s %-15s %-15s",
                     st.getID(),
                     st.getName(),
                     st.getSurname(),
                     st.getNationality(),
                     st.getDOB(),
                     st.getStatus(),
-                    st.getRegisterDate());
+                    st.getRegisterDate(),
+                    st.getLicenceNo(),
+                    st.getLicenceType(),
+                    st.getLicenceExpire());
         }
-        Helpers.drawLine(Helpers.LARGE_LINE);
+        Helpers.drawLine(Helpers.EXTRA_LARGE_LINE);
     }
 
     public static void listGrades() throws IOException, ClassNotFoundException {

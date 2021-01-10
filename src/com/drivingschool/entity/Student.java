@@ -13,7 +13,7 @@ public class Student implements Serializable {
     private LocalDate DOB;
     private String Status;
     private String LicenceType;
-    private String LicenceExpire;
+    private LocalDate LicenceExpire;
     private String LicenceNo;
     private LocalDate RegisterDate;
 
@@ -92,11 +92,11 @@ public class Student implements Serializable {
         LicenceType = licenceType;
     }
 
-    public String getLicenceExpire() {
+    public LocalDate getLicenceExpire() {
         return LicenceExpire;
     }
 
-    public void setLicenceExpire(String licenceExpire) {
+    public void setLicenceExpire(LocalDate licenceExpire) {
         LicenceExpire = licenceExpire;
     }
 
