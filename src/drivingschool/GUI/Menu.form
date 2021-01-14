@@ -98,7 +98,7 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu4">
+        <Menu class="javax.swing.JMenu" name="packagesMenu">
           <Properties>
             <Property name="text" type="java.lang.String" value="Packages"/>
           </Properties>
@@ -123,7 +123,7 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="gradesMenu">
+        <Menu class="javax.swing.JMenu" name="paymentsMenu">
           <Properties>
             <Property name="text" type="java.lang.String" value="Payment"/>
             <Property name="name" type="java.lang.String" value="jMenu_Grades" noResource="true"/>

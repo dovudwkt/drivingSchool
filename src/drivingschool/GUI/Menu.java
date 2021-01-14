@@ -51,10 +51,10 @@ public class Menu extends javax.swing.JFrame {
         lessonsMenu = new javax.swing.JMenu();
         addLessonBtn = new javax.swing.JMenuItem();
         listLessonsBtn = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
+        packagesMenu = new javax.swing.JMenu();
         listPackagesBtn = new javax.swing.JMenuItem();
         addPackagesBtn = new javax.swing.JMenuItem();
-        gradesMenu = new javax.swing.JMenu();
+        paymentsMenu = new javax.swing.JMenu();
         listPaymentsBtn = new javax.swing.JMenuItem();
         addPaymentBtn = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
@@ -147,7 +147,7 @@ public class Menu extends javax.swing.JFrame {
 
         jMenuBar1.add(lessonsMenu);
 
-        jMenu4.setText("Packages");
+        packagesMenu.setText("Packages");
 
         listPackagesBtn.setText("List Packages");
         listPackagesBtn.setName(""); // NOI18N
@@ -156,7 +156,7 @@ public class Menu extends javax.swing.JFrame {
                 listPackagesBtnActionPerformed(evt);
             }
         });
-        jMenu4.add(listPackagesBtn);
+        packagesMenu.add(listPackagesBtn);
 
         addPackagesBtn.setText("Add Package");
         addPackagesBtn.setName("jMenuItem_AddDepartment"); // NOI18N
@@ -165,12 +165,12 @@ public class Menu extends javax.swing.JFrame {
                 addPackagesBtnActionPerformed(evt);
             }
         });
-        jMenu4.add(addPackagesBtn);
+        packagesMenu.add(addPackagesBtn);
 
-        jMenuBar1.add(jMenu4);
+        jMenuBar1.add(packagesMenu);
 
-        gradesMenu.setText("Payment");
-        gradesMenu.setName("jMenu_Grades"); // NOI18N
+        paymentsMenu.setText("Payment");
+        paymentsMenu.setName("jMenu_Grades"); // NOI18N
 
         listPaymentsBtn.setText("List Payments");
         listPaymentsBtn.setName(""); // NOI18N
@@ -179,7 +179,7 @@ public class Menu extends javax.swing.JFrame {
                 listPaymentsBtnActionPerformed(evt);
             }
         });
-        gradesMenu.add(listPaymentsBtn);
+        paymentsMenu.add(listPaymentsBtn);
 
         addPaymentBtn.setText("New Payment");
         addPaymentBtn.setName("jMenuItem_AddDepartment"); // NOI18N
@@ -188,9 +188,9 @@ public class Menu extends javax.swing.JFrame {
                 addPaymentBtnActionPerformed(evt);
             }
         });
-        gradesMenu.add(addPaymentBtn);
+        paymentsMenu.add(addPaymentBtn);
 
-        jMenuBar1.add(gradesMenu);
+        jMenuBar1.add(paymentsMenu);
 
         jMenu6.setText("Agreements");
         jMenu6.setName("JMenu_Attendance"); // NOI18N
@@ -278,11 +278,11 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_addPackagesBtnActionPerformed
 
     private void listPaymentsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listPaymentsBtnActionPerformed
-//        new JFrame_GradeList().show();
+        new JFrame_PaymentList().show();
     }//GEN-LAST:event_listPaymentsBtnActionPerformed
 
     private void addPaymentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPaymentBtnActionPerformed
-//        new JFrame_GradeAdd().show();
+        new JFrame_PaymentAdd().show();
     }//GEN-LAST:event_addPaymentBtnActionPerformed
 
     private void listAgmtBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listAgmtBtnActionPerformed
@@ -350,8 +350,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem addPaymentBtn;
     private javax.swing.JMenuItem addStudentBtn;
     private javax.swing.JMenuItem backupBtn;
-    private javax.swing.JMenu gradesMenu;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
@@ -361,6 +359,8 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem listPackagesBtn;
     private javax.swing.JMenuItem listPaymentsBtn;
     private javax.swing.JMenuItem listStudentsBtn;
+    private javax.swing.JMenu packagesMenu;
+    private javax.swing.JMenu paymentsMenu;
     private javax.swing.JMenuItem quitBtn;
     private javax.swing.JMenuItem restoreBtn;
     private javax.swing.JMenu studentsMenu;
