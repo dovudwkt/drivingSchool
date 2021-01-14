@@ -1,7 +1,7 @@
 package drivingschool.repo;
 
 import drivingschool.Helpers;
-import drivingschool.entity.Package;
+import drivingschool.entity.CoursePackage;
 
 import javax.swing.*;
 import java.io.*;
@@ -24,7 +24,7 @@ public class PackageRepo {
 
     public static void testPackage() throws ParseException {
         try {
-            System.out.printf("\n Tests for Class Package\n\n");
+            System.out.printf("\n Tests for Class CoursePackage\n\n");
             System.out.printf("\n addPackage() ...\n");
 
             addPackage("1201", "Pro", 2000.0, 30);
@@ -71,14 +71,14 @@ public class PackageRepo {
     }
 
     public static void addPackage(String id, String name, double price, int numLessons) {
-        Package p = new Package(id, name, price, numLessons);
+        CoursePackage p = new CoursePackage(id, name, price, numLessons);
         packages.add(p);
     }
 
     public static void editPackage(String id, String name, double price, int numLessons) {
-        Package p = null;
+        CoursePackage p = null;
         boolean found = false;
-        Iterator<Package> itr = packages.iterator();
+        Iterator<CoursePackage> itr = packages.iterator();
         while (itr.hasNext()) {
             p = itr.next();
             if (id.equals(p.getID())) {
@@ -92,12 +92,24 @@ public class PackageRepo {
             p.setNumLessons(numLessons);
         }
     }
+     public static String getIDByName(String dName) {
+        CoursePackage p;
+
+        Iterator<CoursePackage> itr = packages.iterator();
+        while (itr.hasNext()) {
+            p = itr.next();
+            if (dName.trim().equals(p.getName().trim())) {
+                return p.getID();
+            }
+        }
+        return "";
+    }
 
     public static void deletePackage(String pID) {
-        Package p = null;
+        CoursePackage p = null;
         boolean found = false;
 
-        Iterator<Package> itr = packages.iterator();
+        Iterator<CoursePackage> itr = packages.iterator();
         while (itr.hasNext()) {
             p = itr.next();
             if (pID.equals(p.getID())) {
@@ -111,8 +123,8 @@ public class PackageRepo {
     }
 
     public static void listPackages() {
-        Package p;
-        Iterator<Package> itr = packages.iterator();
+        CoursePackage p;
+        Iterator<CoursePackage> itr = packages.iterator();
         System.out.printf("\n%-10s %-15s %-10s %-10s", "ID", "Name", "Price", "Lessons");
 
         Helpers.drawLine(Helpers.MEDIUM_LINE);

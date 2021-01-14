@@ -7,7 +7,7 @@ package drivingschool.GUI;
 
 import drivingschool.repo.PackageRepo;
 
-import drivingschool.entity.Package;
+import drivingschool.entity.CoursePackage;
 import javax.swing.JOptionPane;
 
 /**
@@ -168,10 +168,10 @@ public class JFrame_PackageAdd extends javax.swing.JFrame {
             if (!isEdit) {
                 PackageRepo.addPackage(id, name, Double.parseDouble(price), Integer.parseInt(lesson));
                 JOptionPane.showMessageDialog(null,
-                        "The New Package Data is Recorded Successfully");
+                        "The New CoursePackage Data is Recorded Successfully");
             } else {
                 PackageRepo.editPackage(id, name, Double.parseDouble(price), Integer.parseInt(lesson));
-                JOptionPane.showMessageDialog(null, "The Selected Package Data is Edited Successfully");
+                JOptionPane.showMessageDialog(null, "The Selected CoursePackage Data is Edited Successfully");
             }
             PackageRepo.listPackages();
             setVisible(false);
@@ -182,7 +182,7 @@ public class JFrame_PackageAdd extends javax.swing.JFrame {
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         if (isEdit) {
-            Package st = (Package) PackageRepo.packages.get(st_row);
+            CoursePackage st = (CoursePackage) PackageRepo.packages.get(st_row);
             IDTextField.setText(st.getID());
             nameTextField.setText(st.getName());
             priceTextField.setText(String.valueOf(st.getPrice()) );

@@ -2,13 +2,13 @@ package drivingschool.entity;
 
 import java.io.Serializable;
 
-public class Package implements Serializable {
+public class CoursePackage implements Serializable {
     private String ID;
     private String Name;
     private double Price;
     private int NumLessons;
 
-    public Package(String ID, String name, double price, int numLessons) {
+    public CoursePackage(String ID, String name, double price, int numLessons) {
         this.ID = ID;
         Name = name;
         Price = price;

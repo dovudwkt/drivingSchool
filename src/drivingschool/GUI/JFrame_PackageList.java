@@ -6,7 +6,7 @@
 package drivingschool.GUI;
 
 import java.io.IOException;
-import drivingschool.entity.Package;
+import drivingschool.entity.CoursePackage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -127,8 +127,8 @@ public class JFrame_PackageList extends javax.swing.JFrame {
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
         int sel = packagessList.getSelectedIndex();
         if (sel >= 0) {
-            Package st;
-            st = (Package) PackageRepo.packages.get(sel);
+            CoursePackage st;
+            st = (CoursePackage) PackageRepo.packages.get(sel);
             JFrame_PackageAdd pa = new JFrame_PackageAdd();
             pa.isEdit = true;
             pa.st_row = sel;
@@ -141,7 +141,7 @@ public class JFrame_PackageList extends javax.swing.JFrame {
         if (sel >= 0) {
             PackageRepo.packages.remove(sel);
             refresh_PackageList();
-            JOptionPane.showMessageDialog(null, "Selected Package has been deleted Successfully");
+            JOptionPane.showMessageDialog(null, "Selected CoursePackage has been deleted Successfully");
         }
     }//GEN-LAST:event_deleteBtnActionPerformed
 
@@ -211,7 +211,7 @@ public class JFrame_PackageList extends javax.swing.JFrame {
             }
         }
 
-        Package st;
+        CoursePackage st;
         String cp;
         packagessList.removeAll();
 
@@ -224,7 +224,7 @@ public class JFrame_PackageList extends javax.swing.JFrame {
         jLabel1.setText(cp);
 
         for (int i = 0; i < packages.size(); i++) {
-            st = (Package) packages.get(i);
+            st = (CoursePackage) packages.get(i);
             arr_students[i] = fixedLengthString(st.getID().trim(), 10) + "|"
                     + fixedLengthString(st.getName().trim(), 15) + "|"
                     + fixedLengthString(Integer.toString((int) st.getPrice()), 15) + "|"

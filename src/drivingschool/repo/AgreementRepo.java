@@ -1,7 +1,7 @@
 package drivingschool.repo;
 
 import drivingschool.entity.Agreement;
-import drivingschool.entity.Package;
+import drivingschool.entity.CoursePackage;
 import drivingschool.entity.Student;
 import drivingschool.Helpers;
 
@@ -117,12 +117,12 @@ public class AgreementRepo {
     public static void listAgreements() throws IOException, ClassNotFoundException {
         Agreement agreement;
         Student student;
-        Package pkg;
+        CoursePackage pkg;
 
         List students = Helpers.readFile("backups/students.dat");
         List packages = Helpers.readFile("backups/packages.dat");
 
-        System.out.printf("\n%-10s %-20s %-15s %-20s", "ID", "Start Date", "Package", "Student Name");
+        System.out.printf("\n%-10s %-20s %-15s %-20s", "ID", "Start Date", "CoursePackage", "Student Name");
         Helpers.drawLine(Helpers.LARGE_LINE);
 
         Iterator<Agreement> itr = agreements.iterator();
@@ -131,7 +131,7 @@ public class AgreementRepo {
 
             System.out.printf("\n%-10s %-20s ", agreement.getID(), agreement.getStartDate());
 
-            Iterator<Package> pkgItr = packages.iterator();
+            Iterator<CoursePackage> pkgItr = packages.iterator();
             while (pkgItr.hasNext()) {
                 pkg = pkgItr.next();
                 if (pkg.getID().equals(agreement.getPackageID())) {

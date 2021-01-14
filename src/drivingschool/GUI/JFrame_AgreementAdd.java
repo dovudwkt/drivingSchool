@@ -8,6 +8,8 @@ package drivingschool.GUI;
 import drivingschool.repo.AgreementRepo;
 
 import drivingschool.entity.Agreement;
+import drivingschool.entity.CoursePackage;
+import drivingschool.repo.PackageRepo;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,6 +30,14 @@ public class JFrame_AgreementAdd extends javax.swing.JFrame {
     public JFrame_AgreementAdd() {
         initComponents();
         isEdit = false;
+
+        // Populate dropdown with values
+        for (int i = 0; i < PackageRepo.packages.size(); i++) {
+            CoursePackage p = (CoursePackage) PackageRepo.packages.get(i);
+            if (!p.getName().isEmpty()) {
+                pkgComboBox.addItem(p.getName());
+            }
+        }
     }
 
     /**
@@ -45,10 +55,10 @@ public class JFrame_AgreementAdd extends javax.swing.JFrame {
         stdIDLabel = new javax.swing.JLabel();
         stdIDTextField = new javax.swing.JTextField();
         pkgIDLabel = new javax.swing.JLabel();
-        pkgIDTextField = new javax.swing.JTextField();
         startDateLabel = new javax.swing.JLabel();
         startDateTextField = new javax.swing.JTextField();
         saveButton = new javax.swing.JButton();
+        pkgComboBox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Enter The Information Of The Student");
@@ -84,15 +94,6 @@ public class JFrame_AgreementAdd extends javax.swing.JFrame {
         pkgIDLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         pkgIDLabel.setText("Package ID");
 
-        pkgIDTextField.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        pkgIDTextField.setToolTipText("");
-        pkgIDTextField.setName("jTextField_Surname"); // NOI18N
-        pkgIDTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pkgIDTextFieldActionPerformed(evt);
-            }
-        });
-
         startDateLabel.setText("Start Date");
 
         startDateTextField.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -104,6 +105,17 @@ public class JFrame_AgreementAdd extends javax.swing.JFrame {
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveButtonActionPerformed(evt);
+            }
+        });
+
+        pkgComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                pkgComboBoxItemStateChanged(evt);
+            }
+        });
+        pkgComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pkgComboBoxActionPerformed(evt);
             }
         });
 
@@ -124,9 +136,9 @@ public class JFrame_AgreementAdd extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(IDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(stdIDTextField)
-                        .addComponent(pkgIDTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
-                        .addComponent(startDateTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)))
-                .addContainerGap(67, Short.MAX_VALUE))
+                        .addComponent(pkgComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(startDateTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,22 +154,18 @@ public class JFrame_AgreementAdd extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pkgIDLabel)
-                    .addComponent(pkgIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pkgComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(startDateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(startDateLabel))
                 .addGap(63, 63, 63)
                 .addComponent(saveButton)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void pkgIDTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pkgIDTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pkgIDTextFieldActionPerformed
 
     private void IDTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_IDTextFieldFocusLost
 
@@ -166,11 +174,11 @@ public class JFrame_AgreementAdd extends javax.swing.JFrame {
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         if (!IDTextField.getText().trim().isEmpty()
                 && !stdIDTextField.getText().trim().isEmpty()
-                && !pkgIDTextField.getText().trim().isEmpty()
+                && !pkgIdValue.trim().isEmpty()
                 && !startDateTextField.getText().trim().isEmpty()) {
             String id = IDTextField.getText().trim();
             String stdID = stdIDTextField.getText().trim();
-            String pkgID = pkgIDTextField.getText().trim();
+            String pkgID = pkgIdValue.trim();
             String startDate = startDateTextField.getText().trim();
 
             if (!isEdit) {
@@ -199,7 +207,7 @@ public class JFrame_AgreementAdd extends javax.swing.JFrame {
             Agreement ag = (Agreement) AgreementRepo.agreements.get(st_row);
             IDTextField.setText(ag.getID());
             stdIDTextField.setText(ag.getStudentID());
-            pkgIDTextField.setText(ag.getPackageID());
+            pkgIdValue = ag.getPackageID();
             startDateTextField.setText(ag.getStartDate().toString());
         }
     }//GEN-LAST:event_formWindowActivated
@@ -207,6 +215,16 @@ public class JFrame_AgreementAdd extends javax.swing.JFrame {
     private void stdIDTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stdIDTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_stdIDTextFieldActionPerformed
+
+    private void pkgComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pkgComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pkgComboBoxActionPerformed
+
+    private void pkgComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_pkgComboBoxItemStateChanged
+        String selectedPkg = (String) pkgComboBox.getSelectedItem();
+        String selectedID = PackageRepo.getIDByName(selectedPkg);
+        pkgIdValue = selectedID;
+    }//GEN-LAST:event_pkgComboBoxItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -259,12 +277,13 @@ public class JFrame_AgreementAdd extends javax.swing.JFrame {
         });
     }
 
+    private String pkgIdValue;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel IDLabel;
     private javax.swing.JTextField IDTextField;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox<String> pkgComboBox;
     private javax.swing.JLabel pkgIDLabel;
-    private javax.swing.JTextField pkgIDTextField;
     private javax.swing.JButton saveButton;
     private javax.swing.JLabel startDateLabel;
     private javax.swing.JTextField startDateTextField;
