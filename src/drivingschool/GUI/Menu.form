@@ -73,20 +73,11 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu3">
+        <Menu class="javax.swing.JMenu" name="lessonsMenu">
           <Properties>
             <Property name="text" type="java.lang.String" value="Lessons"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="listDeptBtn">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="View Lessons"/>
-                <Property name="name" type="java.lang.String" value="" noResource="true"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="listDeptBtnActionPerformed"/>
-              </Events>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="addLessonBtn">
               <Properties>
                 <Property name="text" type="java.lang.String" value="New Lesson"/>
@@ -94,6 +85,15 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addLessonBtnActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="listLessonsBtn">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="View Lessons"/>
+                <Property name="name" type="java.lang.String" value="" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="listLessonsBtnActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

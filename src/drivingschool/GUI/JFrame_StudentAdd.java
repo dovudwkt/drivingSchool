@@ -111,10 +111,15 @@ public class JFrame_StudentAdd extends javax.swing.JFrame {
         nationalityTextField.setInheritsPopupMenu(true);
         nationalityTextField.setName("jTextField_Nationality"); // NOI18N
 
-        birthdayLabel.setText("Birthday");
+        birthdayLabel.setText("Birthday (yyyy-mm-dd)");
 
         birthdayTextField.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         birthdayTextField.setName("jTextField_Birthday"); // NOI18N
+        birthdayTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                birthdayTextFieldActionPerformed(evt);
+            }
+        });
 
         saveButton.setText("Save");
         saveButton.setName("jButton_Save"); // NOI18N
@@ -157,13 +162,16 @@ public class JFrame_StudentAdd extends javax.swing.JFrame {
                             .addComponent(nationalityLabel)
                             .addComponent(birthdayLabel)
                             .addComponent(statusLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                        .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nationalityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(birthdayTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(saveButton)
-                            .addComponent(statusTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(20, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(birthdayTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(saveButton)
+                                    .addComponent(statusTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(135, 135, 135))
+                            .addComponent(nationalityTextField))))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -259,6 +267,10 @@ public class JFrame_StudentAdd extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_formWindowActivated
+
+    private void birthdayTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_birthdayTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_birthdayTextFieldActionPerformed
 
     /**
      * @param args the command line arguments

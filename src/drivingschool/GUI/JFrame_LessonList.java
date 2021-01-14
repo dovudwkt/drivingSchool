@@ -6,25 +6,25 @@
 package drivingschool.GUI;
 
 import java.io.IOException;
-import drivingschool.entity.Student;
+import drivingschool.entity.Lesson;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-import drivingschool.repo.StudentRepo;
+import drivingschool.repo.LessonRepo;
 
 /**
  *
  * @author btyo
  */
-public class JFrame_StudentList extends javax.swing.JFrame {
+public class JFrame_LessonList extends javax.swing.JFrame {
 
     /**
      * Creates new form JFrame_StudentList
      */
-    public JFrame_StudentList() {
+    public JFrame_LessonList() {
         initComponents();
     }
 
@@ -38,7 +38,7 @@ public class JFrame_StudentList extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane2 = new javax.swing.JScrollPane();
-        studentsList = new javax.swing.JList<>();
+        lessonsList = new javax.swing.JList<>();
         editBtn = new javax.swing.JButton();
         deleteBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -51,14 +51,14 @@ public class JFrame_StudentList extends javax.swing.JFrame {
             }
         });
 
-        studentsList.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
-        studentsList.setModel(new javax.swing.AbstractListModel<String>() {
+        lessonsList.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
+        lessonsList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        studentsList.setName("jList_Students"); // NOI18N
-        jScrollPane2.setViewportView(studentsList);
+        lessonsList.setName("jList_Students"); // NOI18N
+        jScrollPane2.setViewportView(lessonsList);
 
         editBtn.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         editBtn.setLabel("Edit Student");
@@ -121,28 +121,27 @@ public class JFrame_StudentList extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        refresh_StudentList();
+        refresh_LessonList();
     }//GEN-LAST:event_formWindowActivated
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
-        int sel = studentsList.getSelectedIndex();
+        int sel = lessonsList.getSelectedIndex();
         if (sel >= 0) {
-            Student st;
-            st = (Student) StudentRepo.students.get(sel);
-            JFrame_StudentAdd sa = new JFrame_StudentAdd();
-            sa.edit_student = true;
-            sa.st_row = sel;
-            sa.show();
-            //sa.st_row = st;
+            Lesson lesson;
+            lesson = (Lesson) LessonRepo.lessons.get(sel);
+            JFrame_LessonAdd ls = new JFrame_LessonAdd();
+            ls.isEdit = true;
+            ls.st_row = sel;
+            ls.show();
         }
     }//GEN-LAST:event_editBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
-        int sel = studentsList.getSelectedIndex();
+        int sel = lessonsList.getSelectedIndex();
         if (sel >= 0) {
-            StudentRepo.students.remove(sel);
-            refresh_StudentList();
-            JOptionPane.showMessageDialog(null, "Selected Student has been deleted Successfully");
+            LessonRepo.lessons.remove(sel);
+            refresh_LessonList();
+            JOptionPane.showMessageDialog(null, "Selected Lesson has been deleted Successfully");
         }
     }//GEN-LAST:event_deleteBtnActionPerformed
 
@@ -163,21 +162,23 @@ public class JFrame_StudentList extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JFrame_StudentList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrame_LessonList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JFrame_StudentList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrame_LessonList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JFrame_StudentList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrame_LessonList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JFrame_StudentList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrame_LessonList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFrame_StudentList().setVisible(true);
+                new JFrame_LessonList().setVisible(true);
             }
         });
     }
@@ -187,7 +188,7 @@ public class JFrame_StudentList extends javax.swing.JFrame {
     private javax.swing.JButton editBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JList<String> studentsList;
+    private javax.swing.JList<String> lessonsList;
     // End of variables declaration//GEN-END:variables
 
     public String fixedLengthString(String str, int flength) {
@@ -199,40 +200,44 @@ public class JFrame_StudentList extends javax.swing.JFrame {
         return tstr;
     }
 
-    public void refresh_StudentList() {
-        List students = StudentRepo.students;
-        if (students == null) {
+    public void refresh_LessonList() {
+        List lessons = LessonRepo.lessons;
+        if (lessons == null) {
             try {
-                StudentRepo.retrieveStudent();
-                students = StudentRepo.students;
+                LessonRepo.retrieveLessons();
+                lessons = LessonRepo.lessons;
             } catch (IOException | ClassNotFoundException ex) {
-                Logger.getLogger(JFrame_StudentList.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(JFrame_LessonList.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
-        Student st;
+        Lesson lesson;
         String cp;
-        studentsList.removeAll();
+        lessonsList.removeAll();
 
-        String[] arr_students = new String[students.size()];
+        String[] arr_students = new String[lessons.size()];
         cp = "";
         cp += fixedLengthString("ID", 10) + "|"
-                + fixedLengthString("Name", 15) + "|"
-                + fixedLengthString("Surname", 15) + "|"
-                + fixedLengthString("Nationality", 15) + "|"
-                + fixedLengthString("Birthday", 15) + "|"
-                + fixedLengthString("Status", 15);
+                + fixedLengthString("Package ID", 15) + "|"
+                + fixedLengthString("Student ID", 15) + "|"
+                + fixedLengthString("Lesson No", 15) + "|"
+                + fixedLengthString("Lesson date", 15) + "|"
+                + fixedLengthString("Start time", 15) + "|"
+                + fixedLengthString("End time", 15) + "|"
+                + fixedLengthString("Grade", 15);
         jLabel1.setText(cp);
 
-        for (int i = 0; i < students.size(); i++) {
-            st = (Student) students.get(i);
-            arr_students[i] = fixedLengthString(st.getID().trim(), 10) + "|"
-                    + fixedLengthString(st.getName().trim(), 15) + "|"
-                    + fixedLengthString(st.getSurname().trim(), 15) + "|"
-                    + fixedLengthString(st.getNationality().trim(), 15) + "|"
-                    + fixedLengthString(st.getDOB().toString(), 15) + "|"
-                    + fixedLengthString(st.getStatus().trim(), 15);
+        for (int i = 0; i < lessons.size(); i++) {
+            lesson = (Lesson) lessons.get(i);
+            arr_students[i] = fixedLengthString(lesson.getID().trim(), 10) + "|"
+                    + fixedLengthString(lesson.getPackageID().trim(), 15) + "|"
+                    + fixedLengthString(lesson.getStudentID().trim(), 15) + "|"
+                    + fixedLengthString(String.valueOf(lesson.getLessonNo()), 15) + "|"
+                    + fixedLengthString(lesson.getLessonDate().toString(), 15) + "|"
+                    + fixedLengthString(lesson.getStartTime().trim(), 15) + "|"
+                    + fixedLengthString(lesson.getEndTime().trim(), 15) + "|"
+                    + fixedLengthString(Float.toString(lesson.getGrade()), 15);
         }
-        studentsList.setListData(arr_students);
+        lessonsList.setListData(arr_students);
     }
 }
