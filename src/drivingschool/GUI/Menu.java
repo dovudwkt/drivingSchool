@@ -52,7 +52,7 @@ public class Menu extends javax.swing.JFrame {
         addLessonBtn = new javax.swing.JMenuItem();
         listLessonsBtn = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        listCourseBtn = new javax.swing.JMenuItem();
+        listPackagesBtn = new javax.swing.JMenuItem();
         addPackagesBtn = new javax.swing.JMenuItem();
         gradesMenu = new javax.swing.JMenu();
         listPaymentsBtn = new javax.swing.JMenuItem();
@@ -149,14 +149,14 @@ public class Menu extends javax.swing.JFrame {
 
         jMenu4.setText("Packages");
 
-        listCourseBtn.setText("List Packages");
-        listCourseBtn.setName(""); // NOI18N
-        listCourseBtn.addActionListener(new java.awt.event.ActionListener() {
+        listPackagesBtn.setText("List Packages");
+        listPackagesBtn.setName(""); // NOI18N
+        listPackagesBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                listCourseBtnActionPerformed(evt);
+                listPackagesBtnActionPerformed(evt);
             }
         });
-        jMenu4.add(listCourseBtn);
+        jMenu4.add(listPackagesBtn);
 
         addPackagesBtn.setText("Add Package");
         addPackagesBtn.setName("jMenuItem_AddDepartment"); // NOI18N
@@ -261,20 +261,19 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_listStudentsBtnActionPerformed
 
     private void listLessonsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listLessonsBtnActionPerformed
-//        new JFrame_DepartmentList().show();
         new JFrame_LessonList().show();
     }//GEN-LAST:event_listLessonsBtnActionPerformed
 
     private void addLessonBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addLessonBtnActionPerformed
-//        new JFrame_DepartmentAdd().show();
+        new JFrame_LessonAdd().show();
     }//GEN-LAST:event_addLessonBtnActionPerformed
 
-    private void listCourseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listCourseBtnActionPerformed
-//        new JFrame_CourseList().show();
-    }//GEN-LAST:event_listCourseBtnActionPerformed
+    private void listPackagesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listPackagesBtnActionPerformed
+        new JFrame_PackageList().show();
+    }//GEN-LAST:event_listPackagesBtnActionPerformed
 
     private void addPackagesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPackagesBtnActionPerformed
-//        new JFrame_CourseAdd().show();
+        new JFrame_PackageAdd().show();
 
     }//GEN-LAST:event_addPackagesBtnActionPerformed
 
@@ -358,8 +357,8 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JMenu lessonsMenu;
     private javax.swing.JMenuItem listAgmtBtn;
-    private javax.swing.JMenuItem listCourseBtn;
     private javax.swing.JMenuItem listLessonsBtn;
+    private javax.swing.JMenuItem listPackagesBtn;
     private javax.swing.JMenuItem listPaymentsBtn;
     private javax.swing.JMenuItem listStudentsBtn;
     private javax.swing.JMenuItem quitBtn;
