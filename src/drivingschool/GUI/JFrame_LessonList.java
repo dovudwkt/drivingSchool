@@ -61,7 +61,7 @@ public class JFrame_LessonList extends javax.swing.JFrame {
         jScrollPane2.setViewportView(lessonsList);
 
         editBtn.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        editBtn.setLabel("Edit Student");
+        editBtn.setText("Edit lesson");
         editBtn.setName("jButton_AddStudent"); // NOI18N
         editBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -69,8 +69,8 @@ public class JFrame_LessonList extends javax.swing.JFrame {
             }
         });
 
+        deleteBtn.setText("Delete lesson");
         deleteBtn.setInheritsPopupMenu(true);
-        deleteBtn.setLabel("Delete Student");
         deleteBtn.setName("jButton_DeleteStudent"); // NOI18N
         deleteBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -95,7 +95,7 @@ public class JFrame_LessonList extends javax.swing.JFrame {
                         .addComponent(editBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(deleteBtn)
-                        .addGap(0, 200, Short.MAX_VALUE))
+                        .addGap(0, 220, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

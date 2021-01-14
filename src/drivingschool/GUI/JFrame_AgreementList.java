@@ -6,26 +6,26 @@
 package drivingschool.GUI;
 
 import java.io.IOException;
-import drivingschool.entity.Payment;
+import drivingschool.entity.Agreement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-import drivingschool.repo.PaymentRepo;
+import drivingschool.repo.AgreementRepo;
 import java.util.Date;
 
 /**
  *
  * @author btyo
  */
-public class JFrame_PaymentList extends javax.swing.JFrame {
+public class JFrame_AgreementList extends javax.swing.JFrame {
 
     /**
      * Creates new form JFrame_StudentList
      */
-    public JFrame_PaymentList() {
+    public JFrame_AgreementList() {
         initComponents();
     }
 
@@ -39,7 +39,7 @@ public class JFrame_PaymentList extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane2 = new javax.swing.JScrollPane();
-        paymentsList = new javax.swing.JList<>();
+        agreementsList = new javax.swing.JList<>();
         editBtn = new javax.swing.JButton();
         deleteBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -52,17 +52,17 @@ public class JFrame_PaymentList extends javax.swing.JFrame {
             }
         });
 
-        paymentsList.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
-        paymentsList.setModel(new javax.swing.AbstractListModel<String>() {
+        agreementsList.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
+        agreementsList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        paymentsList.setName("jList_Students"); // NOI18N
-        jScrollPane2.setViewportView(paymentsList);
+        agreementsList.setName("jList_Students"); // NOI18N
+        jScrollPane2.setViewportView(agreementsList);
 
         editBtn.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        editBtn.setText("Edit Payment");
+        editBtn.setText("Edit agreement");
         editBtn.setName("jButton_AddStudent"); // NOI18N
         editBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -70,7 +70,7 @@ public class JFrame_PaymentList extends javax.swing.JFrame {
             }
         });
 
-        deleteBtn.setText("Delete Payment");
+        deleteBtn.setText("Delete agreement");
         deleteBtn.setInheritsPopupMenu(true);
         deleteBtn.setName("jButton_DeleteStudent"); // NOI18N
         deleteBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -96,7 +96,7 @@ public class JFrame_PaymentList extends javax.swing.JFrame {
                         .addComponent(editBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(deleteBtn)
-                        .addGap(0, 191, Short.MAX_VALUE))
+                        .addGap(0, 159, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,15 +122,15 @@ public class JFrame_PaymentList extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        refresh_PaymentList();
+        refresh_AgreementList();
     }//GEN-LAST:event_formWindowActivated
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
-        int sel = paymentsList.getSelectedIndex();
+        int sel = agreementsList.getSelectedIndex();
         if (sel >= 0) {
-            Payment payment;
-            payment = (Payment) PaymentRepo.payments.get(sel);
-            JFrame_PaymentAdd sa = new JFrame_PaymentAdd();
+            Agreement payment;
+            payment = (Agreement) AgreementRepo.agreements.get(sel);
+            JFrame_AgreementAdd sa = new JFrame_AgreementAdd();
             sa.isEdit = true;
             sa.st_row = sel;
             sa.show();
@@ -138,11 +138,11 @@ public class JFrame_PaymentList extends javax.swing.JFrame {
     }//GEN-LAST:event_editBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
-        int sel = paymentsList.getSelectedIndex();
+        int sel = agreementsList.getSelectedIndex();
         if (sel >= 0) {
-            PaymentRepo.payments.remove(sel);
-            refresh_PaymentList();
-            JOptionPane.showMessageDialog(null, "Selected Payment has been deleted Successfully");
+            AgreementRepo.agreements.remove(sel);
+            refresh_AgreementList();
+            JOptionPane.showMessageDialog(null, "Selected Agreement has been deleted Successfully");
         }
     }//GEN-LAST:event_deleteBtnActionPerformed
 
@@ -163,14 +163,18 @@ public class JFrame_PaymentList extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JFrame_PaymentList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrame_AgreementList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JFrame_PaymentList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrame_AgreementList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JFrame_PaymentList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrame_AgreementList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JFrame_PaymentList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrame_AgreementList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -179,17 +183,17 @@ public class JFrame_PaymentList extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFrame_PaymentList().setVisible(true);
+                new JFrame_AgreementList().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JList<String> agreementsList;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JButton editBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JList<String> paymentsList;
     // End of variables declaration//GEN-END:variables
 
     public String fixedLengthString(String str, int flength) {
@@ -201,38 +205,36 @@ public class JFrame_PaymentList extends javax.swing.JFrame {
         return tstr;
     }
 
-    public void refresh_PaymentList() {
-        List payments = PaymentRepo.payments;
-        if (payments == null) {
+    public void refresh_AgreementList() {
+        List agreements = AgreementRepo.agreements;
+        if (agreements == null) {
             try {
-                PaymentRepo.retrievePayments();
-                payments = PaymentRepo.payments;
+                AgreementRepo.retrieveAgreements();
+                agreements = AgreementRepo.agreements;
             } catch (IOException | ClassNotFoundException ex) {
-                Logger.getLogger(JFrame_PaymentList.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(JFrame_AgreementList.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
-        Payment payment;
+        Agreement payment;
         String cp;
-        paymentsList.removeAll();
+        agreementsList.removeAll();
 
-        String[] arr_payments = new String[payments.size()];
+        String[] arr_payments = new String[agreements.size()];
         cp = "";
         cp += fixedLengthString("ID", 10) + "|"
-                + fixedLengthString("Payment", 15) + "|"
-                + fixedLengthString("Amount", 15) + "|"
-                + fixedLengthString("Comment", 30) + "|"
-                + fixedLengthString("Timestamp", 30);
+                + fixedLengthString("StudentID", 15) + "|"
+                + fixedLengthString("PackageID", 15) + "|"
+                + fixedLengthString("Start Date", 20);
         jLabel1.setText(cp);
 
-        for (int i = 0; i < payments.size(); i++) {
-            payment = (Payment) payments.get(i);
+        for (int i = 0; i < agreements.size(); i++) {
+            payment = (Agreement) agreements.get(i);
             arr_payments[i] = fixedLengthString(payment.getID().trim(), 10) + "|"
                     + fixedLengthString(payment.getStudentID().trim(), 15) + "|"
-                    + fixedLengthString(Double.toString(payment.getAmount()), 15) + "|"
-                    + fixedLengthString(payment.getComment().trim(), 30) + "|"
-                    + fixedLengthString(payment.getTimestamp().toString() , 30);
+                    + fixedLengthString(payment.getPackageID(), 15) + "|"
+                    + fixedLengthString(payment.getStartDate().toString(), 20);
         }
-        paymentsList.setListData(arr_payments);
+        agreementsList.setListData(arr_payments);
     }
 }

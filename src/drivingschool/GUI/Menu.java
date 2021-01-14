@@ -286,11 +286,11 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_addPaymentBtnActionPerformed
 
     private void listAgmtBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listAgmtBtnActionPerformed
-//        new JFrame_AttendanceList().show();
+        new JFrame_AgreementList().show();
     }//GEN-LAST:event_listAgmtBtnActionPerformed
 
     private void addAgmtBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAgmtBtnActionPerformed
-//        new JFrame_AttendanceAdd().show();
+        new JFrame_AgreementAdd().show();
     }//GEN-LAST:event_addAgmtBtnActionPerformed
 
     private void testBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testBtnActionPerformed
