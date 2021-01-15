@@ -52,19 +52,21 @@ public class Menu extends javax.swing.JFrame {
         addLessonBtn = new javax.swing.JMenuItem();
         listLessonsBtn = new javax.swing.JMenuItem();
         packagesMenu = new javax.swing.JMenu();
-        listPackagesBtn = new javax.swing.JMenuItem();
         addPackagesBtn = new javax.swing.JMenuItem();
+        listPackagesBtn = new javax.swing.JMenuItem();
         paymentsMenu = new javax.swing.JMenu();
-        listPaymentsBtn = new javax.swing.JMenuItem();
         addPaymentBtn = new javax.swing.JMenuItem();
+        listPaymentsBtn = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
-        listAgmtBtn = new javax.swing.JMenuItem();
         addAgmtBtn = new javax.swing.JMenuItem();
+        listAgmtBtn = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        systemMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/drivingschool/assets/iconfinder_Computer_16x16_132637.png"))); // NOI18N
         systemMenu.setText("System");
 
+        testBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/drivingschool/assets/iconfinder_Tune_132605.png"))); // NOI18N
         testBtn.setText("Run tests");
         testBtn.setName("jMenuItem_Restore"); // NOI18N
         testBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -74,6 +76,7 @@ public class Menu extends javax.swing.JFrame {
         });
         systemMenu.add(testBtn);
 
+        backupBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/drivingschool/assets/iconfinder_Upload_132671.png"))); // NOI18N
         backupBtn.setText("Backup");
         backupBtn.setName("jMenuItem_backup"); // NOI18N
         backupBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -83,6 +86,7 @@ public class Menu extends javax.swing.JFrame {
         });
         systemMenu.add(backupBtn);
 
+        restoreBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/drivingschool/assets/iconfinder_Download_132678.png"))); // NOI18N
         restoreBtn.setText("Restore");
         restoreBtn.setName("jMenuItem_Restore"); // NOI18N
         restoreBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -93,6 +97,7 @@ public class Menu extends javax.swing.JFrame {
         systemMenu.add(restoreBtn);
         systemMenu.add(jSeparator1);
 
+        quitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/drivingschool/assets/iconfinder_Exit_132751.png"))); // NOI18N
         quitBtn.setText("Quit");
         quitBtn.setName("jMenuItem_Quit"); // NOI18N
         quitBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -104,10 +109,13 @@ public class Menu extends javax.swing.JFrame {
 
         jMenuBar1.add(systemMenu);
 
+        studentsMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/drivingschool/assets/iconfinder_Male_132787.png"))); // NOI18N
         studentsMenu.setText("Students");
 
+        addStudentBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/drivingschool/assets/iconfinder_Create_132699.png"))); // NOI18N
         addStudentBtn.setText("Add Student");
         addStudentBtn.setName("jMenuItem_AddStudent"); // NOI18N
+        addStudentBtn.setPreferredSize(new java.awt.Dimension(30, 30));
         addStudentBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addStudentBtnActionPerformed(evt);
@@ -115,6 +123,7 @@ public class Menu extends javax.swing.JFrame {
         });
         studentsMenu.add(addStudentBtn);
 
+        listStudentsBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/drivingschool/assets/iconfinder_Table_132735.png"))); // NOI18N
         listStudentsBtn.setText("List Students");
         listStudentsBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,8 +134,11 @@ public class Menu extends javax.swing.JFrame {
 
         jMenuBar1.add(studentsMenu);
 
+        lessonsMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/drivingschool/assets/iconfinder_Calendar_132582.png"))); // NOI18N
         lessonsMenu.setText("Lessons");
+        lessonsMenu.setMaximumSize(new java.awt.Dimension(91, 50));
 
+        addLessonBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/drivingschool/assets/iconfinder_Create_132699.png"))); // NOI18N
         addLessonBtn.setText("New Lesson");
         addLessonBtn.setName("jMenuItem_AddDepartment"); // NOI18N
         addLessonBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -136,6 +148,7 @@ public class Menu extends javax.swing.JFrame {
         });
         lessonsMenu.add(addLessonBtn);
 
+        listLessonsBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/drivingschool/assets/iconfinder_Table_132735.png"))); // NOI18N
         listLessonsBtn.setText("View Lessons");
         listLessonsBtn.setName(""); // NOI18N
         listLessonsBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -147,17 +160,11 @@ public class Menu extends javax.swing.JFrame {
 
         jMenuBar1.add(lessonsMenu);
 
+        packagesMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/drivingschool/assets/folder.png"))); // NOI18N
         packagesMenu.setText("Packages");
+        packagesMenu.setMaximumSize(new java.awt.Dimension(117, 50));
 
-        listPackagesBtn.setText("List Packages");
-        listPackagesBtn.setName(""); // NOI18N
-        listPackagesBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                listPackagesBtnActionPerformed(evt);
-            }
-        });
-        packagesMenu.add(listPackagesBtn);
-
+        addPackagesBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/drivingschool/assets/iconfinder_Create_132699.png"))); // NOI18N
         addPackagesBtn.setText("Add Package");
         addPackagesBtn.setName("jMenuItem_AddDepartment"); // NOI18N
         addPackagesBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -167,20 +174,25 @@ public class Menu extends javax.swing.JFrame {
         });
         packagesMenu.add(addPackagesBtn);
 
-        jMenuBar1.add(packagesMenu);
-
-        paymentsMenu.setText("Payment");
-        paymentsMenu.setName("jMenu_Grades"); // NOI18N
-
-        listPaymentsBtn.setText("List Payments");
-        listPaymentsBtn.setName(""); // NOI18N
-        listPaymentsBtn.addActionListener(new java.awt.event.ActionListener() {
+        listPackagesBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/drivingschool/assets/iconfinder_Table_132735.png"))); // NOI18N
+        listPackagesBtn.setText("List Packages");
+        listPackagesBtn.setName(""); // NOI18N
+        listPackagesBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                listPaymentsBtnActionPerformed(evt);
+                listPackagesBtnActionPerformed(evt);
             }
         });
-        paymentsMenu.add(listPaymentsBtn);
+        packagesMenu.add(listPackagesBtn);
 
+        jMenuBar1.add(packagesMenu);
+
+        paymentsMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/drivingschool/assets/iconfinder_Table_132735.png"))); // NOI18N
+        paymentsMenu.setText("Payment");
+        paymentsMenu.setMaximumSize(new java.awt.Dimension(100, 50));
+        paymentsMenu.setName("jMenu_Grades"); // NOI18N
+        paymentsMenu.setPreferredSize(new java.awt.Dimension(150, 50));
+
+        addPaymentBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/drivingschool/assets/iconfinder_Create_132699.png"))); // NOI18N
         addPaymentBtn.setText("New Payment");
         addPaymentBtn.setName("jMenuItem_AddDepartment"); // NOI18N
         addPaymentBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -190,20 +202,25 @@ public class Menu extends javax.swing.JFrame {
         });
         paymentsMenu.add(addPaymentBtn);
 
-        jMenuBar1.add(paymentsMenu);
-
-        jMenu6.setText("Agreements");
-        jMenu6.setName("JMenu_Attendance"); // NOI18N
-
-        listAgmtBtn.setText("List Agreements");
-        listAgmtBtn.setName(""); // NOI18N
-        listAgmtBtn.addActionListener(new java.awt.event.ActionListener() {
+        listPaymentsBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/drivingschool/assets/iconfinder_Table_132735.png"))); // NOI18N
+        listPaymentsBtn.setText("List Payments");
+        listPaymentsBtn.setName(""); // NOI18N
+        listPaymentsBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                listAgmtBtnActionPerformed(evt);
+                listPaymentsBtnActionPerformed(evt);
             }
         });
-        jMenu6.add(listAgmtBtn);
+        paymentsMenu.add(listPaymentsBtn);
 
+        jMenuBar1.add(paymentsMenu);
+
+        jMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/drivingschool/assets/iconfinder_Paste_132732.png"))); // NOI18N
+        jMenu6.setText("Agreements");
+        jMenu6.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        jMenu6.setMaximumSize(new java.awt.Dimension(121, 50));
+        jMenu6.setName("JMenu_Attendance"); // NOI18N
+
+        addAgmtBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/drivingschool/assets/iconfinder_Create_132699.png"))); // NOI18N
         addAgmtBtn.setText("Add Agreement");
         addAgmtBtn.setName("jMenuItem_AddDepartment"); // NOI18N
         addAgmtBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -213,6 +230,16 @@ public class Menu extends javax.swing.JFrame {
         });
         jMenu6.add(addAgmtBtn);
 
+        listAgmtBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/drivingschool/assets/iconfinder_Table_132735.png"))); // NOI18N
+        listAgmtBtn.setText("List Agreements");
+        listAgmtBtn.setName(""); // NOI18N
+        listAgmtBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listAgmtBtnActionPerformed(evt);
+            }
+        });
+        jMenu6.add(listAgmtBtn);
+
         jMenuBar1.add(jMenu6);
 
         setJMenuBar(jMenuBar1);
@@ -221,11 +248,11 @@ public class Menu extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 744, Short.MAX_VALUE)
+            .addGap(0, 736, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 334, Short.MAX_VALUE)
+            .addGap(0, 309, Short.MAX_VALUE)
         );
 
         pack();
@@ -234,10 +261,10 @@ public class Menu extends javax.swing.JFrame {
     private void restoreBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restoreBtnActionPerformed
         try {
             StudentRepo.retrieveStudent();
-//            DepartmentsRepo.retrieveDepartment();
-//            CourseRepo.retrieveCourse();
-//            AttendanceRepo.retrieveAttendance();
-//            GradesRepo.retrieveGrade();
+            LessonRepo.retrieveLessons();
+            PackageRepo.retrievePackages();
+            PaymentRepo.retrievePayments();
+            AgreementRepo.retrieveAgreements();
 
             JOptionPane.showMessageDialog(null, "Data Successfully Retrieved");
         } catch (IOException ex) {
@@ -245,7 +272,7 @@ public class Menu extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
         }
-               
+
     }//GEN-LAST:event_restoreBtnActionPerformed
 
     private void quitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitBtnActionPerformed
@@ -253,7 +280,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_quitBtnActionPerformed
 
     private void addStudentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStudentBtnActionPerformed
-         new JFrame_StudentAdd().show();
+        new JFrame_StudentAdd().show();
     }//GEN-LAST:event_addStudentBtnActionPerformed
 
     private void listStudentsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listStudentsBtnActionPerformed
@@ -300,8 +327,11 @@ public class Menu extends javax.swing.JFrame {
     private void backupBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupBtnActionPerformed
         try {
             StudentRepo.backupStudent();
-            //            DepartmentsRepo.backupDepartment();
-            JOptionPane.showMessageDialog(null, "Data Successfully Backuped");
+            LessonRepo.backupLessons();
+            PackageRepo.backupPackages();
+            PaymentRepo.backupPayments();
+            AgreementRepo.backupAgreements();
+            JOptionPane.showMessageDialog(null, "Data Successfully Backed up");
         } catch (IOException ex) {
             Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
         }

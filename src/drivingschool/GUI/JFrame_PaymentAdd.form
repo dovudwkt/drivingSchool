@@ -7,7 +7,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
-    <Property name="title" type="java.lang.String" value="Enter The Information Of The Student"/>
+    <Property name="title" type="java.lang.String" value="Enter Payment data"/>
     <Property name="name" type="java.lang.String" value="frame_StudentAdd" noResource="true"/>
   </Properties>
   <SyntheticProperties>
@@ -42,15 +42,18 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="saveButton" min="-2" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="IDTextField" min="-2" pref="78" max="-2" attributes="0"/>
-                      <Component id="stdIDTextField" max="32767" attributes="0"/>
-                      <Component id="amountTextField" alignment="0" pref="275" max="32767" attributes="0"/>
-                      <Component id="commentTextField" alignment="1" pref="275" max="32767" attributes="0"/>
+                  <Component id="commentTextField" alignment="1" min="-2" pref="275" max="-2" attributes="0"/>
+                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="IDTextField" alignment="0" pref="103" max="32767" attributes="0"/>
+                      <Component id="stdIDTextField" alignment="0" max="32767" attributes="0"/>
+                      <Component id="amountTextField" alignment="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+                      <Component id="saveButton" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="67" max="32767" attributes="0"/>
+              <EmptySpace pref="28" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -72,14 +75,14 @@
                   <Component id="amountLabel" min="-2" max="-2" attributes="0"/>
                   <Component id="amountTextField" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="commentTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="commentLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="commentLabel" min="-2" max="-2" attributes="0"/>
+                  <Component id="commentTextField" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
               <Component id="saveButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="16" max="32767" attributes="0"/>
+              <EmptySpace pref="15" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -159,6 +162,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="saveButton">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/drivingschool/assets/iconfinder_Save_132607.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Save"/>
         <Property name="name" type="java.lang.String" value="jButton_Save" noResource="true"/>
       </Properties>
