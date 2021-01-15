@@ -177,4 +177,18 @@ public class StudentRepo {
             Logger.getLogger(StudentRepo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+     public static String getNameByID(String id) {
+        Student s;
+
+        Iterator<Student> itr = students.iterator();
+        while (itr.hasNext()) {
+            s = itr.next();
+            if (id.trim().equals(s.getID().trim())) {
+                return s.getName()+" "+s.getSurname();
+            }
+        }
+        return "";
+    }
+
 }

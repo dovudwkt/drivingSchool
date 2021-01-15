@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 import drivingschool.repo.PaymentRepo;
+import drivingschool.repo.StudentRepo;
 import java.util.Date;
 
 /**
@@ -217,7 +218,8 @@ public class JFrame_PaymentList extends javax.swing.JFrame {
         String[] arr_payments = new String[payments.size()];
         cp = "";
         cp += fixedLengthString("ID", 10) + "|"
-                + fixedLengthString("Payment", 15) + "|"
+//                + fixedLengthString("StudentID", 15) + "|"
+                + fixedLengthString("Student", 22) + "|"
                 + fixedLengthString("Amount", 15) + "|"
                 + fixedLengthString("Comment", 30) + "|"
                 + fixedLengthString("Timestamp", 30);
@@ -226,10 +228,11 @@ public class JFrame_PaymentList extends javax.swing.JFrame {
         for (int i = 0; i < payments.size(); i++) {
             payment = (Payment) payments.get(i);
             arr_payments[i] = fixedLengthString(payment.getID().trim(), 10) + "|"
-                    + fixedLengthString(payment.getStudentID().trim(), 15) + "|"
+//                    + fixedLengthString(payment.getStudentID().trim(), 15) + "|"
+                    + fixedLengthString(StudentRepo.getNameByID(payment.getStudentID()).trim(), 22) + "|"
                     + fixedLengthString(Double.toString(payment.getAmount()), 15) + "|"
                     + fixedLengthString(payment.getComment().trim(), 30) + "|"
-                    + fixedLengthString(payment.getTimestamp().toString() , 30);
+                    + fixedLengthString(payment.getTimestamp().toString(), 30);
         }
         paymentsList.setListData(arr_payments);
     }

@@ -30,6 +30,14 @@ public class JFrame_AgreementAdd extends javax.swing.JFrame {
     public JFrame_AgreementAdd() {
         initComponents();
         isEdit = false;
+        
+        // Populate dropdown with values
+//        for (int i = 0; i < PackageRepo.packages.size(); i++) {
+//            CoursePackage dept = (CoursePackage) PackageRepo.packages.get(i);
+//            if (!dept.getName().isEmpty()) {
+//                pkgComboBox.addItem(dept.getName());
+//            }
+//        }
     }
 
     /**
@@ -197,7 +205,7 @@ public class JFrame_AgreementAdd extends javax.swing.JFrame {
             Agreement ag = (Agreement) AgreementRepo.agreements.get(st_row);
             IDTextField.setText(ag.getID());
             stdIDTextField.setText(ag.getStudentID());
-            pkgIDTextField.setText(ag.getPackageID());
+            pkgIdValue = ag.getPackageID();
             startDateTextField.setText(ag.getStartDate().toString());
         }
     }//GEN-LAST:event_formWindowActivated
@@ -260,7 +268,7 @@ public class JFrame_AgreementAdd extends javax.swing.JFrame {
             }
         });
     }
-
+    private String pkgIdValue;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel IDLabel;
     private javax.swing.JTextField IDTextField;

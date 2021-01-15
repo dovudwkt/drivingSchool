@@ -92,7 +92,8 @@ public class PackageRepo {
             p.setNumLessons(numLessons);
         }
     }
-     public static String getIDByName(String dName) {
+
+    public static String getIDByName(String dName) {
         CoursePackage p;
 
         Iterator<CoursePackage> itr = packages.iterator();
@@ -100,6 +101,19 @@ public class PackageRepo {
             p = itr.next();
             if (dName.trim().equals(p.getName().trim())) {
                 return p.getID();
+            }
+        }
+        return "";
+    }
+
+    public static String getNameByID(String id) {
+        CoursePackage p;
+
+        Iterator<CoursePackage> itr = packages.iterator();
+        while (itr.hasNext()) {
+            p = itr.next();
+            if (id.trim().equals(p.getID().trim())) {
+                return p.getName();
             }
         }
         return "";

@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 import drivingschool.repo.AgreementRepo;
+import drivingschool.repo.PackageRepo;
 import java.util.Date;
 
 /**
@@ -224,7 +225,7 @@ public class JFrame_AgreementList extends javax.swing.JFrame {
         cp = "";
         cp += fixedLengthString("ID", 10) + "|"
                 + fixedLengthString("StudentID", 15) + "|"
-                + fixedLengthString("PackageID", 15) + "|"
+                + fixedLengthString("Package", 15) + "|"
                 + fixedLengthString("Start Date", 20);
         jLabel1.setText(cp);
 
@@ -232,7 +233,7 @@ public class JFrame_AgreementList extends javax.swing.JFrame {
             payment = (Agreement) agreements.get(i);
             arr_payments[i] = fixedLengthString(payment.getID().trim(), 10) + "|"
                     + fixedLengthString(payment.getStudentID().trim(), 15) + "|"
-                    + fixedLengthString(payment.getPackageID(), 15) + "|"
+                    + fixedLengthString(PackageRepo.getNameByID(payment.getPackageID()), 15) + "|"
                     + fixedLengthString(payment.getStartDate().toString(), 20);
         }
         agreementsList.setListData(arr_payments);

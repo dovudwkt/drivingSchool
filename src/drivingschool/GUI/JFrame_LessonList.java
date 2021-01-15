@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 import drivingschool.repo.LessonRepo;
+import drivingschool.repo.PackageRepo;
 
 /**
  *
@@ -119,7 +120,13 @@ public class JFrame_LessonList extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        refresh_LessonList();
+        try {
+            refresh_LessonList();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(JFrame_LessonList.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(JFrame_LessonList.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_formWindowActivated
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
@@ -137,9 +144,15 @@ public class JFrame_LessonList extends javax.swing.JFrame {
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         int sel = lessonsList.getSelectedIndex();
         if (sel >= 0) {
-            LessonRepo.lessons.remove(sel);
-            refresh_LessonList();
-            JOptionPane.showMessageDialog(null, "Selected Lesson has been deleted Successfully");
+            try {
+                LessonRepo.lessons.remove(sel);
+                refresh_LessonList();
+                JOptionPane.showMessageDialog(null, "Selected Lesson has been deleted Successfully");
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(JFrame_LessonList.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(JFrame_LessonList.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_deleteBtnActionPerformed
 
@@ -198,15 +211,16 @@ public class JFrame_LessonList extends javax.swing.JFrame {
         return tstr;
     }
 
-    public void refresh_LessonList() {
+    public void refresh_LessonList() throws ClassNotFoundException, IOException {
         List lessons = LessonRepo.lessons;
+        List packages = PackageRepo.packages;
+        
         if (lessons == null) {
-            try {
                 LessonRepo.retrieveLessons();
-                lessons = LessonRepo.lessons;
-            } catch (IOException | ClassNotFoundException ex) {
-                Logger.getLogger(JFrame_LessonList.class.getName()).log(Level.SEVERE, null, ex);
-            }
+               lessons = LessonRepo.lessons;
+        } else if (packages == null) {
+                PackageRepo.retrievePackages();
+                packages = PackageRepo.packages;
         }
 
         Lesson lesson;
@@ -216,7 +230,7 @@ public class JFrame_LessonList extends javax.swing.JFrame {
         String[] arr_students = new String[lessons.size()];
         cp = "";
         cp += fixedLengthString("ID", 10) + "|"
-                + fixedLengthString("Package ID", 15) + "|"
+                + fixedLengthString("Package", 15) + "|"
                 + fixedLengthString("Student ID", 15) + "|"
                 + fixedLengthString("Lesson No", 15) + "|"
                 + fixedLengthString("Lesson date", 15) + "|"
@@ -228,7 +242,7 @@ public class JFrame_LessonList extends javax.swing.JFrame {
         for (int i = 0; i < lessons.size(); i++) {
             lesson = (Lesson) lessons.get(i);
             arr_students[i] = fixedLengthString(lesson.getID().trim(), 10) + "|"
-                    + fixedLengthString(lesson.getPackageID().trim(), 15) + "|"
+                    + fixedLengthString(PackageRepo.getNameByID(lesson.getPackageID()).trim(), 15) + "|"
                     + fixedLengthString(lesson.getStudentID().trim(), 15) + "|"
                     + fixedLengthString(String.valueOf(lesson.getLessonNo()), 15) + "|"
                     + fixedLengthString(lesson.getLessonDate().toString(), 15) + "|"
