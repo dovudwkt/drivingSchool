@@ -1,7 +1,7 @@
 package drivingschool.repo;
 
 import drivingschool.entity.Lesson;
-import drivingschool.entity.Package;
+import drivingschool.entity.CoursePackage;
 import drivingschool.entity.Student;
 import drivingschool.Helpers;
 
@@ -114,12 +114,12 @@ public class LessonRepo {
     public static void listLessons() throws IOException, ClassNotFoundException {
         Lesson lesson;
         Student student;
-        Package pkg;
+        CoursePackage pkg;
 
         List students = Helpers.readFile("backups/students.dat");
         List packages = Helpers.readFile("backups/packages.dat");
 
-        System.out.printf("\n%-10s %-12s %-15s %-10s %-10s %-8s %-15s %-22s", "ID", "Lessons No", "Date", "Start Time", "End Time", "Grade", "Package", "Student Name");
+        System.out.printf("\n%-10s %-12s %-15s %-10s %-10s %-8s %-15s %-22s", "ID", "Lessons No", "Date", "Start Time", "End Time", "Grade", "CoursePackage", "Student Name");
         Helpers.drawLine(Helpers.LARGE_LINE);
 
         Iterator<Lesson> lessonsItr = lessons.iterator();
@@ -134,7 +134,7 @@ public class LessonRepo {
                     lesson.getEndTime(),
                     lesson.getGrade());
 
-            Iterator<Package> packagesItr = packages.iterator();
+            Iterator<CoursePackage> packagesItr = packages.iterator();
             while (packagesItr.hasNext()) {
                 pkg = packagesItr.next();
                 if (pkg.getID().equals(lesson.getPackageID())) {
