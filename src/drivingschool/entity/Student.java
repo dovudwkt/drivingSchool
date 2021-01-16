@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class Student implements Serializable {
+
     private String ID;
     private String Name;
     private String Surname;
@@ -17,8 +18,6 @@ public class Student implements Serializable {
     private String LicenceNo;
     private LocalDate RegisterDate;
 
-
-
     public Student(String ID, String name, String surname, String nationality, LocalDate DOB, String status, LocalDate registerDate) {
         this.ID = ID;
         Name = name;
@@ -27,6 +26,19 @@ public class Student implements Serializable {
         this.DOB = DOB;
         Status = status;
         RegisterDate = registerDate;
+    }
+
+    public Student(String ID, String name, String surname, String nationality, LocalDate DOB, String status, LocalDate registerDate, String licenceNo, LocalDate licenceExp) {
+        this.ID = ID;
+        Name = name;
+        Surname = surname;
+        Nationality = nationality;
+        this.DOB = DOB;
+        Status = status;
+        RegisterDate = registerDate;
+        LicenceExpire = licenceExp;
+        LicenceNo = licenceNo;
+
     }
 
     public LocalDate getDOB() {
@@ -44,6 +56,7 @@ public class Student implements Serializable {
     public void setRegisterDate(LocalDate registerDate) {
         RegisterDate = registerDate;
     }
+
     public String getID() {
         return ID;
     }

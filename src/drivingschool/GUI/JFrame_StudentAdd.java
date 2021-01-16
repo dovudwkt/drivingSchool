@@ -43,9 +43,6 @@ public class JFrame_StudentAdd extends javax.swing.JFrame {
         nameTextField = new javax.swing.JTextField();
         surnameLabel = new javax.swing.JLabel();
         surnameTextField = new javax.swing.JTextField();
-        genderLabel = new javax.swing.JLabel();
-        femaleRadioButton = new javax.swing.JRadioButton();
-        maleRadioButton = new javax.swing.JRadioButton();
         nationalityLabel = new javax.swing.JLabel();
         nationalityTextField = new javax.swing.JTextField();
         birthdayLabel = new javax.swing.JLabel();
@@ -53,6 +50,10 @@ public class JFrame_StudentAdd extends javax.swing.JFrame {
         saveButton = new javax.swing.JButton();
         statusTextField = new javax.swing.JTextField();
         statusLabel = new javax.swing.JLabel();
+        licenceNoTextField = new javax.swing.JTextField();
+        licenceNoLabel = new javax.swing.JLabel();
+        licenceExpLabel = new javax.swing.JLabel();
+        licenceExpTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Enter The Information Of The Student");
@@ -92,19 +93,6 @@ public class JFrame_StudentAdd extends javax.swing.JFrame {
             }
         });
 
-        genderLabel.setText("Gender");
-
-        buttonGroup1.add(femaleRadioButton);
-        femaleRadioButton.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        femaleRadioButton.setSelected(true);
-        femaleRadioButton.setText("Female");
-        femaleRadioButton.setName("jRadioButton_Female"); // NOI18N
-
-        buttonGroup1.add(maleRadioButton);
-        maleRadioButton.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        maleRadioButton.setLabel("Male");
-        maleRadioButton.setName("jRadioButton_Male"); // NOI18N
-
         nationalityLabel.setText("Nationality");
 
         nationalityTextField.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -135,6 +123,26 @@ public class JFrame_StudentAdd extends javax.swing.JFrame {
 
         statusLabel.setText("Status");
 
+        licenceNoTextField.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        licenceNoTextField.setName("jTextField_Birthday"); // NOI18N
+        licenceNoTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                licenceNoTextFieldActionPerformed(evt);
+            }
+        });
+
+        licenceNoLabel.setText("Licence No");
+
+        licenceExpLabel.setText("Licence expire");
+
+        licenceExpTextField.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        licenceExpTextField.setName("jTextField_Birthday"); // NOI18N
+        licenceExpTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                licenceExpTextFieldActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -163,13 +171,17 @@ public class JFrame_StudentAdd extends javax.swing.JFrame {
                                     .addComponent(surnameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(surnameLabel)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(genderLabel)
-                                .addGap(18, 18, 18)
-                                .addComponent(femaleRadioButton)
-                                .addGap(18, 18, 18)
-                                .addComponent(maleRadioButton))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(licenceNoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(licenceNoLabel))
+                                .addGap(62, 62, 62)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(licenceExpTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(1, 1, 1)
+                                        .addComponent(licenceExpLabel))))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(141, 141, 141)
+                        .addGap(125, 125, 125)
                         .addComponent(saveButton)))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
@@ -207,13 +219,18 @@ public class JFrame_StudentAdd extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(birthdayTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(genderLabel)
-                    .addComponent(femaleRadioButton)
-                    .addComponent(maleRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(licenceNoLabel)
+                        .addGap(3, 3, 3)
+                        .addComponent(licenceNoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(licenceExpLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(licenceExpTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(saveButton)
-                .addGap(28, 28, 28))
+                .addGap(31, 31, 31))
         );
 
         pack();
@@ -233,6 +250,8 @@ public class JFrame_StudentAdd extends javax.swing.JFrame {
                 && !surnameTextField.getText().trim().isEmpty()
                 && !nationalityTextField.getText().trim().isEmpty()
                 && !statusTextField.getText().trim().isEmpty()
+                //                && !licenceNoTextField.getText().trim().isEmpty()
+                //                && !licenceExpTextField.getText().trim().isEmpty()
                 && !birthdayTextField.getText().trim().isEmpty()) {
             String std_no = stdIDTextField.getText().trim();
             String std_name = nameTextField.getText().trim();
@@ -242,13 +261,16 @@ public class JFrame_StudentAdd extends javax.swing.JFrame {
             String nationality = nationalityTextField.getText().trim();
             String birthday = birthdayTextField.getText().trim();
             String status = statusTextField.getText().trim();
+            String licence_no = licenceNoTextField.getText().trim();
+            String licence_exp = licenceExpTextField.getText().trim();
 
             if (!edit_student) {
-                StudentRepo.addStudent(std_no, std_name, std_surname, nationality, birthday, status);
+                StudentRepo.addStudent(std_no, std_name, std_surname, nationality, birthday, status, licence_no, licence_exp);
                 JOptionPane.showMessageDialog(null,
                         "The New Student Data is Recorded Successfully");
             } else {
-//                StudentRepo.editStudent(std_no, std_name, std_surname, nationality, birthday, status);
+                StudentRepo.editStudent(std_no, std_name, std_surname, nationality, birthday, status, licence_no, licence_exp);
+
                 JOptionPane.showMessageDialog(null, "The Selected Student Data is Edited Successfully");
             }
             StudentRepo.listStudents();
@@ -265,17 +287,28 @@ public class JFrame_StudentAdd extends javax.swing.JFrame {
             nameTextField.setText(st.getName());
             surnameTextField.setText(st.getSurname());
             nationalityTextField.setText(st.getNationality());
+            statusTextField.setText(st.getStatus());
             birthdayTextField.setText(st.getDOB().toString());
+            licenceExpTextField.setText(st.getLicenceExpire().toString());
+            licenceNoTextField.setText(st.getLicenceNo());
+
 //            if (st.getGender().equals("Male")) {
 //                maleRadioButton.setSelected(true);
 //            }
-
         }
     }//GEN-LAST:event_formWindowActivated
 
     private void birthdayTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_birthdayTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_birthdayTextFieldActionPerformed
+
+    private void licenceExpTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_licenceExpTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_licenceExpTextFieldActionPerformed
+
+    private void licenceNoTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_licenceNoTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_licenceNoTextFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -318,9 +351,10 @@ public class JFrame_StudentAdd extends javax.swing.JFrame {
     private javax.swing.JLabel birthdayLabel;
     private javax.swing.JTextField birthdayTextField;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JRadioButton femaleRadioButton;
-    private javax.swing.JLabel genderLabel;
-    private javax.swing.JRadioButton maleRadioButton;
+    private javax.swing.JLabel licenceExpLabel;
+    private javax.swing.JTextField licenceExpTextField;
+    private javax.swing.JLabel licenceNoLabel;
+    private javax.swing.JTextField licenceNoTextField;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JTextField nameTextField;
     private javax.swing.JLabel nationalityLabel;

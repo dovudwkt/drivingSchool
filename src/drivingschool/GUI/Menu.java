@@ -40,7 +40,6 @@ public class Menu extends javax.swing.JFrame {
 
         jMenuBar1 = new javax.swing.JMenuBar();
         systemMenu = new javax.swing.JMenu();
-        testBtn = new javax.swing.JMenuItem();
         backupBtn = new javax.swing.JMenuItem();
         restoreBtn = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
@@ -65,16 +64,6 @@ public class Menu extends javax.swing.JFrame {
 
         systemMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/drivingschool/assets/iconfinder_Computer_16x16_132637.png"))); // NOI18N
         systemMenu.setText("System");
-
-        testBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/drivingschool/assets/iconfinder_Tune_132605.png"))); // NOI18N
-        testBtn.setText("Run tests");
-        testBtn.setName("jMenuItem_Restore"); // NOI18N
-        testBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                testBtnActionPerformed(evt);
-            }
-        });
-        systemMenu.add(testBtn);
 
         backupBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/drivingschool/assets/iconfinder_Upload_132671.png"))); // NOI18N
         backupBtn.setText("Backup");
@@ -320,10 +309,6 @@ public class Menu extends javax.swing.JFrame {
         new JFrame_AgreementAdd().show();
     }//GEN-LAST:event_addAgmtBtnActionPerformed
 
-    private void testBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testBtnActionPerformed
-        drivingschool.DrivingSchool.populateAllData();
-    }//GEN-LAST:event_testBtnActionPerformed
-
     private void backupBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupBtnActionPerformed
         try {
             StudentRepo.backupStudent();
@@ -395,6 +380,5 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem restoreBtn;
     private javax.swing.JMenu studentsMenu;
     private javax.swing.JMenu systemMenu;
-    private javax.swing.JMenuItem testBtn;
     // End of variables declaration//GEN-END:variables
 }

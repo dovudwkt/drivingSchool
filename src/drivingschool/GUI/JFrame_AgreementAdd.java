@@ -205,7 +205,7 @@ public class JFrame_AgreementAdd extends javax.swing.JFrame {
             Agreement ag = (Agreement) AgreementRepo.agreements.get(st_row);
             IDTextField.setText(ag.getID());
             stdIDTextField.setText(ag.getStudentID());
-            pkgIdValue = ag.getPackageID();
+            pkgIDTextField.setText(ag.getPackageID());
             startDateTextField.setText(ag.getStartDate().toString());
         }
     }//GEN-LAST:event_formWindowActivated

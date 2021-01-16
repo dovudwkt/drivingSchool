@@ -189,6 +189,9 @@ public class JFrame_StudentList extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     public String fixedLengthString(String str, int flength) {
+        if (str == null){
+            str = " ";
+        }
         String tstr = "";
         for (int i = 0; i < (flength - str.length()); i++) {
             tstr += " ";
@@ -219,7 +222,10 @@ public class JFrame_StudentList extends javax.swing.JFrame {
                 + fixedLengthString("Surname", 15) + "|"
                 + fixedLengthString("Nationality", 15) + "|"
                 + fixedLengthString("Birthday", 15) + "|"
-                + fixedLengthString("Status", 15);
+                + fixedLengthString("Register at", 15) + "|"
+                + fixedLengthString("Status", 15) + "|"
+                + fixedLengthString("Licence no", 15) + "|"
+                + fixedLengthString("Licence expire", 15);
         jLabel1.setText(cp);
 
         for (int i = 0; i < students.size(); i++) {
@@ -229,7 +235,10 @@ public class JFrame_StudentList extends javax.swing.JFrame {
                     + fixedLengthString(st.getSurname().trim(), 15) + "|"
                     + fixedLengthString(st.getNationality().trim(), 15) + "|"
                     + fixedLengthString(st.getDOB().toString(), 15) + "|"
-                    + fixedLengthString(st.getStatus().trim(), 15);
+                    + fixedLengthString(st.getRegisterDate().toString(), 15) + "|"
+                    + fixedLengthString(st.getStatus().trim(), 15) + "|"
+                    + fixedLengthString(st.getLicenceNo(), 15) + "|"
+                    + fixedLengthString(st.getLicenceExpire().toString(), 15);
         }
         studentsList.setListData(arr_students);
     }
