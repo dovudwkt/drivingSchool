@@ -28,14 +28,14 @@ public class StudentRepo {
         try {
             System.out.printf("\n Tests for Class Student\n\n");
             System.out.printf("\n addStudent() ...\n");
-            addStudent("116229", "Ali", "Faisal", "Turkey ", "1993-06-19", "beginner");
-            addStudent("186731", "Ayse", "Kemaller", "Cyprus", "1998-09-28", "intermediate");
-            addStudent("168337", "Muhammad", "Fahrad", "Iran", "1996-05-30", "on hold");
-            addStudent("189222", "Fatima ", "Reshad", "Syria", "1998-07-22", "beginner");
+            addStudent("116229", "Ali", "Faisal", "Turkey ", "1993-06-19", "beginner", "12548612", "2025-05-12");
+            addStudent("186731", "Ayse", "Kemaller", "Cyprus", "1998-09-28", "intermediate", "12546845", "2024-02-10");
+            addStudent("168337", "Muhammad", "Fahrad", "Iran", "1996-05-30", "on hold", "32156879", "2025-12-04");
+            addStudent("189222", "Fatima ", "Reshad", "Syria", "1998-07-22", "beginner", "18855312", "2026-04-28");
 
             listStudents();
             System.out.printf("\n\n\n editStudent()\n");
-            editStudent("186731", "Ayse", "Kemaller", "Turkey", "1998-09-28", "intermediate", "Category A", "1232456", "2025-10-22");
+            editStudent("186731", "Ayse", "Kemaller", "Turkey", "1998-09-28", "intermediate", "1232456", "2025-10-22");
             listStudents();
 
             System.out.printf("\n\n Backing up...\n");
@@ -59,10 +59,10 @@ public class StudentRepo {
 
     public static void populateData() {
         try {
-            addStudent("116229", "Ali", "Faisal", "Turkey ", "1993-06-19", "beginner");
-            addStudent("186731", "Ayse", "Kemaller", "Cyprus", "1998-09-28", "intermediate");
-            addStudent("168337", "Muhammad", "Fahrad", "Iran", "1996-05-30", "on hold");
-            addStudent("189222", "Fatima ", "Reshad", "Syria", "1998-07-22", "beginner");
+            addStudent("116229", "Ali", "Faisal", "Turkey ", "1993-06-19", "beginner", "12548612", "2025-05-12");
+            addStudent("186731", "Ayse", "Kemaller", "Cyprus", "1998-09-28", "intermediate", "12546845", "2024-02-10");
+            addStudent("168337", "Muhammad", "Fahrad", "Iran", "1996-05-30", "on hold", "32156879", "2025-12-04");
+            addStudent("189222", "Fatima ", "Reshad", "Syria", "1998-07-22", "beginner", "18855312", "2026-04-28");
             backupStudent();
         } catch (IOException ex) {
             java.util.logging.Logger.getLogger(PaymentRepo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
@@ -77,12 +77,12 @@ public class StudentRepo {
         Helpers.writeFile(students, "backups/students.dat");
     }
 
-    public static void addStudent(String stdNo, String name, String surname, String nationality, String dob, String status) {
-        Student st = new Student(stdNo, name, surname, nationality, LocalDate.parse(dob), status, LocalDate.now());
+    public static void addStudent(String stdNo, String name, String surname, String nationality, String dob, String status, String licenceNo, String licenceExp) {
+        Student st = new Student(stdNo, name, surname, nationality, LocalDate.parse(dob), status, LocalDate.now(), licenceNo, LocalDate.parse(licenceExp));
         students.add(st);
     }
 
-    public static void editStudent(String stdNo, String name, String surname, String nationality, String dob, String status, String licenceType, String licenceNo, String licenceExpire) {
+    public static void editStudent(String stdNo, String name, String surname, String nationality, String dob, String status, String licenceNo, String licenceExpire) {
         Student st = null;
         boolean found = false;
         Iterator<Student> itr = students.iterator();
@@ -99,7 +99,6 @@ public class StudentRepo {
             st.setNationality(nationality);
             st.setDOB(LocalDate.parse(dob));
             st.setStatus(status);
-            st.setLicenceType(licenceType);
             st.setLicenceNo(licenceNo);
             st.setLicenceExpire(LocalDate.parse(licenceExpire));
         }
@@ -177,15 +176,15 @@ public class StudentRepo {
             Logger.getLogger(StudentRepo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-     public static String getNameByID(String id) {
+
+    public static String getNameByID(String id) {
         Student s;
 
         Iterator<Student> itr = students.iterator();
         while (itr.hasNext()) {
             s = itr.next();
             if (id.trim().equals(s.getID().trim())) {
-                return s.getName()+" "+s.getSurname();
+                return s.getName() + " " + s.getSurname();
             }
         }
         return "";
