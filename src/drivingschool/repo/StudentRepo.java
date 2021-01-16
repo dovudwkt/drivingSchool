@@ -15,9 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class StudentRepo {
-
     public static List students;
-
     public static void main(String[] args) throws ParseException {
         students = new ArrayList();
         testStudent();
@@ -189,5 +187,5 @@ public class StudentRepo {
         }
         return "";
     }
-
+   
 }

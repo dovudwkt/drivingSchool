@@ -15,6 +15,7 @@ import drivingschool.repo.LessonRepo;
 import drivingschool.repo.PackageRepo;
 import drivingschool.repo.PaymentRepo;
 import drivingschool.repo.StudentRepo;
+import java.sql.SQLException;
 
 /**
  *
@@ -273,7 +274,13 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_addStudentBtnActionPerformed
 
     private void listStudentsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listStudentsBtnActionPerformed
-        new JFrame_StudentList().show();
+        try {
+            new JFrame_StudentList().show();
+        } catch (SQLException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_listStudentsBtnActionPerformed
 
     private void listLessonsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listLessonsBtnActionPerformed
