@@ -120,25 +120,25 @@ public class PaymentRepo {
 
         System.out.printf("\n%-10s %-15s %-12s %-20s %-32s %-15s", "PaymentID", "StudentID", "Amount", "Comment", "Timestamp", "Student Name");
         Helpers.drawLine(Helpers.LARGE_LINE);
-
-        Iterator<Payment> itr = payments.iterator();
-        while (itr.hasNext()) {
-            payment = itr.next();
-            System.out.printf("\n%-10s %-15s %-12s %-20s %-32s ",
-                    payment.getID(),
-                    payment.getStudentID(),
-                    payment.getAmount(),
-                    payment.getComment(),
-                    payment.getTimestamp());
-
-            Iterator<Student> stdItr = students.iterator();
-            while (stdItr.hasNext()) {
-                student = stdItr.next();
-                if (student.getID().equals(payment.getStudentID())) {
-                    System.out.print(student.getName() + " " + student.getSurname());
-                }
-            }
-        }
+//
+//        Iterator<Payment> itr = payments.iterator();
+//        while (itr.hasNext()) {
+//            payment = itr.next();
+//            System.out.printf("\n%-10s %-15s %-12s %-20s %-32s ",
+//                    payment.getID(),
+//                    payment.getStudentID(),
+//                    payment.getAmount(),
+//                    payment.getComment(),
+//                    payment.getTimestamp());
+//
+//            Iterator<Student> stdItr = students.iterator();
+//            while (stdItr.hasNext()) {
+//                student = stdItr.next();
+//                if (student.getID().equals(payment.getStudentID())) {
+//                    System.out.print(student.getName() + " " + student.getSurname());
+//                }
+//            }
+//        }
         Helpers.drawLine(Helpers.LARGE_LINE);
     }
 

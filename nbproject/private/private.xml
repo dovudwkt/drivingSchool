@@ -5,7 +5,10 @@
         <group>
             <file>file:/home/dovud/NetBeansProjects/DrivingSchool/src/drivingschool/DrivingSchool.java</file>
             <file>file:/home/dovud/NetBeansProjects/DrivingSchool/src/drivingschool/GUI/JFrame_StudentAdd.java</file>
+            <file>file:/home/dovud/NetBeansProjects/DrivingSchool/src/drivingschool/GUI/Menu.java</file>
             <file>file:/home/dovud/NetBeansProjects/DrivingSchool/src/drivingschool/GUI/JFrame_AgreementAdd.java</file>
+            <file>file:/home/dovud/NetBeansProjects/DrivingSchool/src/drivingschool/repo/StudentRepo.java</file>
+            <file>file:/home/dovud/NetBeansProjects/DrivingSchool/src/drivingschool/entity/Student.java</file>
             <file>file:/home/dovud/NetBeansProjects/DrivingSchool/src/drivingschool/GUI/JFrame_AgreementList.java</file>
             <file>file:/home/dovud/NetBeansProjects/DrivingSchool/src/drivingschool/GUI/JFrame_LessonAdd.java</file>
             <file>file:/home/dovud/NetBeansProjects/DrivingSchool/src/drivingschool/GUI/JFrame_StudentList.java</file>

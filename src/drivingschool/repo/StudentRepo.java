@@ -1,11 +1,14 @@
 package drivingschool.repo;
 
+import java.sql.Connection;
 import drivingschool.Helpers;
 import drivingschool.entity.Lesson;
 import drivingschool.entity.Student;
 
 import javax.swing.*;
 import java.io.*;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,52 +18,65 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class StudentRepo {
+
+    Connection conn;
     public static List students;
-    public static void main(String[] args) throws ParseException {
-        students = new ArrayList();
-        testStudent();
-        System.out.printf("\n");
+
+    public void main(String[] args) throws ParseException, ClassNotFoundException, SQLException {
+        connect();
+
     }
 
-    public static void testStudent() throws ParseException {
-        try {
-            System.out.printf("\n Tests for Class Student\n\n");
-            System.out.printf("\n addStudent() ...\n");
-            addStudent("116229", "Ali", "Faisal", "Turkey ", "1993-06-19", "beginner", "12548612", "2025-05-12");
-            addStudent("186731", "Ayse", "Kemaller", "Cyprus", "1998-09-28", "intermediate", "12546845", "2024-02-10");
-            addStudent("168337", "Muhammad", "Fahrad", "Iran", "1996-05-30", "on hold", "32156879", "2025-12-04");
-            addStudent("189222", "Fatima ", "Reshad", "Syria", "1998-07-22", "beginner", "18855312", "2026-04-28");
+    public void connect() throws SQLException, ClassNotFoundException {
+        String url, user, pw;
+        url = "jdbc:mysql://localhost:3306/drivingschool";
+        user = "root";
+        pw = "password";
 
-            listStudents();
-            System.out.printf("\n\n\n editStudent()\n");
-            editStudent("186731", "Ayse", "Kemaller", "Turkey", "1998-09-28", "intermediate", "1232456", "2025-10-22");
-            listStudents();
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        conn = (Connection) DriverManager.getConnection(url, user, pw);
+        System.out.println("Connected !");
 
-            System.out.printf("\n\n Backing up...\n");
-            backupStudent();
-
-            System.out.printf("\n deleteStudent() whose std ID is 189222\n");
-            deleteStudent("189222");
-            listStudents();
-
-            System.out.printf("\n\n\n Retrieving backed up data...\n");
-            retrieveStudent();
-            listStudents();
-
-            System.out.printf("\n\n\n ListGrades()\n");
-            listGrades();
-
-        } catch (IOException | ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "Error");
-        }
     }
 
+//    public static void testStudent() throws ParseException {
+//        try {
+//            System.out.printf("\n Tests for Class Student\n\n");
+//            System.out.printf("\n addStudent() ...\n");
+//            addStudent("Ali", "Faisal", "Turkey ", "1993-06-19", "beginner", "12548612", "2025-05-12");
+//            addStudent("Ayse", "Kemaller", "Cyprus", "1998-09-28", "intermediate", "12546845", "2024-02-10");
+//            addStudent("Muhammad", "Fahrad", "Iran", "1996-05-30", "on hold", "32156879", "2025-12-04");
+//            addStudent("Fatima ", "Reshad", "Syria", "1998-07-22", "beginner", "18855312", "2026-04-28");
+//
+//            listStudents();
+//            System.out.printf("\n\n\n editStudent()\n");
+//            editStudent("186731", "Ayse", "Kemaller", "Turkey", "1998-09-28", "intermediate", "1232456", "2025-10-22");
+//            listStudents();
+//
+//            System.out.printf("\n\n Backing up...\n");
+//            backupStudent();
+//
+//            System.out.printf("\n deleteStudent() whose std ID is 189222\n");
+//            deleteStudent("189222");
+//            listStudents();
+//
+//            System.out.printf("\n\n\n Retrieving backed up data...\n");
+//            retrieveStudent();
+//            listStudents();
+//
+//            System.out.printf("\n\n\n ListGrades()\n");
+//            listGrades();
+//
+//        } catch (IOException | ClassNotFoundException e) {
+//            JOptionPane.showMessageDialog(null, "Error");
+//        }
+//    }
     public static void populateData() {
         try {
-            addStudent("116229", "Ali", "Faisal", "Turkey ", "1993-06-19", "beginner", "12548612", "2025-05-12");
-            addStudent("186731", "Ayse", "Kemaller", "Cyprus", "1998-09-28", "intermediate", "12546845", "2024-02-10");
-            addStudent("168337", "Muhammad", "Fahrad", "Iran", "1996-05-30", "on hold", "32156879", "2025-12-04");
-            addStudent("189222", "Fatima ", "Reshad", "Syria", "1998-07-22", "beginner", "18855312", "2026-04-28");
+            addStudent("Ali", "Faisal", "Turkey ", "1993-06-19", "beginner", "12548612", "2025-05-12");
+            addStudent("Ayse", "Kemaller", "Cyprus", "1998-09-28", "intermediate", "12546845", "2024-02-10");
+            addStudent("Muhammad", "Fahrad", "Iran", "1996-05-30", "on hold", "32156879", "2025-12-04");
+            addStudent("Fatima ", "Reshad", "Syria", "1998-07-22", "beginner", "18855312", "2026-04-28");
             backupStudent();
         } catch (IOException ex) {
             java.util.logging.Logger.getLogger(PaymentRepo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
@@ -75,8 +91,9 @@ public class StudentRepo {
         Helpers.writeFile(students, "backups/students.dat");
     }
 
-    public static void addStudent(String stdNo, String name, String surname, String nationality, String dob, String status, String licenceNo, String licenceExp) {
-        Student st = new Student(stdNo, name, surname, nationality, LocalDate.parse(dob), status, LocalDate.now(), licenceNo, LocalDate.parse(licenceExp));
+    public static void addStudent(String name, String surname, String nationality, String dob, String status, String licenceNo, String licenceExp) {
+//        Student st = new Student(name, surname, nationality, LocalDate.parse(dob), status, LocalDate.now(), licenceNo, LocalDate.parse(licenceExp));
+        Student st = new Student(name, surname, nationality, dob, status, licenceExp, licenceNo, LocalDate.now().toString());
         students.add(st);
     }
 
@@ -95,10 +112,10 @@ public class StudentRepo {
             st.setName(name);
             st.setSurname(surname);
             st.setNationality(nationality);
-            st.setDOB(LocalDate.parse(dob));
+            st.setDOB(dob);
             st.setStatus(status);
             st.setLicenceNo(licenceNo);
-            st.setLicenceExpire(LocalDate.parse(licenceExpire));
+            st.setLicenceExpire(licenceExpire);
         }
     }
 
@@ -175,17 +192,38 @@ public class StudentRepo {
         }
     }
 
-    public static String getNameByID(String id) {
+    public static String getNameByID(int id) {
         Student s;
 
         Iterator<Student> itr = students.iterator();
         while (itr.hasNext()) {
             s = itr.next();
-            if (id.trim().equals(s.getID().trim())) {
+            if (id == s.getID()) {
                 return s.getName() + " " + s.getSurname();
             }
         }
         return "";
     }
-   
+
+    public void addStudent2(String name, String surname, String nationality, String dob, String status, String licenceNo, String licenceExp) {
+        try {
+            Student st = new Student(name, surname, nationality, dob, status, LocalDate.now().toString(), licenceNo,licenceExp);
+            students.add(st);
+            var q = "insert into student(first_name, last_name, nationality, dob, licence_no, licence_expire) Values (?,?,?,?,?,?)";
+            var pstmt = conn.prepareStatement(q);
+            pstmt.setString(1, name);
+            pstmt.setString(2, surname);
+            pstmt.setString(3, nationality);
+            pstmt.setString(4, dob);
+            pstmt.setInt(5, Integer.parseInt(licenceNo));
+            pstmt.setString(6, licenceExp);
+            pstmt.setString(7, status);
+
+            System.out.println(pstmt);
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentRepo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }

@@ -141,9 +141,9 @@ public class AgreementRepo {
             Iterator<Student> stdItr = students.iterator();
             while (stdItr.hasNext()) {
                 student = stdItr.next();
-                if (student.getID().equals(agreement.getStudentID())) {
-                    System.out.print(student.getName() + " " + student.getSurname());
-                }
+//                if (student.getID().equals(agreement.getStudentID())) {
+//                    System.out.print(student.getName() + " " + student.getSurname());
+//                }
             }
         }
         Helpers.drawLine(Helpers.LARGE_LINE);

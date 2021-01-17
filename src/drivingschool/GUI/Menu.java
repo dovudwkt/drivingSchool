@@ -270,7 +270,13 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_quitBtnActionPerformed
 
     private void addStudentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStudentBtnActionPerformed
-        new JFrame_StudentAdd().show();
+        try {
+            new JFrame_StudentAdd().show();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_addStudentBtnActionPerformed
 
     private void listStudentsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listStudentsBtnActionPerformed

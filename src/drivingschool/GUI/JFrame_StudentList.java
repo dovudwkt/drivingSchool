@@ -6,25 +6,19 @@
 package drivingschool.GUI;
 
 import java.sql.Connection;
-import com.mysql.cj.jdbc.ConnectionImpl;
-import com.mysql.cj.jdbc.PreparedStatementWrapper;
-import com.mysql.cj.xdevapi.Statement;
-
-import java.io.IOException;
 import drivingschool.entity.Student;
-import com.mysql.jdbc.Driver;
-//import com.sun.jdi.connect.spi.Connection;
-//import com.mysql.jdbc.PreparedStatement;
-import java.util.ArrayList;
 import java.sql.DriverManager;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 import drivingschool.repo.StudentRepo;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -33,14 +27,18 @@ import javax.swing.table.DefaultTableModel;
  */
 public class JFrame_StudentList extends javax.swing.JFrame {
 
-//    private ConnectionImpl dbconn;
+    Connection conn;
+    List students;
+
     /**
      * Creates new form JFrame_StudentList
      */
     public JFrame_StudentList() throws SQLException, ClassNotFoundException {
         initComponents();
         connect();
-//        loadTable();
+        students = new ArrayList();
+
+//        System.out.println(getStudents());
     }
 
     public void connect() throws SQLException, ClassNotFoundException {
@@ -50,29 +48,43 @@ public class JFrame_StudentList extends javax.swing.JFrame {
         pw = "password";
 
         Class.forName("com.mysql.cj.jdbc.Driver");
-        var conn = DriverManager.getConnection(url, user, pw);
-        var stmt = conn.createStatement();
+        conn = DriverManager.getConnection(url, user, pw);
         System.out.println("Connected !");
 
-        var pstmt = conn.prepareStatement("select * from student");
-        var rs = pstmt.executeQuery();
+    }
 
-        DefaultTableModel model = (DefaultTableModel) stdTable.getModel();
-        model.setRowCount(0);
+    public List<Student> getStudents() {
+        List students = new ArrayList();
 
-        while (rs.next()) {
-            int id = rs.getInt("id");
-            String name = rs.getString("first_name");
-            String surname = rs.getString("last_name");
-            String email = rs.getString("email");
-            Date birthday = rs.getDate("dob");
-            Date registerDate = rs.getDate("register_date");
-            int licenceNo = rs.getInt("licence_no");
-            Date licenceExp = rs.getDate("licence_expire");
-            String status = rs.getString("status");
+        try {
+            var pstmt = conn.prepareStatement("select * from student");
+            var rs = pstmt.executeQuery();
 
-            model.addRow(new Object[]{id, name, surname, email, birthday, licenceNo, licenceExp, status, registerDate});
+            DefaultTableModel model = (DefaultTableModel) stdTable.getModel();
+            model.setRowCount(0);
+            Student s;
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("first_name");
+                String surname = rs.getString("last_name");
+                String nationality = rs.getString("nationality");
+                String birthday = rs.getString("dob");
+                String registerDate = rs.getString("register_date");
+                String licenceNo = rs.getString("licence_no");
+                String licenceExp = rs.getString("licence_expire");
+                String status = rs.getString("status");
+
+                s = new Student(id, name, surname, nationality, birthday, status, licenceExp, licenceNo, registerDate);
+                students.add(s);
+
+                model.addRow(new Object[]{id, name, surname, birthday, licenceNo, licenceExp, status, registerDate});
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(JFrame_StudentList.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        return students;
     }
 
     /**
@@ -84,11 +96,8 @@ public class JFrame_StudentList extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
-        studentsList = new javax.swing.JList<>();
         editBtn = new javax.swing.JButton();
         deleteBtn = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         stdTable = new javax.swing.JTable();
 
@@ -99,15 +108,6 @@ public class JFrame_StudentList extends javax.swing.JFrame {
                 formWindowActivated(evt);
             }
         });
-
-        studentsList.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
-        studentsList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        studentsList.setName("jList_Students"); // NOI18N
-        jScrollPane2.setViewportView(studentsList);
 
         editBtn.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         editBtn.setLabel("Edit Student");
@@ -127,68 +127,53 @@ public class JFrame_StudentList extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setBackground(new java.awt.Color(102, 0, 0));
-        jLabel1.setFont(new java.awt.Font("Monospaced", 0, 11)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(102, 0, 0));
-        jLabel1.setText("jLabel1");
-        jLabel1.setName("jLabel_Captions"); // NOI18N
-
         stdTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "Name", "Surname", "Email", "Birthday", "Licence No", "Licence Expire", "Status", "Regiser Date"
+                "ID", "Name", "Surname", "Birthday", "Licence No", "Licence Expire", "Status", "Regiser Date"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
+        stdTable.setToolTipText("");
+        stdTable.setRowHeight(30);
         jScrollPane1.setViewportView(stdTable);
+        stdTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(382, 382, 382)
-                .addComponent(editBtn)
-                .addGap(18, 18, 18)
-                .addComponent(deleteBtn)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(570, 570, 570)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 829, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 824, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(249, 249, 249)
+                        .addComponent(editBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(deleteBtn)))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1)
-                        .addGap(9, 9, 9)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(editBtn)
                     .addComponent(deleteBtn))
-                .addGap(47, 47, 47))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -199,24 +184,33 @@ public class JFrame_StudentList extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowActivated
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
-        int sel = studentsList.getSelectedIndex();
-        if (sel >= 0) {
-            Student st;
-            st = (Student) StudentRepo.students.get(sel);
+        try {
+            var r = stdTable.getSelectedRow();
+            var c = 0;
+            var v = stdTable.getValueAt(r, c);
+
             JFrame_StudentAdd sa = new JFrame_StudentAdd();
             sa.edit_student = true;
-            sa.st_row = sel;
+            sa.selected_id = (int) v;
             sa.show();
-            //sa.st_row = st;
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(JFrame_StudentList.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(JFrame_StudentList.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_editBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
-        int sel = studentsList.getSelectedIndex();
-        if (sel >= 0) {
-            StudentRepo.students.remove(sel);
-            refresh_StudentList();
-            JOptionPane.showMessageDialog(null, "Selected Student has been deleted Successfully");
+        try {
+            var r = stdTable.getSelectedRow();
+            var c = 0;
+            int selected_id = (int) stdTable.getValueAt(r, c);
+            
+            if (deleteStudent(selected_id) > 0) {
+                JOptionPane.showMessageDialog(null, "Selected Student has been deleted Successfully");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(JFrame_StudentList.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_deleteBtnActionPerformed
 
@@ -265,11 +259,8 @@ public class JFrame_StudentList extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteBtn;
     private javax.swing.JButton editBtn;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable stdTable;
-    private javax.swing.JList<String> studentsList;
     // End of variables declaration//GEN-END:variables
 
     public String fixedLengthString(String str, int flength) {
@@ -285,45 +276,15 @@ public class JFrame_StudentList extends javax.swing.JFrame {
     }
 
     public void refresh_StudentList() {
-        List students = StudentRepo.students;
-        if (students == null) {
-            try {
-                StudentRepo.retrieveStudent();
-                students = StudentRepo.students;
-            } catch (IOException | ClassNotFoundException ex) {
-                Logger.getLogger(JFrame_StudentList.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        students = getStudents();
+    }
 
-        Student st;
-        String cp;
-        studentsList.removeAll();
-
-        String[] arr_students = new String[students.size()];
-        cp = "";
-        cp += fixedLengthString("ID", 10) + "|"
-                + fixedLengthString("Name", 15) + "|"
-                + fixedLengthString("Surname", 15) + "|"
-                + fixedLengthString("Nationality", 15) + "|"
-                + fixedLengthString("Birthday", 15) + "|"
-                + fixedLengthString("Register at", 15) + "|"
-                + fixedLengthString("Status", 15) + "|"
-                + fixedLengthString("Licence no", 15) + "|"
-                + fixedLengthString("Licence expire", 15);
-        jLabel1.setText(cp);
-
-        for (int i = 0; i < students.size(); i++) {
-            st = (Student) students.get(i);
-            arr_students[i] = fixedLengthString(st.getID().trim(), 10) + "|"
-                    + fixedLengthString(st.getName().trim(), 15) + "|"
-                    + fixedLengthString(st.getSurname().trim(), 15) + "|"
-                    + fixedLengthString(st.getNationality().trim(), 15) + "|"
-                    + fixedLengthString(st.getDOB().toString(), 15) + "|"
-                    + fixedLengthString(st.getRegisterDate().toString(), 15) + "|"
-                    + fixedLengthString(st.getStatus().trim(), 15) + "|"
-                    + fixedLengthString(st.getLicenceNo(), 15) + "|"
-                    + fixedLengthString(st.getLicenceExpire().toString(), 15);
-        }
-        studentsList.setListData(arr_students);
+    public int deleteStudent(int id) throws SQLException {
+        var q = "delete from student WHERE id = ?";
+        PreparedStatement pstmt = conn.prepareStatement(q);
+        pstmt.setInt(1, id);
+        int result = pstmt.executeUpdate();
+        System.out.println("Number of records affected :: " + result);
+        return result;
     }
 }

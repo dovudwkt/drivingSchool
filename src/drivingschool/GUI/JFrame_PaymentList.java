@@ -229,7 +229,7 @@ public class JFrame_PaymentList extends javax.swing.JFrame {
             payment = (Payment) payments.get(i);
             arr_payments[i] = fixedLengthString(payment.getID().trim(), 10) + "|"
 //                    + fixedLengthString(payment.getStudentID().trim(), 15) + "|"
-                    + fixedLengthString(StudentRepo.getNameByID(payment.getStudentID()).trim(), 22) + "|"
+                    + fixedLengthString(StudentRepo.getNameByID(Integer.valueOf(payment.getStudentID()) ), 22) + "|"
                     + fixedLengthString(Double.toString(payment.getAmount()), 15) + "|"
                     + fixedLengthString(payment.getComment().trim(), 30) + "|"
                     + fixedLengthString(payment.getTimestamp().toString(), 30);

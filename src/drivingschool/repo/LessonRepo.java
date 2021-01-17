@@ -144,13 +144,13 @@ public class LessonRepo {
             }
 
             Iterator<Student> studentsItr = students.iterator();
-            while (studentsItr.hasNext()) {
-                student = studentsItr.next();
-                if (student.getID().equals(lesson.getStudentID())) {
-                    System.out.print(student.getName() + " " + student.getSurname());
-                    break;
-                }
-            }
+//            while (studentsItr.hasNext()) {
+//                student = studentsItr.next();
+//                if (student.getID().equals(lesson.getStudentID())) {
+//                    System.out.print(student.getName() + " " + student.getSurname());
+//                    break;
+//                }
+//            }
         }
         Helpers.drawLine(Helpers.LARGE_LINE);
     }
