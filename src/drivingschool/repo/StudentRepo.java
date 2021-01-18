@@ -1,5 +1,6 @@
 package drivingschool.repo;
 
+import drivingschool.GUI.JFrame_StudentList;
 import java.sql.Connection;
 import drivingschool.Helpers;
 import drivingschool.entity.Lesson;
@@ -207,7 +208,7 @@ public class StudentRepo {
 
     public void addStudent2(String name, String surname, String nationality, String dob, String status, String licenceNo, String licenceExp) {
         try {
-            Student st = new Student(name, surname, nationality, dob, status, LocalDate.now().toString(), licenceNo,licenceExp);
+            Student st = new Student(name, surname, nationality, dob, status, LocalDate.now().toString(), licenceNo, licenceExp);
             students.add(st);
             var q = "insert into student(first_name, last_name, nationality, dob, licence_no, licence_expire) Values (?,?,?,?,?,?)";
             var pstmt = conn.prepareStatement(q);
@@ -224,6 +225,37 @@ public class StudentRepo {
         } catch (SQLException ex) {
             Logger.getLogger(StudentRepo.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public List<Student> getStudents() {
+        List students = new ArrayList();
+
+        try {
+            var pstmt = conn.prepareStatement("select * from student");
+            var rs = pstmt.executeQuery();
+
+            Student s;
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("first_name");
+                String surname = rs.getString("last_name");
+                String nationality = rs.getString("nationality");
+                String birthday = rs.getString("dob");
+                String registerDate = rs.getString("register_date");
+                String licenceNo = rs.getString("licence_no");
+                String licenceExp = rs.getString("licence_expire");
+                String status = rs.getString("status");
+
+                s = new Student(id, name, surname, nationality, birthday, status, licenceExp, licenceNo, registerDate);
+                students.add(s);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(JFrame_StudentList.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return students;
     }
 
 }

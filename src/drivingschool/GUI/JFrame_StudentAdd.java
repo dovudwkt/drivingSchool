@@ -8,14 +8,10 @@ package drivingschool.GUI;
 import java.sql.Connection;
 
 import drivingschool.repo.StudentRepo;
-import java.sql.ResultSet;
 import drivingschool.entity.Student;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import drivingschool.repo.StudentModel;
+
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -31,27 +27,18 @@ public class JFrame_StudentAdd extends javax.swing.JFrame {
     public Boolean edit_student;
     public int st_row;
     public int selected_id;
+    private StudentModel sModel;
 
     /**
      * Creates new form JFrame_StudentAdd
      */
     public JFrame_StudentAdd() throws ClassNotFoundException, SQLException {
         initComponents();
-        connect();
         edit_student = false;
+        sModel = new StudentModel();
     }
 
-    public void connect() throws SQLException, ClassNotFoundException {
-        String url, user, pw;
-        url = "jdbc:mysql://localhost:3306/drivingschool";
-        user = "root";
-        pw = "password";
-
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        conn = (Connection) DriverManager.getConnection(url, user, pw);
-        System.out.println("Connected !");
-
-    }
+  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -281,10 +268,10 @@ public class JFrame_StudentAdd extends javax.swing.JFrame {
             String licenceExp = licenceExpTextField.getText().trim();
 
             if (!edit_student) {
-                addStudent(name, surname, nationality, dob, status, licenceNo, licenceExp);
+                sModel.addStudent(name, surname, nationality, dob, status, licenceNo, licenceExp);
             } else {
                 int id = Integer.valueOf(stdIDTextField.getText());
-                editStudent(id, name, surname, nationality, dob, status, licenceNo, licenceExp);
+                sModel.editStudent(id, name, surname, nationality, dob, status, licenceNo, licenceExp);
                 JOptionPane.showMessageDialog(null, "The Selected Student Data is Edited Successfully");
             }
             StudentRepo.listStudents();
@@ -296,8 +283,8 @@ public class JFrame_StudentAdd extends javax.swing.JFrame {
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         if (edit_student) {
-//            Student st = (Student) StudentRepo.students.get(st_row);
-            Student st = getStudentById(selected_id);
+            Student st = sModel.getStudentById(selected_id);
+
             stdIDTextField.setText(String.valueOf(st.getID()));
             nameTextField.setText(st.getName());
             surnameTextField.setText(st.getSurname());
@@ -306,10 +293,6 @@ public class JFrame_StudentAdd extends javax.swing.JFrame {
             birthdayTextField.setText(st.getDOB());
             licenceExpTextField.setText(st.getLicenceExpire());
             licenceNoTextField.setText(st.getLicenceNo());
-
-//            if (st.getGender().equals("Male")) {
-//                maleRadioButton.setSelected(true);
-//            }
         }
     }//GEN-LAST:event_formWindowActivated
 
@@ -392,79 +375,4 @@ public class JFrame_StudentAdd extends javax.swing.JFrame {
     private javax.swing.JLabel surnameLabel;
     private javax.swing.JTextField surnameTextField;
     // End of variables declaration//GEN-END:variables
-
-    private void addStudent(String name, String surname, String nationality, String dob, String status, String licenceNo, String licenceExp) {
-        try {
-            var q = "insert into student(first_name, last_name, nationality, dob, licence_no, licence_expire, status, register_date) Values (?,?,?,?,?,?,?,?)";
-            PreparedStatement pstmt = conn.prepareStatement(q);
-            pstmt.setString(1, name);
-            pstmt.setString(2, surname);
-            pstmt.setString(3, nationality);
-            pstmt.setString(4, dob);
-            pstmt.setString(5, licenceNo);
-            pstmt.setString(6, licenceExp);
-            pstmt.setString(7, status);
-            pstmt.setString(8, LocalDate.now().format(DateTimeFormatter.ISO_DATE));
-
-            System.out.println(pstmt);
-            pstmt.executeUpdate();
-            JOptionPane.showMessageDialog(null,
-                    "The New Student Data is Recorded Successfully");
-        } catch (SQLException ex) {
-            Logger.getLogger(JFrame_StudentAdd.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private void editStudent(int id, String name, String surname, String nationality, String dob, String status, String licenceNo, String licenceExp) {
-        try {
-            var q = "update student set first_name = ?, last_name = ?, nationality = ?, dob = ?, licence_no = ?, licence_expire = ?, status = ?  WHERE id = ?";
-            PreparedStatement pstmt = conn.prepareStatement(q);
-            pstmt.setString(1, name);
-            pstmt.setString(2, surname);
-            pstmt.setString(3, nationality);
-            pstmt.setString(4, dob);
-            pstmt.setString(5, licenceNo);
-            pstmt.setString(6, licenceExp);
-            pstmt.setString(7, status);
-            pstmt.setInt(8, id);
-
-            System.out.println(pstmt);
-            pstmt.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(JFrame_StudentAdd.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private Student getStudentById(int stdId) {
-        Student std = null;
-
-        try {
-            var q = "Select * from student WHERE id = ?";
-            PreparedStatement pstmt = conn.prepareStatement(q);
-            pstmt.setInt(1, stdId);
-
-            ResultSet rs = pstmt.executeQuery();
-
-            int id;
-            String name, surname, nationality, dob, licenceNo, licenceExp, registerDate, status;
-
-            while (rs.next()) {
-                id = rs.getInt("id");
-                name = rs.getString("first_name");
-                surname = rs.getString("last_name");
-                nationality = rs.getString("nationality");
-                dob = rs.getString("dob");
-                licenceNo = rs.getString("licence_no");
-                licenceExp = rs.getString("licence_expire");
-                registerDate = rs.getString("register_date");
-                status = rs.getString("status");
-
-                std = new Student(id, name, surname, nationality, dob, status, licenceExp, licenceNo, registerDate);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(JFrame_StudentAdd.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return std;
-    }
 }

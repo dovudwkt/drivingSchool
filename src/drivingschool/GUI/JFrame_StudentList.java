@@ -5,19 +5,16 @@
  */
 package drivingschool.GUI;
 
-import java.sql.Connection;
 import drivingschool.entity.Student;
-import java.sql.DriverManager;
+import drivingschool.repo.StudentModel;
+
+import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
-import drivingschool.repo.StudentRepo;
-import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -29,62 +26,15 @@ public class JFrame_StudentList extends javax.swing.JFrame {
 
     Connection conn;
     List students;
+    private StudentModel sModel;
 
     /**
      * Creates new form JFrame_StudentList
      */
     public JFrame_StudentList() throws SQLException, ClassNotFoundException {
         initComponents();
-        connect();
         students = new ArrayList();
-
-//        System.out.println(getStudents());
-    }
-
-    public void connect() throws SQLException, ClassNotFoundException {
-        String url, user, pw;
-        url = "jdbc:mysql://localhost:3306/drivingschool";
-        user = "root";
-        pw = "password";
-
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        conn = DriverManager.getConnection(url, user, pw);
-        System.out.println("Connected !");
-
-    }
-
-    public List<Student> getStudents() {
-        List students = new ArrayList();
-
-        try {
-            var pstmt = conn.prepareStatement("select * from student");
-            var rs = pstmt.executeQuery();
-
-            DefaultTableModel model = (DefaultTableModel) stdTable.getModel();
-            model.setRowCount(0);
-            Student s;
-
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String name = rs.getString("first_name");
-                String surname = rs.getString("last_name");
-                String nationality = rs.getString("nationality");
-                String birthday = rs.getString("dob");
-                String registerDate = rs.getString("register_date");
-                String licenceNo = rs.getString("licence_no");
-                String licenceExp = rs.getString("licence_expire");
-                String status = rs.getString("status");
-
-                s = new Student(id, name, surname, nationality, birthday, status, licenceExp, licenceNo, registerDate);
-                students.add(s);
-
-                model.addRow(new Object[]{id, name, surname, birthday, licenceNo, licenceExp, status, registerDate});
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(JFrame_StudentList.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return students;
+        sModel = new StudentModel();
     }
 
     /**
@@ -180,7 +130,7 @@ public class JFrame_StudentList extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        refresh_StudentList();
+        loadTable();
     }//GEN-LAST:event_formWindowActivated
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
@@ -205,8 +155,8 @@ public class JFrame_StudentList extends javax.swing.JFrame {
             var r = stdTable.getSelectedRow();
             var c = 0;
             int selected_id = (int) stdTable.getValueAt(r, c);
-            
-            if (deleteStudent(selected_id) > 0) {
+
+            if (sModel.deleteStudent(selected_id) > 0) {
                 JOptionPane.showMessageDialog(null, "Selected Student has been deleted Successfully");
             }
         } catch (SQLException ex) {
@@ -263,28 +213,20 @@ public class JFrame_StudentList extends javax.swing.JFrame {
     private javax.swing.JTable stdTable;
     // End of variables declaration//GEN-END:variables
 
-    public String fixedLengthString(String str, int flength) {
-        if (str == null) {
-            str = " ";
+    public void loadTable() {
+        DefaultTableModel model = (DefaultTableModel) stdTable.getModel();
+        model.setRowCount(0);
+        StudentModel sModal = new StudentModel();
+        students = sModal.getStudents();
+        System.out.println(students);
+
+        Iterator<Student> itr = students.iterator();
+        while (itr.hasNext()) {
+            Student s = itr.next();
+
+            model.addRow(new Object[]{s.getID(), s.getName(), s.getSurname(), s.getDOB(), s.getLicenceNo(), s.getLicenceExpire(), s.getStatus(), s.getRegisterDate()});
         }
-        String tstr = "";
-        for (int i = 0; i < (flength - str.length()); i++) {
-            tstr += " ";
-        }
-        tstr += str;
-        return tstr;
+
     }
 
-    public void refresh_StudentList() {
-        students = getStudents();
-    }
-
-    public int deleteStudent(int id) throws SQLException {
-        var q = "delete from student WHERE id = ?";
-        PreparedStatement pstmt = conn.prepareStatement(q);
-        pstmt.setInt(1, id);
-        int result = pstmt.executeUpdate();
-        System.out.println("Number of records affected :: " + result);
-        return result;
-    }
 }
