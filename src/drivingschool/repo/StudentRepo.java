@@ -181,7 +181,7 @@ public class StudentRepo {
                 Iterator<Lesson> lessonItr = lessons.iterator();
                 while (lessonItr.hasNext()) {
                     lesson = lessonItr.next();
-                    if (lesson.getStudentID().equals(st.getID())) {
+                    if (lesson.getStudentID() == st.getID()) {
                         System.out.printf("%-10s %-15s %-10s", lesson.getLessonNo(), lesson.getLessonDate(), lesson.getGrade());
                         break;
                     }

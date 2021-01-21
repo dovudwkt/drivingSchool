@@ -42,15 +42,11 @@ public class DrivingSchool {
     }
 
     public static void populateAllData() {
-        try {
-            AgreementRepo.populateData();
-            LessonRepo.populateData();
-            PackageRepo.populateData();
-            PaymentRepo.populateData();
-            StudentRepo.populateData();
-        } catch (IOException | ClassNotFoundException ex) {
-            Logger.getLogger(DrivingSchool.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        AgreementRepo.populateData();
+        //            LessonRepo.populateData();
+        PackageRepo.populateData();
+        PaymentRepo.populateData();
+        StudentRepo.populateData();
     }
 
 }

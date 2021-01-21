@@ -8,6 +8,7 @@ package drivingschool.GUI;
 import drivingschool.repo.LessonRepo;
 
 import drivingschool.entity.Lesson;
+import drivingschool.repo.LessonModel;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +21,8 @@ import javax.swing.JOptionPane;
 public class JFrame_LessonAdd extends javax.swing.JFrame {
 
     public Boolean isEdit;
-    public int st_row;
+    public int selected_id;
+    private final LessonModel lModel;
 
     /**
      * Creates new form JFrame_StudentAdd
@@ -28,6 +30,8 @@ public class JFrame_LessonAdd extends javax.swing.JFrame {
     public JFrame_LessonAdd() {
         initComponents();
         isEdit = false;
+        lModel = new LessonModel();
+
     }
 
     /**
@@ -244,24 +248,25 @@ public class JFrame_LessonAdd extends javax.swing.JFrame {
                 && !endTimeTextField.getText().trim().isEmpty()
                 && !lessonNoTextField.getText().trim().isEmpty()
                 && !gradeTextField.getText().trim().isEmpty()
-                && !IDTextField.getText().trim().isEmpty()
                 && !startTimeTextField.getText().trim().isEmpty()) {
-            String id = IDTextField.getText().trim();
-            String std_no = stdIDTextField.getText().trim();
-            String pkg_id = packageIDTextField.getText().trim();
-            String lesson_no = lessonNoTextField.getText().trim();
+            int std_no = Integer.valueOf(stdIDTextField.getText().trim());
+            int pkg_id = Integer.valueOf(packageIDTextField.getText().trim());
+            int lesson_no = Integer.valueOf(lessonNoTextField.getText().trim());
             String date = dateTextField.getText().trim();
             String end_time = endTimeTextField.getText().trim();
             String start_time = startTimeTextField.getText().trim();
             String grade = gradeTextField.getText().trim();
 
             if (!isEdit) {
-                LessonRepo.addLesson(id, pkg_id, std_no, Integer.parseInt(lesson_no), date, start_time, end_time, Integer.parseInt(grade));
+                lModel.addLesson(pkg_id, std_no, lesson_no, date, start_time, end_time, grade);
                 JOptionPane.showMessageDialog(null,
                         "The New Lesson Data is Recorded Successfully");
             } else {
-                LessonRepo.editLesson(id, pkg_id, std_no, Integer.parseInt(lesson_no), date, start_time, end_time, Integer.parseInt(grade));
-                JOptionPane.showMessageDialog(null, "The Selected Lesson Data is Edited Successfully");
+                if (!IDTextField.getText().trim().isEmpty()) {
+                    int id = Integer.valueOf(IDTextField.getText().trim());
+                    lModel.editLesson(id, pkg_id, std_no, lesson_no, date, start_time, end_time, grade);
+                    JOptionPane.showMessageDialog(null, "The Selected Lesson Data is Edited Successfully");
+                }
             }
             try {
                 LessonRepo.listLessons();
@@ -278,16 +283,17 @@ public class JFrame_LessonAdd extends javax.swing.JFrame {
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         if (isEdit) {
-            Lesson st = (Lesson) LessonRepo.lessons.get(st_row);
-            IDTextField.setText(st.getID());
-            stdIDTextField.setText(st.getStudentID());
-            packageIDTextField.setText(st.getPackageID());
+            System.out.println("selected id: " + selected_id);
+            Lesson st = lModel.getLessonById(selected_id);
+            
+            IDTextField.setText(String.valueOf(st.getID()));
+            stdIDTextField.setText(String.valueOf(st.getStudentID()));
+            packageIDTextField.setText(String.valueOf(st.getPackageID()));
             lessonNoTextField.setText(String.valueOf(st.getLessonNo()));
-            dateTextField.setText(st.getLessonDate().toString());
+            dateTextField.setText(st.getLessonDate());
             startTimeTextField.setText(st.getStartTime());
             endTimeTextField.setText(st.getEndTime());
-            gradeTextField.setText(Integer.toString(st.getGrade()));
-
+            gradeTextField.setText(st.getGrade());
         }
     }//GEN-LAST:event_formWindowActivated
 

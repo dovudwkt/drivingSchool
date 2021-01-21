@@ -7,15 +7,19 @@ package drivingschool.GUI;
 
 import java.io.IOException;
 import drivingschool.entity.Agreement;
+import drivingschool.repo.AgreementModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
+import java.sql.SQLException;
 import drivingschool.repo.AgreementRepo;
 import drivingschool.repo.PackageRepo;
 import java.util.Date;
+import java.util.Iterator;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -23,11 +27,16 @@ import java.util.Date;
  */
 public class JFrame_AgreementList extends javax.swing.JFrame {
 
+    List agreements;
+    private AgreementModel aModel;
+
     /**
      * Creates new form JFrame_StudentList
      */
     public JFrame_AgreementList() {
         initComponents();
+        agreements = new ArrayList();
+        aModel = new AgreementModel();
     }
 
     /**
@@ -39,11 +48,10 @@ public class JFrame_AgreementList extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
-        agreementsList = new javax.swing.JList<>();
         editBtn = new javax.swing.JButton();
         deleteBtn = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        agreementTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Select and Double Click The Row To Edit");
@@ -52,15 +60,6 @@ public class JFrame_AgreementList extends javax.swing.JFrame {
                 formWindowActivated(evt);
             }
         });
-
-        agreementsList.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
-        agreementsList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        agreementsList.setName("jList_Students"); // NOI18N
-        jScrollPane2.setViewportView(agreementsList);
 
         editBtn.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         editBtn.setText("Edit agreement");
@@ -80,11 +79,23 @@ public class JFrame_AgreementList extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setBackground(new java.awt.Color(102, 0, 0));
-        jLabel1.setFont(new java.awt.Font("Monospaced", 0, 11)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(102, 0, 0));
-        jLabel1.setText("jLabel1");
-        jLabel1.setName("jLabel_Captions"); // NOI18N
+        agreementTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Student", "Package", "Start Date"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(agreementTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -96,23 +107,17 @@ public class JFrame_AgreementList extends javax.swing.JFrame {
                         .addGap(139, 139, 139)
                         .addComponent(editBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(deleteBtn)
-                        .addGap(0, 159, Short.MAX_VALUE))
+                        .addComponent(deleteBtn))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2))))
-                .addContainerGap())
+                        .addGap(70, 70, 70)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(editBtn)
                     .addComponent(deleteBtn))
@@ -123,27 +128,32 @@ public class JFrame_AgreementList extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        refresh_AgreementList();
+        loadTable();
     }//GEN-LAST:event_formWindowActivated
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
-        int sel = agreementsList.getSelectedIndex();
-        if (sel >= 0) {
-            Agreement payment;
-            payment = (Agreement) AgreementRepo.agreements.get(sel);
-            JFrame_AgreementAdd sa = new JFrame_AgreementAdd();
-            sa.isEdit = true;
-            sa.st_row = sel;
-            sa.show();
-        }
+        var r = agreementTable.getSelectedRow();
+        var c = 0;
+        var agtID = (int) agreementTable.getValueAt(r, c);
+
+        JFrame_AgreementAdd sa = new JFrame_AgreementAdd();
+        sa.isEdit = true;
+        sa.selected_id = agtID;
+        sa.show();
+
     }//GEN-LAST:event_editBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
-        int sel = agreementsList.getSelectedIndex();
-        if (sel >= 0) {
-            AgreementRepo.agreements.remove(sel);
-            refresh_AgreementList();
-            JOptionPane.showMessageDialog(null, "Selected Agreement has been deleted Successfully");
+        try {
+            var r = agreementTable.getSelectedRow();
+            var c = 0;
+            int pkgId = (int) agreementTable.getValueAt(r, c);
+
+            if (aModel.deleteAgreement(pkgId) > 0) {
+                JOptionPane.showMessageDialog(null, "Selected Package has been deleted Successfully");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(JFrame_PackageList.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_deleteBtnActionPerformed
 
@@ -190,52 +200,25 @@ public class JFrame_AgreementList extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList<String> agreementsList;
+    private javax.swing.JTable agreementTable;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JButton editBtn;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
-    public String fixedLengthString(String str, int flength) {
-        String tstr = "";
-        for (int i = 0; i < (flength - str.length()); i++) {
-            tstr += " ";
-        }
-        tstr += str;
-        return tstr;
-    }
+    public void loadTable() {
+        DefaultTableModel model = (DefaultTableModel) agreementTable.getModel();
+        model.setRowCount(0);
+        AgreementModel aModal = new AgreementModel();
+        agreements = aModal.getAgreements();
+        System.out.println(agreements);
 
-    public void refresh_AgreementList() {
-        List agreements = AgreementRepo.agreements;
-        if (agreements == null) {
-            try {
-                AgreementRepo.retrieveAgreements();
-                agreements = AgreementRepo.agreements;
-            } catch (IOException | ClassNotFoundException ex) {
-                Logger.getLogger(JFrame_AgreementList.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        Iterator<Agreement> itr = agreements.iterator();
+        while (itr.hasNext()) {
+            Agreement p = itr.next();
+
+            model.addRow(new Object[]{p.getID(), p.getStudentID(), p.getPackageID(), p.getStartDate()});
         }
 
-        Agreement payment;
-        String cp;
-        agreementsList.removeAll();
-
-        String[] arr_payments = new String[agreements.size()];
-        cp = "";
-        cp += fixedLengthString("ID", 10) + "|"
-                + fixedLengthString("StudentID", 15) + "|"
-                + fixedLengthString("Package", 15) + "|"
-                + fixedLengthString("Start Date", 20);
-        jLabel1.setText(cp);
-
-        for (int i = 0; i < agreements.size(); i++) {
-            payment = (Agreement) agreements.get(i);
-            arr_payments[i] = fixedLengthString(payment.getID().trim(), 10) + "|"
-                    + fixedLengthString(payment.getStudentID().trim(), 15) + "|"
-                    + fixedLengthString(PackageRepo.getNameByID(payment.getPackageID()), 15) + "|"
-                    + fixedLengthString(payment.getStartDate().toString(), 20);
-        }
-        agreementsList.setListData(arr_payments);
     }
 }

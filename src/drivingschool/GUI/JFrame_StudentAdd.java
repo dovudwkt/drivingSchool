@@ -22,10 +22,7 @@ import javax.swing.JOptionPane;
  */
 public class JFrame_StudentAdd extends javax.swing.JFrame {
 
-    Connection conn;
-
     public Boolean edit_student;
-    public int st_row;
     public int selected_id;
     private StudentModel sModel;
 

@@ -24,7 +24,6 @@ import javax.swing.table.DefaultTableModel;
  */
 public class JFrame_StudentList extends javax.swing.JFrame {
 
-    Connection conn;
     List students;
     private StudentModel sModel;
 

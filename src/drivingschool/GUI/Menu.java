@@ -254,7 +254,7 @@ public class Menu extends javax.swing.JFrame {
             LessonRepo.retrieveLessons();
             PackageRepo.retrievePackages();
             PaymentRepo.retrievePayments();
-            AgreementRepo.retrieveAgreements();
+//            AgreementRepo.retrieveAgreements();
 
             JOptionPane.showMessageDialog(null, "Data Successfully Retrieved");
         } catch (IOException ex) {
@@ -328,7 +328,7 @@ public class Menu extends javax.swing.JFrame {
             LessonRepo.backupLessons();
             PackageRepo.backupPackages();
             PaymentRepo.backupPayments();
-            AgreementRepo.backupAgreements();
+//            AgreementRepo.backupAgreements();
             JOptionPane.showMessageDialog(null, "Data Successfully Backed up");
         } catch (IOException ex) {
             Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);

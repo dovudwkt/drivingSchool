@@ -6,19 +6,16 @@
 package drivingschool.repo;
 
 import drivingschool.GUI.JFrame_StudentAdd;
-import drivingschool.GUI.JFrame_StudentList;
-import drivingschool.entity.Student;
+import drivingschool.entity.CoursePackage;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -38,39 +35,33 @@ public class PackageModel {
         }
     }
 
-//    public List<Student> getPackages() {
-//        List pkgs = new ArrayList();
-//
-//        try {
-//            var pstmt = conn.prepareStatement("select * from package");
-//            var rs = pstmt.executeQuery();
-//
-//            Package p;
-//
-//            while (rs.next()) {
-//                int id = rs.getInt("id");
-//                String name = rs.getString("first_name");
-//                String surname = rs.getString("last_name");
-//                String nationality = rs.getString("nationality");
-//                String birthday = rs.getString("dob");
-//                String registerDate = rs.getString("register_date");
-//                String licenceNo = rs.getString("licence_no");
-//                String licenceExp = rs.getString("licence_expire");
-//                String status = rs.getString("status");
-//
-//                p = new Student(id, name, surname, nationality, birthday, status, licenceExp, licenceNo, registerDate);
-//                stds.add(p);
-//
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(JFrame_StudentList.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//
-//        return stds;
-//    }
+    public List<CoursePackage> getPackages() {
+        List pkgs = new ArrayList();
 
-    public int deleteStudent(int id) throws SQLException {
-        var q = "delete from student WHERE id = ?";
+        try {
+            var pstmt = conn.prepareStatement("select * from package");
+            var rs = pstmt.executeQuery();
+
+            CoursePackage p;
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                double price = rs.getDouble("price");
+                int numLessons = rs.getInt("num_lessons");
+
+                p = new CoursePackage(id, name, price, numLessons);
+                pkgs.add(p);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PackageModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return pkgs;
+    }
+
+    public int deletePackage(int id) throws SQLException {
+        var q = "delete from package WHERE id = ?";
         PreparedStatement pstmt = conn.prepareStatement(q);
         pstmt.setInt(1, id);
         int result = pstmt.executeUpdate();
@@ -78,78 +69,62 @@ public class PackageModel {
         return result;
     }
 
-    public void addStudent(String name, String surname, String nationality, String dob, String status, String licenceNo, String licenceExp) {
+    public void addPackage(String name, double price, int numLessons) {
         try {
-            var q = "insert into student(first_name, last_name, nationality, dob, licence_no, licence_expire, status, register_date) Values (?,?,?,?,?,?,?,?)";
+            var q = "insert into package(name, price, num_lessons) Values (?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(q);
             pstmt.setString(1, name);
-            pstmt.setString(2, surname);
-            pstmt.setString(3, nationality);
-            pstmt.setString(4, dob);
-            pstmt.setString(5, licenceNo);
-            pstmt.setString(6, licenceExp);
-            pstmt.setString(7, status);
-            pstmt.setString(8, LocalDate.now().format(DateTimeFormatter.ISO_DATE));
+            pstmt.setDouble(2, price);
+            pstmt.setInt(3, numLessons);
 
-            System.out.println(pstmt);
             pstmt.executeUpdate();
-            JOptionPane.showMessageDialog(null,
-                    "The New Student Data is Recorded Successfully");
+            System.out.println("The New package Data is Recorded Successfully");
+        } catch (SQLException ex) {
+            Logger.getLogger(PackageModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void editPackage(int id, String name, double price, int numLessons) {
+        try {
+            var q = "update package set name = ?, price = ?, num_lessons = ? WHERE id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(q);
+            pstmt.setString(1, name);
+            pstmt.setDouble(2, price);
+            pstmt.setInt(3, numLessons);
+            pstmt.setInt(4, id);
+
+            pstmt.executeUpdate();
+            System.out.println("Edited successfully");
+
         } catch (SQLException ex) {
             Logger.getLogger(JFrame_StudentAdd.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void editStudent(int id, String name, String surname, String nationality, String dob, String status, String licenceNo, String licenceExp) {
-        try {
-            var q = "update student set first_name = ?, last_name = ?, nationality = ?, dob = ?, licence_no = ?, licence_expire = ?, status = ?  WHERE id = ?";
-            PreparedStatement pstmt = conn.prepareStatement(q);
-            pstmt.setString(1, name);
-            pstmt.setString(2, surname);
-            pstmt.setString(3, nationality);
-            pstmt.setString(4, dob);
-            pstmt.setString(5, licenceNo);
-            pstmt.setString(6, licenceExp);
-            pstmt.setString(7, status);
-            pstmt.setInt(8, id);
-
-            System.out.println(pstmt);
-            pstmt.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(JFrame_StudentAdd.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public Student getStudentById(int stdId) {
-        Student std = null;
+    public CoursePackage getPackageById(int pkgID) {
+        CoursePackage pkg = null;
 
         try {
-            var q = "Select * from student WHERE id = ?";
+            var q = "Select * from package WHERE id = ?";
             PreparedStatement pstmt = conn.prepareStatement(q);
-            pstmt.setInt(1, stdId);
-
+            pstmt.setInt(1, pkgID);
             ResultSet rs = pstmt.executeQuery();
-
-            int id;
-            String name, surname, nationality, dob, licenceNo, licenceExp, registerDate, status;
-
+            int id, numLessons;
+            String name;
+            double price;
             while (rs.next()) {
                 id = rs.getInt("id");
-                name = rs.getString("first_name");
-                surname = rs.getString("last_name");
-                nationality = rs.getString("nationality");
-                dob = rs.getString("dob");
-                licenceNo = rs.getString("licence_no");
-                licenceExp = rs.getString("licence_expire");
-                registerDate = rs.getString("register_date");
-                status = rs.getString("status");
+                name = rs.getString("name");
+                price = rs.getDouble("price");
+                numLessons = rs.getInt("num_lessons");
 
-                std = new Student(id, name, surname, nationality, dob, status, licenceExp, licenceNo, registerDate);
+                pkg = new CoursePackage(id, name, price, numLessons);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(JFrame_StudentAdd.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PackageModel.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return pkg;
 
-        return std;
     }
 }

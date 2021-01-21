@@ -1,21 +1,20 @@
 package drivingschool.entity;
 
-//import java.util.LocalDate;
+//import java.util.String;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 public class Lesson implements Serializable {
-    private String ID;
-    private String PackageID;
-    private String StudentID;
+    private int ID;
+    private int PackageID;
+    private int StudentID;
     private int LessonNo;
-    private LocalDate LessonDate;
+    private String LessonDate;
     private String StartTime;
     private String EndTime;
-    private int Grade;
+    private String Grade;
 
-    public Lesson(String ID, String packageID, String studentID, int lessonNo, LocalDate lessonDate, String startTime, String endTime, int grade) {
+    public Lesson(int ID, int packageID, int studentID, int lessonNo, String lessonDate, String startTime, String endTime, String grade) {
         this.ID = ID;
         PackageID = packageID;
         StudentID = studentID;
@@ -25,28 +24,38 @@ public class Lesson implements Serializable {
         EndTime = endTime;
         Grade = grade;
     }
+     public Lesson(int packageID, int studentID, int lessonNo, String lessonDate, String startTime, String endTime, String grade) {
+        PackageID = packageID;
+        StudentID = studentID;
+        LessonNo = lessonNo;
+        LessonDate = lessonDate;
+        StartTime = startTime;
+        EndTime = endTime;
+        Grade = grade;
+    }
 
-    public String getID() {
+
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 
-    public String getPackageID() {
+    public int getPackageID() {
         return PackageID;
     }
 
-    public void setPackageID(String packageID) {
+    public void setPackageID(int packageID) {
         PackageID = packageID;
     }
 
-    public String getStudentID() {
+    public int getStudentID() {
         return StudentID;
     }
 
-    public void setStudentID(String studentID) {
+    public void setStudentID(int studentID) {
         StudentID = studentID;
     }
 
@@ -58,11 +67,11 @@ public class Lesson implements Serializable {
         LessonNo = lessonNo;
     }
 
-    public LocalDate getLessonDate() {
+    public String getLessonDate() {
         return LessonDate;
     }
 
-    public void setLessonDate(LocalDate lessonDate) {
+    public void setLessonDate(String lessonDate) {
         LessonDate = lessonDate;
     }
 
@@ -82,11 +91,11 @@ public class Lesson implements Serializable {
         EndTime = endTime;
     }
 
-    public int getGrade() {
+    public String getGrade() {
         return Grade;
     }
 
-    public void setGrade(int grade) {
+    public void setGrade(String grade) {
         Grade = grade;
     }
 }

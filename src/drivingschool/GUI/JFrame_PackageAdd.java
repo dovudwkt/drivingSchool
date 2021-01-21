@@ -8,6 +8,7 @@ package drivingschool.GUI;
 import drivingschool.repo.PackageRepo;
 
 import drivingschool.entity.CoursePackage;
+import drivingschool.repo.PackageModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,7 +18,8 @@ import javax.swing.JOptionPane;
 public class JFrame_PackageAdd extends javax.swing.JFrame {
 
     public Boolean isEdit;
-    public int st_row;
+    public int selected_id;
+    private final PackageModel pModel;
 
     /**
      * Creates new form JFrame_StudentAdd
@@ -25,6 +27,7 @@ public class JFrame_PackageAdd extends javax.swing.JFrame {
     public JFrame_PackageAdd() {
         initComponents();
         isEdit = false;
+        pModel = new PackageModel();
     }
 
     /**
@@ -165,21 +168,20 @@ public class JFrame_PackageAdd extends javax.swing.JFrame {
     }//GEN-LAST:event_IDTextFieldFocusLost
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        if (!IDTextField.getText().trim().isEmpty()
-                && !nameTextField.getText().trim().isEmpty()
+        if (!nameTextField.getText().trim().isEmpty()
                 && !priceTextField.getText().trim().isEmpty()
                 && !lessonsTextField.getText().trim().isEmpty()) {
-            String id = IDTextField.getText().trim();
             String name = nameTextField.getText().trim();
-            String price = priceTextField.getText().trim();
-            String lesson = lessonsTextField.getText().trim();
+            double price = Double.valueOf(priceTextField.getText().trim());
+            int lessons = Integer.valueOf(lessonsTextField.getText().trim());
 
             if (!isEdit) {
-                PackageRepo.addPackage(id, name, Double.parseDouble(price), Integer.parseInt(lesson));
+                pModel.addPackage(name, price, lessons);
                 JOptionPane.showMessageDialog(null,
                         "The New CoursePackage Data is Recorded Successfully");
             } else {
-                PackageRepo.editPackage(id, name, Double.parseDouble(price), Integer.parseInt(lesson));
+                int id = Integer.valueOf(IDTextField.getText());
+                pModel.editPackage(id, name, price, lessons);
                 JOptionPane.showMessageDialog(null, "The Selected CoursePackage Data is Edited Successfully");
             }
             PackageRepo.listPackages();
@@ -191,11 +193,13 @@ public class JFrame_PackageAdd extends javax.swing.JFrame {
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         if (isEdit) {
-            CoursePackage st = (CoursePackage) PackageRepo.packages.get(st_row);
-            IDTextField.setText(st.getID());
-            nameTextField.setText(st.getName());
-            priceTextField.setText(String.valueOf(st.getPrice()) );
-            lessonsTextField.setText(String.valueOf(st.getNumLessons()));
+            System.out.println("selected id: " + selected_id);
+            CoursePackage p = pModel.getPackageById(selected_id);
+
+            IDTextField.setText(String.valueOf(p.getID()));
+            nameTextField.setText(p.getName());
+            priceTextField.setText(String.valueOf(p.getPrice()));
+            lessonsTextField.setText(String.valueOf(p.getNumLessons()));
         }
     }//GEN-LAST:event_formWindowActivated
 

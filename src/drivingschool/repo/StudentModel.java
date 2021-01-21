@@ -147,7 +147,7 @@ public class StudentModel {
                 std = new Student(id, name, surname, nationality, dob, status, licenceExp, licenceNo, registerDate);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(JFrame_StudentAdd.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StudentModel.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return std;

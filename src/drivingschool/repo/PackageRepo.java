@@ -18,44 +18,43 @@ public class PackageRepo {
 
     public static void main(String[] args) throws ParseException {
         packages = new ArrayList();
-        testPackage();
         System.out.printf("\n");
     }
 
-    public static void testPackage() throws ParseException {
-        try {
-            System.out.printf("\n Tests for Class CoursePackage\n\n");
-            System.out.printf("\n addPackage() ...\n");
-
-            addPackage("1201", "Pro", 2000.0, 30);
-            addPackage("1202", "Standard", 1500.0, 12);
-            addPackage("1204", "Intense", 1800.0, 20);
-            listPackages();
-
-            System.out.printf("\n\n\n editPackage() Edit price for Standard package to 1400  \n");
-            editPackage("1202", "Standard", 1400.0, 12);
-            listPackages();
-
-            System.out.printf("\n\n Backing up...\n");
-            backupPackages();
-
-            System.out.printf("\n deletePackage() Delete “Pro” package \n");
-            deletePackage("1201");
-            listPackages();
-
-            System.out.printf("\n\n\n Retrieving backed up data...\n");
-            retrievePackages();
-            listPackages();
-        } catch (IOException | ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "Error");
-        }
-    }
+//    public static void testPackage() throws ParseException {
+//        try {
+//            System.out.printf("\n Tests for Class CoursePackage\n\n");
+//            System.out.printf("\n addPackage() ...\n");
+//
+//            addPackage("1201", "Pro", 2000.0, 30);
+//            addPackage("1202", "Standard", 1500.0, 12);
+//            addPackage("1204", "Intense", 1800.0, 20);
+//            listPackages();
+//
+//            System.out.printf("\n\n\n editPackage() Edit price for Standard package to 1400  \n");
+//            editPackage("1202", "Standard", 1400.0, 12);
+//            listPackages();
+//
+//            System.out.printf("\n\n Backing up...\n");
+//            backupPackages();
+//
+//            System.out.printf("\n deletePackage() Delete “Pro” package \n");
+//            deletePackage("1201");
+//            listPackages();
+//
+//            System.out.printf("\n\n\n Retrieving backed up data...\n");
+//            retrievePackages();
+//            listPackages();
+//        } catch (IOException | ClassNotFoundException e) {
+//            JOptionPane.showMessageDialog(null, "Error");
+//        }
+//    }
 
     public static void populateData() {
         try {
-            addPackage("1201", "Pro", 2000.0, 30);
-            addPackage("1202", "Standard", 1500.0, 12);
-            addPackage("1204", "Intense", 1800.0, 20);
+            addPackage(1201, "Pro", 2000.0, 30);
+            addPackage(1202, "Standard", 1500.0, 12);
+            addPackage(1204, "Intense", 1800.0, 20);
             backupPackages();
         } catch (IOException ex) {
             Logger.getLogger(PackageRepo.class.getName()).log(Level.SEVERE, null, ex);
@@ -70,7 +69,7 @@ public class PackageRepo {
         Helpers.writeFile(packages, "backups/packages.dat");
     }
 
-    public static void addPackage(String id, String name, double price, int numLessons) {
+    public static void addPackage(int id, String name, double price, int numLessons) {
         CoursePackage p = new CoursePackage(id, name, price, numLessons);
         packages.add(p);
     }
@@ -93,7 +92,7 @@ public class PackageRepo {
         }
     }
 
-    public static String getIDByName(String dName) {
+    public static int getIDByName(String dName) {
         CoursePackage p;
 
         Iterator<CoursePackage> itr = packages.iterator();
@@ -103,16 +102,16 @@ public class PackageRepo {
                 return p.getID();
             }
         }
-        return "";
+        return 0;
     }
 
-    public static String getNameByID(String id) {
+    public static String getNameByID(int id) {
         CoursePackage p;
 
         Iterator<CoursePackage> itr = packages.iterator();
         while (itr.hasNext()) {
             p = itr.next();
-            if (id.trim().equals(p.getID().trim())) {
+            if (id  == p.getID()) {
                 return p.getName();
             }
         }
