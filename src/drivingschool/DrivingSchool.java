@@ -44,9 +44,9 @@ public class DrivingSchool {
     public static void populateAllData() {
 //        AgreementRepo.populateData();
         //            LessonRepo.populateData();
-        PackageRepo.populateData();
-        PaymentRepo.populateData();
-        StudentRepo.populateData();
+//        PackageRepo.populateData();
+//        PaymentRepo.populateData();
+//        StudentRepo.populateData();
     }
 
 }

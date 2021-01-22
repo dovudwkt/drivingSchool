@@ -1,60 +1,67 @@
 package drivingschool.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class Payment implements Serializable {
-    private String ID;
-    private String StudentID;
+    private int ID;
+    private int StudentID;
     private double Amount;
-    private Date Timestamp;
+    private String Timestamp;
     private String Comment;
 
-    public Payment(String ID, String studentID, double amount, Date timestamp, String comment) {
+    public Payment(int ID, int StudentID, double Amount, String Timestamp, String Comment) {
         this.ID = ID;
-        StudentID = studentID;
-        Amount = amount;
-        Timestamp = timestamp;
-        Comment = comment;
+        this.StudentID = StudentID;
+        this.Amount = Amount;
+        this.Timestamp = Timestamp;
+        this.Comment = Comment;
     }
 
-    public String getID() {
+    public Payment(int StudentID, double Amount, String Timestamp, String Comment) {
+        this.StudentID = StudentID;
+        this.Amount = Amount;
+        this.Timestamp = Timestamp;
+        this.Comment = Comment;
+    }
+
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 
-    public String getStudentID() {
+    public int getStudentID() {
         return StudentID;
     }
 
-    public void setStudentID(String studentID) {
-        StudentID = studentID;
+    public void setStudentID(int StudentID) {
+        this.StudentID = StudentID;
     }
 
     public double getAmount() {
         return Amount;
     }
 
-    public void setAmount(double amount) {
-        Amount = amount;
+    public void setAmount(double Amount) {
+        this.Amount = Amount;
     }
 
-    public Date getTimestamp() {
+    public String getTimestamp() {
         return Timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
-        Timestamp = timestamp;
+    public void setTimestamp(String Timestamp) {
+        this.Timestamp = Timestamp;
     }
 
     public String getComment() {
         return Comment;
     }
 
-    public void setComment(String comment) {
-        Comment = comment;
+    public void setComment(String Comment) {
+        this.Comment = Comment;
     }
+
 }

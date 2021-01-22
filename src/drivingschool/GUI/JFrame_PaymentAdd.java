@@ -8,6 +8,7 @@ package drivingschool.GUI;
 import drivingschool.repo.PaymentRepo;
 
 import drivingschool.entity.Payment;
+import drivingschool.repo.PaymentModel;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +21,8 @@ import javax.swing.JOptionPane;
 public class JFrame_PaymentAdd extends javax.swing.JFrame {
 
     public Boolean isEdit;
-    public int st_row;
+    public int selected_id;
+    private final PaymentModel pModel;
 
     /**
      * Creates new form JFrame_StudentAdd
@@ -28,6 +30,7 @@ public class JFrame_PaymentAdd extends javax.swing.JFrame {
     public JFrame_PaymentAdd() {
         initComponents();
         isEdit = false;
+        pModel = new PaymentModel();
     }
 
     /**
@@ -167,42 +170,34 @@ public class JFrame_PaymentAdd extends javax.swing.JFrame {
     }//GEN-LAST:event_IDTextFieldFocusLost
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        if (!IDTextField.getText().trim().isEmpty()
-                && !stdIDTextField.getText().trim().isEmpty()
-                && !amountTextField.getText().trim().isEmpty()) {
-            String id = IDTextField.getText().trim();
-            String stdID = stdIDTextField.getText().trim();
-            String amount = amountTextField.getText().trim();
+        if (!stdIDTextField.getText().trim().isEmpty() && !amountTextField.getText().trim().isEmpty()) {
+            int stdID = Integer.valueOf(stdIDTextField.getText().trim());
+            double amount = Double.valueOf(amountTextField.getText().trim());
             String comment = commentTextField.getText().trim();
 
             if (!isEdit) {
-                PaymentRepo.addPayment(id, stdID, Double.parseDouble(amount), comment);
-                JOptionPane.showMessageDialog(null,
-                        "The New Payment Data is Recorded Successfully");
+                pModel.addPayment(stdID, amount, comment);
+                JOptionPane.showMessageDialog(null, "The New Payment Data is Recorded Successfully");
             } else {
-                PaymentRepo.editPayment(id, stdID, Double.parseDouble(amount), comment);
-                JOptionPane.showMessageDialog(null, "The Selected Payment Data is Edited Successfully");
-            }
-            try {
-                PaymentRepo.listPayments();
-            } catch (IOException ex) {
-                Logger.getLogger(JFrame_PaymentAdd.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(JFrame_PaymentAdd.class.getName()).log(Level.SEVERE, null, ex);
+                if (!IDTextField.getText().trim().isEmpty()) {
+                    int id = Integer.valueOf(IDTextField.getText().trim());
+                    pModel.editPayment(id, stdID, amount, comment);
+                    JOptionPane.showMessageDialog(null, "The Selected Payment Data is Edited Successfully");
+                }
             }
             setVisible(false);
-
         }
 
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         if (isEdit) {
-            Payment st = (Payment) PaymentRepo.payments.get(st_row);
-            IDTextField.setText(st.getID());
-            stdIDTextField.setText(st.getStudentID());
-            amountTextField.setText(String.valueOf(st.getAmount()));
-            commentTextField.setText(st.getComment());
+            Payment p = pModel.getPaymentById(selected_id);
+
+            IDTextField.setText(String.valueOf(p.getID()));
+            stdIDTextField.setText(String.valueOf(p.getStudentID()));
+            amountTextField.setText(String.valueOf(p.getAmount()));
+            commentTextField.setText(p.getComment());
         }
     }//GEN-LAST:event_formWindowActivated
 
