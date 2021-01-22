@@ -14,8 +14,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-import drivingschool.repo.PaymentRepo;
-import drivingschool.repo.StudentRepo;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.Iterator;

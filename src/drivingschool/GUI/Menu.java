@@ -5,16 +5,12 @@
  */
 package drivingschool.GUI;
 
-import java.io.IOException;
+import drivingschool.repo.DB;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-import drivingschool.repo.AgreementRepo;
-import drivingschool.repo.LessonRepo;
-import drivingschool.repo.PackageRepo;
-import drivingschool.repo.PaymentRepo;
-import drivingschool.repo.StudentRepo;
+import drivingschool.repo.MySQLDumper;
 import java.sql.SQLException;
 
 /**
@@ -249,20 +245,8 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void restoreBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restoreBtnActionPerformed
-        try {
-            StudentRepo.retrieveStudent();
-            LessonRepo.retrieveLessons();
-            PackageRepo.retrievePackages();
-            PaymentRepo.retrievePayments();
-//            AgreementRepo.retrieveAgreements();
-
-            JOptionPane.showMessageDialog(null, "Data Successfully Retrieved");
-        } catch (IOException ex) {
-            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        DB.restore();
+        JOptionPane.showMessageDialog(null, "Data Successfully restored");
     }//GEN-LAST:event_restoreBtnActionPerformed
 
     private void quitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitBtnActionPerformed
@@ -323,16 +307,8 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_addAgmtBtnActionPerformed
 
     private void backupBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupBtnActionPerformed
-        try {
-            StudentRepo.backupStudent();
-            LessonRepo.backupLessons();
-            PackageRepo.backupPackages();
-            PaymentRepo.backupPayments();
-//            AgreementRepo.backupAgreements();
-            JOptionPane.showMessageDialog(null, "Data Successfully Backed up");
-        } catch (IOException ex) {
-            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        DB.backup();
+        JOptionPane.showMessageDialog(null, "Data Successfully Backed up");
     }//GEN-LAST:event_backupBtnActionPerformed
 
     /**

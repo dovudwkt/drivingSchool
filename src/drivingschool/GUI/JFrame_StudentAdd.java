@@ -5,9 +5,7 @@
  */
 package drivingschool.GUI;
 
-import java.sql.Connection;
 
-import drivingschool.repo.StudentRepo;
 import drivingschool.entity.Student;
 import drivingschool.repo.StudentModel;
 
@@ -271,7 +269,6 @@ public class JFrame_StudentAdd extends javax.swing.JFrame {
                 sModel.editStudent(id, name, surname, nationality, dob, status, licenceNo, licenceExp);
                 JOptionPane.showMessageDialog(null, "The Selected Student Data is Edited Successfully");
             }
-            StudentRepo.listStudents();
             setVisible(false);
 
         }

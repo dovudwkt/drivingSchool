@@ -5,13 +5,8 @@
  */
 package drivingschool.GUI;
 
-import drivingschool.repo.PaymentRepo;
-
 import drivingschool.entity.Payment;
 import drivingschool.repo.PaymentModel;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**

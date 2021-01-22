@@ -5,38 +5,28 @@
  */
 package drivingschool.repo;
 
+/**
+ *
+ * @author dovud
+ */
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
-/**
- *
- * @author dovud
- */
-public class DB {
+public class MySQLDumper {
+
     private static String ip = "localhost";
     private static String port = "3306";
     private static String database = "drivingschool";
     private static String user = "root";
     private static String pass = "password";
     private static String path = "backup.sql";
-    private static String url  = "jdbc:mysql://localhost:3306/drivingschool";
-
-    public Connection connect() throws SQLException, ClassNotFoundException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection conn = (Connection) DriverManager.getConnection(url, user, pass);
-
-        System.out.println("Connected to MYSQL");
-        return conn;
-    }
 
     public static void backup() {
         String dumpCommand = "mysqldump " + database + " -h " + ip + " -u " + user + " -p" + pass;
@@ -92,5 +82,11 @@ public class DB {
             e.printStackTrace();
         }
         return true;
+    }
+
+    public static void main(String args[]) throws IOException, InterruptedException {
+//        export();
+//        importDB();
+//        load();
     }
 }

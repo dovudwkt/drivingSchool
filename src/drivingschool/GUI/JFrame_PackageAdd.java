@@ -5,8 +5,6 @@
  */
 package drivingschool.GUI;
 
-import drivingschool.repo.PackageRepo;
-
 import drivingschool.entity.CoursePackage;
 import drivingschool.repo.PackageModel;
 import javax.swing.JOptionPane;
@@ -184,7 +182,6 @@ public class JFrame_PackageAdd extends javax.swing.JFrame {
                 pModel.editPackage(id, name, price, lessons);
                 JOptionPane.showMessageDialog(null, "The Selected CoursePackage Data is Edited Successfully");
             }
-            PackageRepo.listPackages();
             setVisible(false);
 
         }

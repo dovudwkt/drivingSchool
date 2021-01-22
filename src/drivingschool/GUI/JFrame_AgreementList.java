@@ -15,9 +15,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 import java.sql.SQLException;
-import drivingschool.repo.AgreementRepo;
-import drivingschool.repo.PackageRepo;
-import java.util.Date;
 import java.util.Iterator;
 import javax.swing.table.DefaultTableModel;
 

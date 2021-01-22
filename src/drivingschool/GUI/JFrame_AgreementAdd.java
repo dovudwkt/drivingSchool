@@ -5,15 +5,10 @@
  */
 package drivingschool.GUI;
 
-import drivingschool.repo.AgreementRepo;
 
 import drivingschool.entity.Agreement;
-import drivingschool.entity.CoursePackage;
 import drivingschool.repo.AgreementModel;
-import drivingschool.repo.PackageRepo;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.swing.JOptionPane;
 
 /**

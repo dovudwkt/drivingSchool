@@ -5,8 +5,6 @@
  */
 package drivingschool.GUI;
 
-import drivingschool.repo.LessonRepo;
-
 import drivingschool.entity.Lesson;
 import drivingschool.repo.LessonModel;
 import java.io.IOException;
@@ -268,13 +266,7 @@ public class JFrame_LessonAdd extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "The Selected Lesson Data is Edited Successfully");
                 }
             }
-            try {
-                LessonRepo.listLessons();
-            } catch (IOException ex) {
-                Logger.getLogger(JFrame_LessonAdd.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(JFrame_LessonAdd.class.getName()).log(Level.SEVERE, null, ex);
-            }
+           
             setVisible(false);
 
         }
