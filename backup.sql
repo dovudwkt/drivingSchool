@@ -120,7 +120,7 @@ CREATE TABLE `payment` (
 
 LOCK TABLES `payment` WRITE;
 /*!40000 ALTER TABLE `payment` DISABLE KEYS */;
-INSERT INTO `payment` VALUES (1,8,1500,'test payment',NULL),(4,12354,12321,'asdas','Fri Jan 22 17:55:42 EET 2021'),(5,58,1565,'sscasca123','Fri Jan 22 17:55:55 EET 2021'),(6,125,6845,'ok','Fri Jan 22 18:24:26 EET 2021');
+INSERT INTO `payment` VALUES (1,8,1500,'test payment',NULL),(4,8,12321,'asdas','Sun Jan 24 22:46:00 EET 2021'),(5,58,1565,'','Sun Jan 24 22:45:04 EET 2021'),(6,3,6845,'ok','Sun Jan 24 22:45:39 EET 2021');
 /*!40000 ALTER TABLE `payment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,7 +143,7 @@ CREATE TABLE `student` (
   `register_date` varchar(15) DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,7 +152,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES (3,'Dovud','Inomov','iana@gmail.com','asdsad','12345678','212565','dsadsa',NULL,'new status'),(8,'some name','ali',NULL,'22-05-2021','123654ss','2025-05-10','usb','2021-01-18','updated');
+INSERT INTO `student` VALUES (3,'Dovud','Inomov','iana@gmail.com','28-02-1999','12345678','2024-05-10','dsadsa',NULL,'new status'),(8,'ali','aliev',NULL,'22-05-2021','123654ss','2025-05-10','usb','2021-01-18','updated');
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -165,4 +165,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-01-24 22:20:04
+-- Dump completed on 2021-01-24 22:54:22
