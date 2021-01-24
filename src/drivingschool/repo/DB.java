@@ -31,6 +31,7 @@ public class DB {
     private static final String BACKUP_PATH = "backup.sql";
     private static final String JDBC_URL = "jdbc:mysql://localhost:3306/drivingschool";
 
+    public DB() {}
     public Connection connect() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection conn = (Connection) DriverManager.getConnection(JDBC_URL, DB_USER, DB_PWD);

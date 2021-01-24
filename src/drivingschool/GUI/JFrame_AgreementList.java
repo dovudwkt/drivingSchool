@@ -6,7 +6,11 @@
 package drivingschool.GUI;
 
 import drivingschool.entity.Agreement;
+import drivingschool.entity.CoursePackage;
+import drivingschool.entity.Student;
 import drivingschool.repo.AgreementModel;
+import drivingschool.repo.PackageModel;
+import drivingschool.repo.StudentModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -50,7 +54,7 @@ public class JFrame_AgreementList extends javax.swing.JFrame {
         agreementTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Select and Double Click The Row To Edit");
+        setTitle("Agreements");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
@@ -105,9 +109,9 @@ public class JFrame_AgreementList extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(deleteBtn))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(80, Short.MAX_VALUE))
+                        .addGap(53, 53, 53)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -205,15 +209,31 @@ public class JFrame_AgreementList extends javax.swing.JFrame {
     public void loadTable() {
         DefaultTableModel model = (DefaultTableModel) agreementTable.getModel();
         model.setRowCount(0);
+
         AgreementModel aModal = new AgreementModel();
+        StudentModel sModel = new StudentModel();
+        PackageModel pModel = new PackageModel();
+
         agreements = aModal.getAgreements();
         System.out.println(agreements);
+
+        String pkgName = "", stdName = "";
 
         Iterator<Agreement> itr = agreements.iterator();
         while (itr.hasNext()) {
             Agreement p = itr.next();
 
-            model.addRow(new Object[]{p.getID(), p.getStudentID(), p.getPackageID(), p.getStartDate()});
+            CoursePackage pkg = pModel.getPackageById(p.getPackageID());
+            Student std = sModel.getStudentById(p.getStudentID());
+
+            if (pkg != null) {
+                pkgName = pkg.getName();
+            }
+            if (std != null) {
+                stdName = std.getName()+" "+std.getSurname();
+            }
+
+            model.addRow(new Object[]{p.getID(), stdName, pkgName, p.getStartDate()});
         }
 
     }

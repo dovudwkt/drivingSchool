@@ -50,7 +50,7 @@ public class JFrame_PackageList extends javax.swing.JFrame {
         packageTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Select and Double Click The Row To Edit");
+        setTitle("Packages");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);

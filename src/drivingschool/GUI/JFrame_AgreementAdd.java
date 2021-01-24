@@ -59,7 +59,7 @@ public class JFrame_AgreementAdd extends javax.swing.JFrame {
         saveButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Enter The Information Of The Agreement");
+        setTitle("New Agreement");
         setName("frame_StudentAdd"); // NOI18N
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
@@ -70,6 +70,7 @@ public class JFrame_AgreementAdd extends javax.swing.JFrame {
         IDLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         IDLabel.setText("ID");
 
+        IDTextField.setEditable(false);
         IDTextField.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         IDTextField.setName("jTextFiend_StdNo"); // NOI18N
         IDTextField.addFocusListener(new java.awt.event.FocusAdapter() {

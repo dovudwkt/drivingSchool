@@ -6,7 +6,9 @@
 package drivingschool.GUI;
 
 import drivingschool.entity.Payment;
+import drivingschool.entity.Student;
 import drivingschool.repo.PaymentModel;
+import drivingschool.repo.StudentModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -50,7 +52,7 @@ public class JFrame_PaymentList extends javax.swing.JFrame {
         paymentTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Select and Double Click The Row To Edit");
+        setTitle("Payments");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
@@ -206,16 +208,22 @@ public class JFrame_PaymentList extends javax.swing.JFrame {
         model.setRowCount(0);
 
         PaymentModel pModal = new PaymentModel();
+        StudentModel sModel = new StudentModel();
+
         payments = pModal.getPayments();
 
-        System.out.println(payments);
-
+        String stdName = "";
         Iterator<Payment> itr = payments.iterator();
         while (itr.hasNext()) {
             Payment p = itr.next();
 
-            model.addRow(new Object[]{p.getID(), p.getStudentID(), p.getAmount(), p.getComment(), p.getTimestamp()});
-        }
+            Student std = sModel.getStudentById(p.getStudentID());
+            if (std != null) {
+                stdName = std.getName() + " " + std.getSurname();
+            }
 
+            model.addRow(new Object[]{p.getID(), stdName, p.getAmount(), p.getComment(), p.getTimestamp()});
+        }
     }
+
 }

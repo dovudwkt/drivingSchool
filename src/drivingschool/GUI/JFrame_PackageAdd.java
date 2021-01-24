@@ -60,6 +60,7 @@ public class JFrame_PackageAdd extends javax.swing.JFrame {
         IDLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         IDLabel.setText("ID");
 
+        IDTextField.setEditable(false);
         IDTextField.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         IDTextField.setName("jTextFiend_StdNo"); // NOI18N
         IDTextField.addFocusListener(new java.awt.event.FocusAdapter() {

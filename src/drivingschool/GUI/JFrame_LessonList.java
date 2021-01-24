@@ -5,8 +5,12 @@
  */
 package drivingschool.GUI;
 
+import drivingschool.entity.CoursePackage;
 import drivingschool.entity.Lesson;
+import drivingschool.entity.Student;
 import drivingschool.repo.LessonModel;
+import drivingschool.repo.PackageModel;
+import drivingschool.repo.StudentModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -50,7 +54,7 @@ public class JFrame_LessonList extends javax.swing.JFrame {
         lessonTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Select and Double Click The Row To Edit");
+        setTitle("Lessons");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
@@ -201,14 +205,29 @@ public class JFrame_LessonList extends javax.swing.JFrame {
     public void loadTable() {
         DefaultTableModel model = (DefaultTableModel) lessonTable.getModel();
         model.setRowCount(0);
-        LessonModel lModal = new LessonModel();
-        lessons = lModal.getLessons();
-        System.out.println(lessons);
 
+        LessonModel lModal = new LessonModel();
+        StudentModel sModel = new StudentModel();
+        PackageModel pModel = new PackageModel();
+
+        lessons = lModal.getLessons();
+
+        String pkgName = "", stdName = "";
         Iterator<Lesson> itr = lessons.iterator();
         while (itr.hasNext()) {
             Lesson p = itr.next();
-            model.addRow(new Object[]{p.getID(), p.getPackageID(), p.getStudentID(), p.getLessonDate(), p.getStartTime(), p.getEndTime(), p.getGrade(), p.getLessonNo()});
+
+            CoursePackage pkg = pModel.getPackageById(p.getPackageID());
+            Student std = sModel.getStudentById(p.getStudentID());
+
+            if (pkg != null) {
+                pkgName = pkg.getName();
+            }
+            if (std != null) {
+                stdName = std.getName() + " " + std.getSurname();
+            }
+
+            model.addRow(new Object[]{p.getID(), pkgName, stdName, p.getLessonDate(), p.getStartTime(), p.getEndTime(), p.getGrade(), p.getLessonNo()});
         }
 
     }

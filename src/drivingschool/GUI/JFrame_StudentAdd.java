@@ -75,6 +75,7 @@ public class JFrame_StudentAdd extends javax.swing.JFrame {
         stdNoLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         stdNoLabel.setText("Std ID");
 
+        stdIDTextField.setEditable(false);
         stdIDTextField.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         stdIDTextField.setEnabled(false);
         stdIDTextField.setName("jTextFiend_StdNo"); // NOI18N
