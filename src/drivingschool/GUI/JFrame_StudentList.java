@@ -5,15 +5,17 @@
  */
 package drivingschool.GUI;
 
-import java.io.IOException;
 import drivingschool.entity.Student;
-import java.util.ArrayList;
-import java.util.List;
+import drivingschool.repo.StudentModel;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
-import drivingschool.repo.StudentRepo;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,11 +23,19 @@ import drivingschool.repo.StudentRepo;
  */
 public class JFrame_StudentList extends javax.swing.JFrame {
 
+    List students;
+    private final StudentModel sModel;
+
     /**
      * Creates new form JFrame_StudentList
+     *
+     * @throws java.sql.SQLException
+     * @throws java.lang.ClassNotFoundException
      */
-    public JFrame_StudentList() {
+    public JFrame_StudentList() throws SQLException, ClassNotFoundException {
         initComponents();
+        students = new ArrayList();
+        sModel = new StudentModel();
     }
 
     /**
@@ -37,11 +47,10 @@ public class JFrame_StudentList extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
-        studentsList = new javax.swing.JList<>();
         editBtn = new javax.swing.JButton();
         deleteBtn = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        stdTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Select and Double Click The Row To Edit");
@@ -50,15 +59,6 @@ public class JFrame_StudentList extends javax.swing.JFrame {
                 formWindowActivated(evt);
             }
         });
-
-        studentsList.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
-        studentsList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        studentsList.setName("jList_Students"); // NOI18N
-        jScrollPane2.setViewportView(studentsList);
 
         editBtn.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         editBtn.setLabel("Edit Student");
@@ -78,69 +78,88 @@ public class JFrame_StudentList extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setBackground(new java.awt.Color(102, 0, 0));
-        jLabel1.setFont(new java.awt.Font("Monospaced", 0, 11)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(102, 0, 0));
-        jLabel1.setText("jLabel1");
-        jLabel1.setName("jLabel_Captions"); // NOI18N
+        stdTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Name", "Surname", "Birthday", "Licence No", "Licence Expire", "Status", "Regiser Date"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        stdTable.setToolTipText("");
+        stdTable.setRowHeight(30);
+        jScrollPane1.setViewportView(stdTable);
+        stdTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 733, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(221, 221, 221)
-                .addComponent(editBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(deleteBtn)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 824, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(249, 249, 249)
+                        .addComponent(editBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(deleteBtn)))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(editBtn)
                     .addComponent(deleteBtn))
-                .addContainerGap())
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        refresh_StudentList();
+        loadTable();
     }//GEN-LAST:event_formWindowActivated
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
-        int sel = studentsList.getSelectedIndex();
-        if (sel >= 0) {
-            Student st;
-            st = (Student) StudentRepo.students.get(sel);
+        try {
+            var r = stdTable.getSelectedRow();
+            var c = 0;
+            var v = stdTable.getValueAt(r, c);
+
             JFrame_StudentAdd sa = new JFrame_StudentAdd();
             sa.edit_student = true;
-            sa.st_row = sel;
+            sa.selected_id = (int) v;
             sa.show();
-            //sa.st_row = st;
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(JFrame_StudentList.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_editBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
-        int sel = studentsList.getSelectedIndex();
-        if (sel >= 0) {
-            StudentRepo.students.remove(sel);
-            refresh_StudentList();
-            JOptionPane.showMessageDialog(null, "Selected Student has been deleted Successfully");
+        try {
+            var r = stdTable.getSelectedRow();
+            var c = 0;
+            int selected_id = (int) stdTable.getValueAt(r, c);
+
+            if (sModel.deleteStudent(selected_id) > 0) {
+                JOptionPane.showMessageDialog(null, "Selected Student has been deleted Successfully");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(JFrame_StudentList.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_deleteBtnActionPerformed
 
@@ -175,7 +194,13 @@ public class JFrame_StudentList extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFrame_StudentList().setVisible(true);
+                try {
+                    new JFrame_StudentList().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(JFrame_StudentList.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(JFrame_StudentList.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -183,63 +208,23 @@ public class JFrame_StudentList extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteBtn;
     private javax.swing.JButton editBtn;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JList<String> studentsList;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable stdTable;
     // End of variables declaration//GEN-END:variables
 
-    public String fixedLengthString(String str, int flength) {
-        if (str == null){
-            str = " ";
+    public void loadTable() {
+        DefaultTableModel model = (DefaultTableModel) stdTable.getModel();
+        model.setRowCount(0);
+        StudentModel sModal = new StudentModel();
+        students = sModal.getStudents();
+        System.out.println(students);
+
+        Iterator<Student> itr = students.iterator();
+        while (itr.hasNext()) {
+            Student s = itr.next();
+
+            model.addRow(new Object[]{s.getID(), s.getName(), s.getSurname(), s.getDOB(), s.getLicenceNo(), s.getLicenceExpire(), s.getStatus(), s.getRegisterDate()});
         }
-        String tstr = "";
-        for (int i = 0; i < (flength - str.length()); i++) {
-            tstr += " ";
-        }
-        tstr += str;
-        return tstr;
     }
 
-    public void refresh_StudentList() {
-        List students = StudentRepo.students;
-        if (students == null) {
-            try {
-                StudentRepo.retrieveStudent();
-                students = StudentRepo.students;
-            } catch (IOException | ClassNotFoundException ex) {
-                Logger.getLogger(JFrame_StudentList.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-        Student st;
-        String cp;
-        studentsList.removeAll();
-
-        String[] arr_students = new String[students.size()];
-        cp = "";
-        cp += fixedLengthString("ID", 10) + "|"
-                + fixedLengthString("Name", 15) + "|"
-                + fixedLengthString("Surname", 15) + "|"
-                + fixedLengthString("Nationality", 15) + "|"
-                + fixedLengthString("Birthday", 15) + "|"
-                + fixedLengthString("Register at", 15) + "|"
-                + fixedLengthString("Status", 15) + "|"
-                + fixedLengthString("Licence no", 15) + "|"
-                + fixedLengthString("Licence expire", 15);
-        jLabel1.setText(cp);
-
-        for (int i = 0; i < students.size(); i++) {
-            st = (Student) students.get(i);
-            arr_students[i] = fixedLengthString(st.getID().trim(), 10) + "|"
-                    + fixedLengthString(st.getName().trim(), 15) + "|"
-                    + fixedLengthString(st.getSurname().trim(), 15) + "|"
-                    + fixedLengthString(st.getNationality().trim(), 15) + "|"
-                    + fixedLengthString(st.getDOB().toString(), 15) + "|"
-                    + fixedLengthString(st.getRegisterDate().toString(), 15) + "|"
-                    + fixedLengthString(st.getStatus().trim(), 15) + "|"
-                    + fixedLengthString(st.getLicenceNo(), 15) + "|"
-                    + fixedLengthString(st.getLicenceExpire().toString(), 15);
-        }
-        studentsList.setListData(arr_students);
-    }
 }

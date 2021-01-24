@@ -5,9 +5,12 @@
  */
 package drivingschool.GUI;
 
-import drivingschool.repo.StudentRepo;
-
 import drivingschool.entity.Student;
+import drivingschool.repo.StudentModel;
+
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,14 +20,19 @@ import javax.swing.JOptionPane;
 public class JFrame_StudentAdd extends javax.swing.JFrame {
 
     public Boolean edit_student;
-    public int st_row;
+    public int selected_id;
+    private final StudentModel sModel;
 
     /**
      * Creates new form JFrame_StudentAdd
+     *
+     * @throws java.lang.ClassNotFoundException
+     * @throws java.sql.SQLException
      */
-    public JFrame_StudentAdd() {
+    public JFrame_StudentAdd() throws ClassNotFoundException, SQLException {
         initComponents();
         edit_student = false;
+        sModel = new StudentModel();
     }
 
     /**
@@ -67,7 +75,9 @@ public class JFrame_StudentAdd extends javax.swing.JFrame {
         stdNoLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         stdNoLabel.setText("Std ID");
 
+        stdIDTextField.setEditable(false);
         stdIDTextField.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        stdIDTextField.setEnabled(false);
         stdIDTextField.setName("jTextFiend_StdNo"); // NOI18N
         stdIDTextField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -240,40 +250,26 @@ public class JFrame_StudentAdd extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_surnameTextFieldActionPerformed
 
-    private void stdIDTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_stdIDTextFieldFocusLost
-
-    }//GEN-LAST:event_stdIDTextFieldFocusLost
-
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        if (!stdIDTextField.getText().trim().isEmpty()
-                && !nameTextField.getText().trim().isEmpty()
+        if (!nameTextField.getText().trim().isEmpty()
                 && !surnameTextField.getText().trim().isEmpty()
                 && !nationalityTextField.getText().trim().isEmpty()
-                && !statusTextField.getText().trim().isEmpty()
-                //                && !licenceNoTextField.getText().trim().isEmpty()
-                //                && !licenceExpTextField.getText().trim().isEmpty()
                 && !birthdayTextField.getText().trim().isEmpty()) {
-            String std_no = stdIDTextField.getText().trim();
-            String std_name = nameTextField.getText().trim();
-            String std_surname = surnameTextField.getText().trim();
-//            String gender;
-//            if(femaleRadioButton.isSelected()) gender="Female"; else gender="Male";
+            String name = nameTextField.getText().trim();
+            String surname = surnameTextField.getText().trim();
             String nationality = nationalityTextField.getText().trim();
-            String birthday = birthdayTextField.getText().trim();
+            String dob = birthdayTextField.getText().trim();
             String status = statusTextField.getText().trim();
-            String licence_no = licenceNoTextField.getText().trim();
-            String licence_exp = licenceExpTextField.getText().trim();
+            String licenceNo = licenceNoTextField.getText().trim();
+            String licenceExp = licenceExpTextField.getText().trim();
 
             if (!edit_student) {
-                StudentRepo.addStudent(std_no, std_name, std_surname, nationality, birthday, status, licence_no, licence_exp);
-                JOptionPane.showMessageDialog(null,
-                        "The New Student Data is Recorded Successfully");
+                sModel.addStudent(name, surname, nationality, dob, status, licenceNo, licenceExp);
             } else {
-                StudentRepo.editStudent(std_no, std_name, std_surname, nationality, birthday, status, licence_no, licence_exp);
-
+                int id = Integer.valueOf(stdIDTextField.getText());
+                sModel.editStudent(id, name, surname, nationality, dob, status, licenceNo, licenceExp);
                 JOptionPane.showMessageDialog(null, "The Selected Student Data is Edited Successfully");
             }
-            StudentRepo.listStudents();
             setVisible(false);
 
         }
@@ -282,19 +278,16 @@ public class JFrame_StudentAdd extends javax.swing.JFrame {
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         if (edit_student) {
-            Student st = (Student) StudentRepo.students.get(st_row);
-            stdIDTextField.setText(st.getID());
+            Student st = sModel.getStudentById(selected_id);
+
+            stdIDTextField.setText(String.valueOf(st.getID()));
             nameTextField.setText(st.getName());
             surnameTextField.setText(st.getSurname());
             nationalityTextField.setText(st.getNationality());
             statusTextField.setText(st.getStatus());
-            birthdayTextField.setText(st.getDOB().toString());
-            licenceExpTextField.setText(st.getLicenceExpire().toString());
+            birthdayTextField.setText(st.getDOB());
+            licenceExpTextField.setText(st.getLicenceExpire());
             licenceNoTextField.setText(st.getLicenceNo());
-
-//            if (st.getGender().equals("Male")) {
-//                maleRadioButton.setSelected(true);
-//            }
         }
     }//GEN-LAST:event_formWindowActivated
 
@@ -309,6 +302,10 @@ public class JFrame_StudentAdd extends javax.swing.JFrame {
     private void licenceNoTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_licenceNoTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_licenceNoTextFieldActionPerformed
+
+    private void stdIDTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_stdIDTextFieldFocusLost
+
+    }//GEN-LAST:event_stdIDTextFieldFocusLost
 
     /**
      * @param args the command line arguments
@@ -341,7 +338,13 @@ public class JFrame_StudentAdd extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFrame_StudentAdd().setVisible(true);
+                try {
+                    new JFrame_StudentAdd().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(JFrame_StudentAdd.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(JFrame_StudentAdd.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
             }
         });

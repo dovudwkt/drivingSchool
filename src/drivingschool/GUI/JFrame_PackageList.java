@@ -5,15 +5,17 @@
  */
 package drivingschool.GUI;
 
-import java.io.IOException;
 import drivingschool.entity.CoursePackage;
-import java.util.ArrayList;
+import drivingschool.repo.PackageModel;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-import drivingschool.repo.PackageRepo;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,11 +23,16 @@ import drivingschool.repo.PackageRepo;
  */
 public class JFrame_PackageList extends javax.swing.JFrame {
 
+    List packages;
+    private PackageModel pModel;
+
     /**
      * Creates new form JFrame_StudentList
      */
     public JFrame_PackageList() {
         initComponents();
+        packages = new ArrayList();
+        pModel = new PackageModel();
     }
 
     /**
@@ -37,28 +44,18 @@ public class JFrame_PackageList extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
-        packagessList = new javax.swing.JList<>();
         editBtn = new javax.swing.JButton();
         deleteBtn = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        packageTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Select and Double Click The Row To Edit");
+        setTitle("Packages");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
             }
         });
-
-        packagessList.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
-        packagessList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        packagessList.setName("jList_Students"); // NOI18N
-        jScrollPane2.setViewportView(packagessList);
 
         editBtn.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         editBtn.setText("Edit package");
@@ -78,70 +75,80 @@ public class JFrame_PackageList extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setBackground(new java.awt.Color(102, 0, 0));
-        jLabel1.setFont(new java.awt.Font("Monospaced", 0, 11)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(102, 0, 0));
-        jLabel1.setText("jLabel1");
-        jLabel1.setName("jLabel_Captions"); // NOI18N
+        packageTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Name", "Price", "Number of lessons"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(packageTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(139, 139, 139)
-                        .addComponent(editBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(deleteBtn)
-                        .addGap(0, 193, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2))))
-                .addContainerGap())
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 589, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(32, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(editBtn)
+                .addGap(39, 39, 39)
+                .addComponent(deleteBtn)
+                .addGap(194, 194, 194))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(36, 36, 36)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(editBtn)
-                    .addComponent(deleteBtn))
-                .addContainerGap())
+                    .addComponent(deleteBtn)
+                    .addComponent(editBtn))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        refresh_PackageList();
+        loadTable();
     }//GEN-LAST:event_formWindowActivated
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
-        int sel = packagessList.getSelectedIndex();
-        if (sel >= 0) {
-            CoursePackage st;
-            st = (CoursePackage) PackageRepo.packages.get(sel);
-            JFrame_PackageAdd pa = new JFrame_PackageAdd();
-            pa.isEdit = true;
-            pa.st_row = sel;
-            pa.show();
-        }
+        var r = packageTable.getSelectedRow();
+        var c = 0;
+        var pkgID = packageTable.getValueAt(r, c);
+
+        JFrame_PackageAdd pa = new JFrame_PackageAdd();
+        pa.isEdit = true;
+        pa.selected_id = (int) pkgID;
+        pa.show();
     }//GEN-LAST:event_editBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
-        int sel = packagessList.getSelectedIndex();
-        if (sel >= 0) {
-            PackageRepo.packages.remove(sel);
-            refresh_PackageList();
-            JOptionPane.showMessageDialog(null, "Selected CoursePackage has been deleted Successfully");
+        try {
+            var r = packageTable.getSelectedRow();
+            var c = 0;
+            int pkgId = (int) packageTable.getValueAt(r, c);
+
+            if (pModel.deletePackage(pkgId) > 0) {
+                JOptionPane.showMessageDialog(null, "Selected Package has been deleted Successfully");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(JFrame_PackageList.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_deleteBtnActionPerformed
 
@@ -186,50 +193,24 @@ public class JFrame_PackageList extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteBtn;
     private javax.swing.JButton editBtn;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JList<String> packagessList;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable packageTable;
     // End of variables declaration//GEN-END:variables
 
-    public String fixedLengthString(String str, int flength) {
-        String tstr = "";
-        for (int i = 0; i < (flength - str.length()); i++) {
-            tstr += " ";
+    public void loadTable() {
+        DefaultTableModel model = (DefaultTableModel) packageTable.getModel();
+        model.setRowCount(0);
+        PackageModel pModal = new PackageModel();
+        packages = pModal.getPackages();
+        System.out.println(packages);
+
+        Iterator<CoursePackage> itr = packages.iterator();
+        while (itr.hasNext()) {
+            CoursePackage p = itr.next();
+
+            model.addRow(new Object[]{p.getID(), p.getName(), p.getPrice(), p.getNumLessons()});
         }
-        tstr += str;
-        return tstr;
+
     }
 
-    public void refresh_PackageList() {
-        List packages = PackageRepo.packages;
-        if (packages == null) {
-            try {
-                PackageRepo.retrievePackages();
-                packages = PackageRepo.packages;
-            } catch (IOException | ClassNotFoundException ex) {
-                Logger.getLogger(JFrame_PackageList.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-        CoursePackage st;
-        String cp;
-        packagessList.removeAll();
-
-        String[] arr_students = new String[packages.size()];
-        cp = "";
-        cp += fixedLengthString("ID", 10) + "|"
-                + fixedLengthString("Name", 15) + "|"
-                + fixedLengthString("Price", 15) + "|"
-                + fixedLengthString("Num Lessons", 15);
-        jLabel1.setText(cp);
-
-        for (int i = 0; i < packages.size(); i++) {
-            st = (CoursePackage) packages.get(i);
-            arr_students[i] = fixedLengthString(st.getID().trim(), 10) + "|"
-                    + fixedLengthString(st.getName().trim(), 15) + "|"
-                    + fixedLengthString(Integer.toString((int) st.getPrice()), 15) + "|"
-                    + fixedLengthString(Integer.toString(st.getNumLessons()), 15);
-        }
-        packagessList.setListData(arr_students);
-    }
 }

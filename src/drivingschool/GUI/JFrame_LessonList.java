@@ -5,16 +5,21 @@
  */
 package drivingschool.GUI;
 
-import java.io.IOException;
+import drivingschool.entity.CoursePackage;
 import drivingschool.entity.Lesson;
+import drivingschool.entity.Student;
+import drivingschool.repo.LessonModel;
+import drivingschool.repo.PackageModel;
+import drivingschool.repo.StudentModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-import drivingschool.repo.LessonRepo;
-import drivingschool.repo.PackageRepo;
+import java.sql.SQLException;
+import java.util.Iterator;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -22,11 +27,16 @@ import drivingschool.repo.PackageRepo;
  */
 public class JFrame_LessonList extends javax.swing.JFrame {
 
+    List lessons;
+    private final LessonModel lModel;
+
     /**
      * Creates new form JFrame_StudentList
      */
     public JFrame_LessonList() {
         initComponents();
+        lessons = new ArrayList();
+        lModel = new LessonModel();
     }
 
     /**
@@ -38,28 +48,18 @@ public class JFrame_LessonList extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
-        lessonsList = new javax.swing.JList<>();
         editBtn = new javax.swing.JButton();
         deleteBtn = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lessonTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Select and Double Click The Row To Edit");
+        setTitle("Lessons");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
             }
         });
-
-        lessonsList.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
-        lessonsList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        lessonsList.setName("jList_Students"); // NOI18N
-        jScrollPane2.setViewportView(lessonsList);
 
         editBtn.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         editBtn.setText("Edit lesson");
@@ -79,37 +79,46 @@ public class JFrame_LessonList extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setBackground(new java.awt.Color(102, 0, 0));
-        jLabel1.setFont(new java.awt.Font("Monospaced", 0, 11)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(102, 0, 0));
-        jLabel1.setText("jLabel1");
-        jLabel1.setName("jLabel_Captions"); // NOI18N
+        lessonTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Package", "Student", "Date", "Start time", "End time", "Grade", "Lesson no"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(lessonTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 947, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(293, 293, 293)
-                .addComponent(editBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(deleteBtn)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(293, 293, 293)
+                        .addComponent(editBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(deleteBtn))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 936, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(editBtn)
                     .addComponent(deleteBtn))
@@ -120,39 +129,31 @@ public class JFrame_LessonList extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        try {
-            refresh_LessonList();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(JFrame_LessonList.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(JFrame_LessonList.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        loadTable();
     }//GEN-LAST:event_formWindowActivated
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
-        int sel = lessonsList.getSelectedIndex();
-        if (sel >= 0) {
-            Lesson lesson;
-            lesson = (Lesson) LessonRepo.lessons.get(sel);
-            JFrame_LessonAdd ls = new JFrame_LessonAdd();
-            ls.isEdit = true;
-            ls.st_row = sel;
-            ls.show();
-        }
+        var r = lessonTable.getSelectedRow();
+        var c = 0;
+        var lessonID = lessonTable.getValueAt(r, c);
+
+        JFrame_LessonAdd la = new JFrame_LessonAdd();
+        la.isEdit = true;
+        la.selected_id = (int) lessonID;
+        la.show();
     }//GEN-LAST:event_editBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
-        int sel = lessonsList.getSelectedIndex();
-        if (sel >= 0) {
-            try {
-                LessonRepo.lessons.remove(sel);
-                refresh_LessonList();
+        try {
+            var r = lessonTable.getSelectedRow();
+            var c = 0;
+            int lessonId = (int) lessonTable.getValueAt(r, c);
+
+            if (lModel.deleteLesson(lessonId) > 0) {
                 JOptionPane.showMessageDialog(null, "Selected Lesson has been deleted Successfully");
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(JFrame_LessonList.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(JFrame_LessonList.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(JFrame_PackageList.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_deleteBtnActionPerformed
 
@@ -197,59 +198,38 @@ public class JFrame_LessonList extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteBtn;
     private javax.swing.JButton editBtn;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JList<String> lessonsList;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable lessonTable;
     // End of variables declaration//GEN-END:variables
 
-    public String fixedLengthString(String str, int flength) {
-        String tstr = "";
-        for (int i = 0; i < (flength - str.length()); i++) {
-            tstr += " ";
+    public void loadTable() {
+        DefaultTableModel model = (DefaultTableModel) lessonTable.getModel();
+        model.setRowCount(0);
+
+        LessonModel lModal = new LessonModel();
+        StudentModel sModel = new StudentModel();
+        PackageModel pModel = new PackageModel();
+
+        lessons = lModal.getLessons();
+
+        String pkgName = "", stdName = "";
+        Iterator<Lesson> itr = lessons.iterator();
+        while (itr.hasNext()) {
+            Lesson p = itr.next();
+
+            CoursePackage pkg = pModel.getPackageById(p.getPackageID());
+            Student std = sModel.getStudentById(p.getStudentID());
+
+            if (pkg != null) {
+                pkgName = pkg.getName();
+            }
+            if (std != null) {
+                stdName = std.getName() + " " + std.getSurname();
+            }
+
+            model.addRow(new Object[]{p.getID(), pkgName, stdName, p.getLessonDate(), p.getStartTime(), p.getEndTime(), p.getGrade(), p.getLessonNo()});
         }
-        tstr += str;
-        return tstr;
+
     }
 
-    public void refresh_LessonList() throws ClassNotFoundException, IOException {
-        List lessons = LessonRepo.lessons;
-        List packages = PackageRepo.packages;
-        
-        if (lessons == null) {
-                LessonRepo.retrieveLessons();
-               lessons = LessonRepo.lessons;
-        } else if (packages == null) {
-                PackageRepo.retrievePackages();
-                packages = PackageRepo.packages;
-        }
-
-        Lesson lesson;
-        String cp;
-        lessonsList.removeAll();
-
-        String[] arr_students = new String[lessons.size()];
-        cp = "";
-        cp += fixedLengthString("ID", 10) + "|"
-                + fixedLengthString("Package", 15) + "|"
-                + fixedLengthString("Student ID", 15) + "|"
-                + fixedLengthString("Lesson No", 15) + "|"
-                + fixedLengthString("Lesson date", 15) + "|"
-                + fixedLengthString("Start time", 15) + "|"
-                + fixedLengthString("End time", 15) + "|"
-                + fixedLengthString("Grade", 15);
-        jLabel1.setText(cp);
-
-        for (int i = 0; i < lessons.size(); i++) {
-            lesson = (Lesson) lessons.get(i);
-            arr_students[i] = fixedLengthString(lesson.getID().trim(), 10) + "|"
-                    + fixedLengthString(PackageRepo.getNameByID(lesson.getPackageID()).trim(), 15) + "|"
-                    + fixedLengthString(lesson.getStudentID().trim(), 15) + "|"
-                    + fixedLengthString(String.valueOf(lesson.getLessonNo()), 15) + "|"
-                    + fixedLengthString(lesson.getLessonDate().toString(), 15) + "|"
-                    + fixedLengthString(lesson.getStartTime().trim(), 15) + "|"
-                    + fixedLengthString(lesson.getEndTime().trim(), 15) + "|"
-                    + fixedLengthString(Float.toString(lesson.getGrade()), 15);
-        }
-        lessonsList.setListData(arr_students);
-    }
 }

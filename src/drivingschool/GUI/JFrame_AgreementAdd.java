@@ -5,14 +5,10 @@
  */
 package drivingschool.GUI;
 
-import drivingschool.repo.AgreementRepo;
 
 import drivingschool.entity.Agreement;
-import drivingschool.entity.CoursePackage;
-import drivingschool.repo.PackageRepo;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import drivingschool.repo.AgreementModel;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -22,7 +18,8 @@ import javax.swing.JOptionPane;
 public class JFrame_AgreementAdd extends javax.swing.JFrame {
 
     public Boolean isEdit;
-    public int st_row;
+    public int selected_id;
+    private final AgreementModel aModel;
 
     /**
      * Creates new form JFrame_StudentAdd
@@ -30,7 +27,8 @@ public class JFrame_AgreementAdd extends javax.swing.JFrame {
     public JFrame_AgreementAdd() {
         initComponents();
         isEdit = false;
-        
+        aModel = new AgreementModel();
+
         // Populate dropdown with values
 //        for (int i = 0; i < PackageRepo.packages.size(); i++) {
 //            CoursePackage dept = (CoursePackage) PackageRepo.packages.get(i);
@@ -61,7 +59,7 @@ public class JFrame_AgreementAdd extends javax.swing.JFrame {
         saveButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Enter The Information Of The Agreement");
+        setTitle("New Agreement");
         setName("frame_StudentAdd"); // NOI18N
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
@@ -72,6 +70,7 @@ public class JFrame_AgreementAdd extends javax.swing.JFrame {
         IDLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         IDLabel.setText("ID");
 
+        IDTextField.setEditable(false);
         IDTextField.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         IDTextField.setName("jTextFiend_StdNo"); // NOI18N
         IDTextField.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -170,43 +169,36 @@ public class JFrame_AgreementAdd extends javax.swing.JFrame {
     }//GEN-LAST:event_IDTextFieldFocusLost
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        if (!IDTextField.getText().trim().isEmpty()
-                && !stdIDTextField.getText().trim().isEmpty()
+        if (!stdIDTextField.getText().trim().isEmpty()
                 && !pkgIDTextField.getText().trim().isEmpty()
                 && !startDateTextField.getText().trim().isEmpty()) {
-            String id = IDTextField.getText().trim();
-            String stdID = stdIDTextField.getText().trim();
-            String pkgID = pkgIDTextField.getText().trim();
+            int stdID = Integer.valueOf(stdIDTextField.getText().trim());
+            int pkgID = Integer.valueOf(pkgIDTextField.getText().trim());
             String startDate = startDateTextField.getText().trim();
 
             if (!isEdit) {
-                AgreementRepo.addAgreement(id, stdID, pkgID, startDate);
-                JOptionPane.showMessageDialog(null,
-                        "The New Agreement Data is Recorded Successfully");
+                aModel.addAgreement(stdID, pkgID, startDate);
+                JOptionPane.showMessageDialog(null,"The New Agreement Data is Recorded Successfully");
             } else {
-                AgreementRepo.editAgreement(id, stdID, pkgID, startDate);
-                JOptionPane.showMessageDialog(null, "The Selected Agreement Data is Edited Successfully");
-            }
-            try {
-                AgreementRepo.listAgreements();
-            } catch (IOException ex) {
-                Logger.getLogger(JFrame_AgreementAdd.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(JFrame_AgreementAdd.class.getName()).log(Level.SEVERE, null, ex);
+                if (!IDTextField.getText().trim().isEmpty()) {
+                    int id = Integer.valueOf(IDTextField.getText().trim());
+
+                    aModel.editAgreement(id, stdID, pkgID, startDate);
+                    JOptionPane.showMessageDialog(null, "The Selected Agreement Data is Edited Successfully");
+                }
             }
             setVisible(false);
-
         }
-
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         if (isEdit) {
-            Agreement ag = (Agreement) AgreementRepo.agreements.get(st_row);
-            IDTextField.setText(ag.getID());
-            stdIDTextField.setText(ag.getStudentID());
-            pkgIDTextField.setText(ag.getPackageID());
-            startDateTextField.setText(ag.getStartDate().toString());
+            Agreement ag = aModel.getAgreementById(selected_id);
+
+            IDTextField.setText(String.valueOf(ag.getID()));
+            stdIDTextField.setText(String.valueOf(ag.getStudentID()));
+            pkgIDTextField.setText(String.valueOf(ag.getPackageID()));
+            startDateTextField.setText(ag.getStartDate());
         }
     }//GEN-LAST:event_formWindowActivated
 

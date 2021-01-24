@@ -7,61 +7,45 @@ import java.util.Date;
 
 public class Student implements Serializable {
 
-    private String ID;
+    private int ID;
     private String Name;
     private String Surname;
     private String Nationality;
-    private LocalDate DOB;
+    private String DOB;
     private String Status;
     private String LicenceType;
-    private LocalDate LicenceExpire;
+    private String LicenceExpire;
     private String LicenceNo;
-    private LocalDate RegisterDate;
+    private String RegisterDate;
 
-    public Student(String ID, String name, String surname, String nationality, LocalDate DOB, String status, LocalDate registerDate) {
+    public Student(int ID, String Name, String Surname, String Nationality, String DOB, String Status, String LicenceExpire, String LicenceNo, String RegisterDate) {
         this.ID = ID;
-        Name = name;
-        Surname = surname;
-        Nationality = nationality;
+        this.Name = Name;
+        this.Surname = Surname;
+        this.Nationality = Nationality;
         this.DOB = DOB;
-        Status = status;
-        RegisterDate = registerDate;
+        this.Status = Status;
+        this.LicenceExpire = LicenceExpire;
+        this.LicenceNo = LicenceNo;
+        this.RegisterDate = RegisterDate;
     }
 
-    public Student(String ID, String name, String surname, String nationality, LocalDate DOB, String status, LocalDate registerDate, String licenceNo, LocalDate licenceExp) {
-        this.ID = ID;
-        Name = name;
-        Surname = surname;
-        Nationality = nationality;
+    public Student(String Name, String Surname, String Nationality, String DOB, String Status, String LicenceExpire, String LicenceNo, String RegisterDate) {
+        this.Name = Name;
+        this.Surname = Surname;
+        this.Nationality = Nationality;
         this.DOB = DOB;
-        Status = status;
-        RegisterDate = registerDate;
-        LicenceExpire = licenceExp;
-        LicenceNo = licenceNo;
-
+        this.Status = Status;
+        this.LicenceExpire = LicenceExpire;
+        this.LicenceNo = LicenceNo;
+        this.RegisterDate = RegisterDate;
     }
 
-    public LocalDate getDOB() {
-        return DOB;
-    }
-
-    public void setDOB(LocalDate DOB) {
-        this.DOB = DOB;
-    }
-
-    public LocalDate getRegisterDate() {
-        return RegisterDate;
-    }
-
-    public void setRegisterDate(LocalDate registerDate) {
-        RegisterDate = registerDate;
-    }
-
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 
@@ -69,63 +53,72 @@ public class Student implements Serializable {
         return Name;
     }
 
-    public void setName(String name) {
-        Name = name;
+    public void setName(String Name) {
+        this.Name = Name;
     }
 
     public String getSurname() {
         return Surname;
     }
 
-    public void setSurname(String surname) {
-        Surname = surname;
+    public void setSurname(String Surname) {
+        this.Surname = Surname;
     }
 
     public String getNationality() {
         return Nationality;
     }
 
-    public void setNationality(String nationality) {
-        Nationality = nationality;
+    public void setNationality(String Nationality) {
+        this.Nationality = Nationality;
+    }
+
+    public String getDOB() {
+        return DOB;
+    }
+
+    public void setDOB(String DOB) {
+        this.DOB = DOB;
     }
 
     public String getStatus() {
         return Status;
     }
 
-    public void setStatus(String status) {
-        Status = status;
+    public void setStatus(String Status) {
+        this.Status = Status;
     }
 
     public String getLicenceType() {
         return LicenceType;
     }
 
-    public void setLicenceType(String licenceType) {
-        LicenceType = licenceType;
+    public void setLicenceType(String LicenceType) {
+        this.LicenceType = LicenceType;
     }
 
-    public LocalDate getLicenceExpire() {
+    public String getLicenceExpire() {
         return LicenceExpire;
     }
 
-    public void setLicenceExpire(LocalDate licenceExpire) {
-        LicenceExpire = licenceExpire;
+    public void setLicenceExpire(String LicenceExpire) {
+        this.LicenceExpire = LicenceExpire;
     }
 
     public String getLicenceNo() {
         return LicenceNo;
     }
 
-    public void setLicenceNo(String licenceNo) {
-        LicenceNo = licenceNo;
+    public void setLicenceNo(String LicenceNo) {
+        this.LicenceNo = LicenceNo;
     }
 
-    public LocalDate getRegisterDateFormatted() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String text = RegisterDate.format(formatter);
-        LocalDate parsedDate = LocalDate.parse(text, formatter);
-        return parsedDate;
+    public String getRegisterDate() {
+        return RegisterDate;
+    }
+
+    public void setRegisterDate(String RegisterDate) {
+        this.RegisterDate = RegisterDate;
     }
 
 }

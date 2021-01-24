@@ -1,50 +1,56 @@
 package drivingschool.entity;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 public class Agreement implements Serializable {
-    private String ID;
-    private String StudentID;
-    private String PackageID;
-    private LocalDate StartDate;
+    private int ID;
+    private int StudentID;
+    private int PackageID;
+    private String StartDate;
 
-    public Agreement(String ID, String studentID, String packageID, LocalDate startDate) {
+    public Agreement(int ID, int StudentID, int PackageID, String StartDate) {
         this.ID = ID;
-        StudentID = studentID;
-        PackageID = packageID;
-        StartDate = startDate;
+        this.StudentID = StudentID;
+        this.PackageID = PackageID;
+        this.StartDate = StartDate;
     }
 
-    public String getID() {
+    public Agreement(int StudentID, int PackageID, String StartDate) {
+        this.StudentID = StudentID;
+        this.PackageID = PackageID;
+        this.StartDate = StartDate;
+    }
+
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 
-    public String getStudentID() {
+    public int getStudentID() {
         return StudentID;
     }
 
-    public void setStudentID(String studentID) {
-        StudentID = studentID;
+    public void setStudentID(int StudentID) {
+        this.StudentID = StudentID;
     }
 
-    public String getPackageID() {
+    public int getPackageID() {
         return PackageID;
     }
 
-    public void setPackageID(String packageID) {
-        PackageID = packageID;
+    public void setPackageID(int PackageID) {
+        this.PackageID = PackageID;
     }
 
-    public LocalDate getStartDate() {
+    public String getStartDate() {
         return StartDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        StartDate = startDate;
+    public void setStartDate(String StartDate) {
+        this.StartDate = StartDate;
     }
+
 }

@@ -5,17 +5,19 @@
  */
 package drivingschool.GUI;
 
-import java.io.IOException;
 import drivingschool.entity.Payment;
+import drivingschool.entity.Student;
+import drivingschool.repo.PaymentModel;
+import drivingschool.repo.StudentModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-import drivingschool.repo.PaymentRepo;
-import drivingschool.repo.StudentRepo;
-import java.util.Date;
+import java.sql.SQLException;
+import java.util.Iterator;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -23,11 +25,16 @@ import java.util.Date;
  */
 public class JFrame_PaymentList extends javax.swing.JFrame {
 
+    List payments;
+    private final PaymentModel pModel;
+
     /**
      * Creates new form JFrame_StudentList
      */
     public JFrame_PaymentList() {
         initComponents();
+        payments = new ArrayList();
+        pModel = new PaymentModel();
     }
 
     /**
@@ -39,28 +46,18 @@ public class JFrame_PaymentList extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
-        paymentsList = new javax.swing.JList<>();
         editBtn = new javax.swing.JButton();
         deleteBtn = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        paymentTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Select and Double Click The Row To Edit");
+        setTitle("Payments");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
             }
         });
-
-        paymentsList.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
-        paymentsList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        paymentsList.setName("jList_Students"); // NOI18N
-        jScrollPane2.setViewportView(paymentsList);
 
         editBtn.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         editBtn.setText("Edit Payment");
@@ -80,37 +77,49 @@ public class JFrame_PaymentList extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setBackground(new java.awt.Color(102, 0, 0));
-        jLabel1.setFont(new java.awt.Font("Monospaced", 0, 11)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(102, 0, 0));
-        jLabel1.setText("jLabel1");
-        jLabel1.setName("jLabel_Captions"); // NOI18N
+        paymentTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Student", "Amount", "Comment", "Last updated "
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Double.class, java.lang.String.class, java.lang.Short.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(paymentTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 792, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(262, 262, 262)
-                .addComponent(editBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(deleteBtn)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(168, 168, 168)
+                        .addComponent(editBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(deleteBtn))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 626, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(editBtn)
                     .addComponent(deleteBtn))
@@ -121,27 +130,31 @@ public class JFrame_PaymentList extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        refresh_PaymentList();
+        loadTable();
     }//GEN-LAST:event_formWindowActivated
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
-        int sel = paymentsList.getSelectedIndex();
-        if (sel >= 0) {
-            Payment payment;
-            payment = (Payment) PaymentRepo.payments.get(sel);
-            JFrame_PaymentAdd sa = new JFrame_PaymentAdd();
-            sa.isEdit = true;
-            sa.st_row = sel;
-            sa.show();
-        }
+        var r = paymentTable.getSelectedRow();
+        var c = 0;
+        int pId = (int) paymentTable.getValueAt(r, c);
+
+        JFrame_PaymentAdd sa = new JFrame_PaymentAdd();
+        sa.isEdit = true;
+        sa.selected_id = pId;
+        sa.show();
     }//GEN-LAST:event_editBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
-        int sel = paymentsList.getSelectedIndex();
-        if (sel >= 0) {
-            PaymentRepo.payments.remove(sel);
-            refresh_PaymentList();
-            JOptionPane.showMessageDialog(null, "Selected Payment has been deleted Successfully");
+        try {
+            var r = paymentTable.getSelectedRow();
+            var c = 0;
+            int pId = (int) paymentTable.getValueAt(r, c);
+
+            if (pModel.deletePayment(pId) > 0) {
+                JOptionPane.showMessageDialog(null, "Selected Payment has been deleted Successfully");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(JFrame_PaymentList.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_deleteBtnActionPerformed
 
@@ -186,54 +199,31 @@ public class JFrame_PaymentList extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteBtn;
     private javax.swing.JButton editBtn;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JList<String> paymentsList;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable paymentTable;
     // End of variables declaration//GEN-END:variables
 
-    public String fixedLengthString(String str, int flength) {
-        String tstr = "";
-        for (int i = 0; i < (flength - str.length()); i++) {
-            tstr += " ";
-        }
-        tstr += str;
-        return tstr;
-    }
+    public void loadTable() {
+        DefaultTableModel model = (DefaultTableModel) paymentTable.getModel();
+        model.setRowCount(0);
 
-    public void refresh_PaymentList() {
-        List payments = PaymentRepo.payments;
-        if (payments == null) {
-            try {
-                PaymentRepo.retrievePayments();
-                payments = PaymentRepo.payments;
-            } catch (IOException | ClassNotFoundException ex) {
-                Logger.getLogger(JFrame_PaymentList.class.getName()).log(Level.SEVERE, null, ex);
+        PaymentModel pModal = new PaymentModel();
+        StudentModel sModel = new StudentModel();
+
+        payments = pModal.getPayments();
+
+        String stdName = "";
+        Iterator<Payment> itr = payments.iterator();
+        while (itr.hasNext()) {
+            Payment p = itr.next();
+
+            Student std = sModel.getStudentById(p.getStudentID());
+            if (std != null) {
+                stdName = std.getName() + " " + std.getSurname();
             }
+
+            model.addRow(new Object[]{p.getID(), stdName, p.getAmount(), p.getComment(), p.getTimestamp()});
         }
-
-        Payment payment;
-        String cp;
-        paymentsList.removeAll();
-
-        String[] arr_payments = new String[payments.size()];
-        cp = "";
-        cp += fixedLengthString("ID", 10) + "|"
-//                + fixedLengthString("StudentID", 15) + "|"
-                + fixedLengthString("Student", 22) + "|"
-                + fixedLengthString("Amount", 15) + "|"
-                + fixedLengthString("Comment", 30) + "|"
-                + fixedLengthString("Timestamp", 30);
-        jLabel1.setText(cp);
-
-        for (int i = 0; i < payments.size(); i++) {
-            payment = (Payment) payments.get(i);
-            arr_payments[i] = fixedLengthString(payment.getID().trim(), 10) + "|"
-//                    + fixedLengthString(payment.getStudentID().trim(), 15) + "|"
-                    + fixedLengthString(StudentRepo.getNameByID(payment.getStudentID()).trim(), 22) + "|"
-                    + fixedLengthString(Double.toString(payment.getAmount()), 15) + "|"
-                    + fixedLengthString(payment.getComment().trim(), 30) + "|"
-                    + fixedLengthString(payment.getTimestamp().toString(), 30);
-        }
-        paymentsList.setListData(arr_payments);
     }
+
 }
