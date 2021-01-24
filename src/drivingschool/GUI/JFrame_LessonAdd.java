@@ -7,9 +7,6 @@ package drivingschool.GUI;
 
 import drivingschool.entity.Lesson;
 import drivingschool.repo.LessonModel;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -29,7 +26,6 @@ public class JFrame_LessonAdd extends javax.swing.JFrame {
         initComponents();
         isEdit = false;
         lModel = new LessonModel();
-
     }
 
     /**
@@ -257,8 +253,7 @@ public class JFrame_LessonAdd extends javax.swing.JFrame {
 
             if (!isEdit) {
                 lModel.addLesson(pkg_id, std_no, lesson_no, date, start_time, end_time, grade);
-                JOptionPane.showMessageDialog(null,
-                        "The New Lesson Data is Recorded Successfully");
+                JOptionPane.showMessageDialog(null, "The New Lesson Data is Recorded Successfully");
             } else {
                 if (!IDTextField.getText().trim().isEmpty()) {
                     int id = Integer.valueOf(IDTextField.getText().trim());
@@ -266,9 +261,7 @@ public class JFrame_LessonAdd extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "The Selected Lesson Data is Edited Successfully");
                 }
             }
-           
             setVisible(false);
-
         }
 
     }//GEN-LAST:event_saveButtonActionPerformed
@@ -277,7 +270,7 @@ public class JFrame_LessonAdd extends javax.swing.JFrame {
         if (isEdit) {
             System.out.println("selected id: " + selected_id);
             Lesson st = lModel.getLessonById(selected_id);
-            
+
             IDTextField.setText(String.valueOf(st.getID()));
             stdIDTextField.setText(String.valueOf(st.getStudentID()));
             packageIDTextField.setText(String.valueOf(st.getPackageID()));

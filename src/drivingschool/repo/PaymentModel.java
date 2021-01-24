@@ -127,6 +127,5 @@ public class PaymentModel {
             Logger.getLogger(PaymentModel.class.getName()).log(Level.SEVERE, null, ex);
         }
         return p;
-
     }
 }

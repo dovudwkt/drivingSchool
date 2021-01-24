@@ -5,7 +5,6 @@
  */
 package drivingschool.GUI;
 
-import java.io.IOException;
 import drivingschool.entity.Payment;
 import drivingschool.repo.PaymentModel;
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.Iterator;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,7 +24,7 @@ import javax.swing.table.DefaultTableModel;
 public class JFrame_PaymentList extends javax.swing.JFrame {
 
     List payments;
-    private PaymentModel pModel;
+    private final PaymentModel pModel;
 
     /**
      * Creates new form JFrame_StudentList
@@ -105,18 +103,19 @@ public class JFrame_PaymentList extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(262, 262, 262)
+                        .addGap(168, 168, 168)
                         .addComponent(editBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(deleteBtn))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
+                        .addGap(15, 15, 15)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 626, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(111, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)

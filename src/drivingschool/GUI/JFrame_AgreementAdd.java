@@ -177,8 +177,7 @@ public class JFrame_AgreementAdd extends javax.swing.JFrame {
 
             if (!isEdit) {
                 aModel.addAgreement(stdID, pkgID, startDate);
-                JOptionPane.showMessageDialog(null,
-                        "The New Agreement Data is Recorded Successfully");
+                JOptionPane.showMessageDialog(null,"The New Agreement Data is Recorded Successfully");
             } else {
                 if (!IDTextField.getText().trim().isEmpty()) {
                     int id = Integer.valueOf(IDTextField.getText().trim());
@@ -187,11 +186,8 @@ public class JFrame_AgreementAdd extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "The Selected Agreement Data is Edited Successfully");
                 }
             }
-//            AgreementRepo.listAgreements();
             setVisible(false);
-
         }
-
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated

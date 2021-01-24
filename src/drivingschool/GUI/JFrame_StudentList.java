@@ -8,7 +8,6 @@ package drivingschool.GUI;
 import drivingschool.entity.Student;
 import drivingschool.repo.StudentModel;
 
-import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -25,10 +24,13 @@ import javax.swing.table.DefaultTableModel;
 public class JFrame_StudentList extends javax.swing.JFrame {
 
     List students;
-    private StudentModel sModel;
+    private final StudentModel sModel;
 
     /**
      * Creates new form JFrame_StudentList
+     *
+     * @throws java.sql.SQLException
+     * @throws java.lang.ClassNotFoundException
      */
     public JFrame_StudentList() throws SQLException, ClassNotFoundException {
         initComponents();
@@ -142,9 +144,7 @@ public class JFrame_StudentList extends javax.swing.JFrame {
             sa.edit_student = true;
             sa.selected_id = (int) v;
             sa.show();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(JFrame_StudentList.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(JFrame_StudentList.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_editBtnActionPerformed
@@ -225,7 +225,6 @@ public class JFrame_StudentList extends javax.swing.JFrame {
 
             model.addRow(new Object[]{s.getID(), s.getName(), s.getSurname(), s.getDOB(), s.getLicenceNo(), s.getLicenceExpire(), s.getStatus(), s.getRegisterDate()});
         }
-
     }
 
 }

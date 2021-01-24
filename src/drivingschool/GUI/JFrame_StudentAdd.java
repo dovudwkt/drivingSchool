@@ -5,7 +5,6 @@
  */
 package drivingschool.GUI;
 
-
 import drivingschool.entity.Student;
 import drivingschool.repo.StudentModel;
 
@@ -22,18 +21,19 @@ public class JFrame_StudentAdd extends javax.swing.JFrame {
 
     public Boolean edit_student;
     public int selected_id;
-    private StudentModel sModel;
+    private final StudentModel sModel;
 
     /**
      * Creates new form JFrame_StudentAdd
+     *
+     * @throws java.lang.ClassNotFoundException
+     * @throws java.sql.SQLException
      */
     public JFrame_StudentAdd() throws ClassNotFoundException, SQLException {
         initComponents();
         edit_student = false;
         sModel = new StudentModel();
     }
-
-  
 
     /**
      * This method is called from within the constructor to initialize the form.

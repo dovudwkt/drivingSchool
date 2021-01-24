@@ -5,7 +5,6 @@
  */
 package drivingschool.GUI;
 
-import java.io.IOException;
 import drivingschool.entity.Lesson;
 import drivingschool.repo.LessonModel;
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ import javax.swing.table.DefaultTableModel;
 public class JFrame_LessonList extends javax.swing.JFrame {
 
     List lessons;
-    private LessonModel lModel;
+    private final LessonModel lModel;
 
     /**
      * Creates new form JFrame_StudentList
@@ -141,7 +140,7 @@ public class JFrame_LessonList extends javax.swing.JFrame {
     }//GEN-LAST:event_editBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
-      try {
+        try {
             var r = lessonTable.getSelectedRow();
             var c = 0;
             int lessonId = (int) lessonTable.getValueAt(r, c);
@@ -209,7 +208,6 @@ public class JFrame_LessonList extends javax.swing.JFrame {
         Iterator<Lesson> itr = lessons.iterator();
         while (itr.hasNext()) {
             Lesson p = itr.next();
-
             model.addRow(new Object[]{p.getID(), p.getPackageID(), p.getStudentID(), p.getLessonDate(), p.getStartTime(), p.getEndTime(), p.getGrade(), p.getLessonNo()});
         }
 

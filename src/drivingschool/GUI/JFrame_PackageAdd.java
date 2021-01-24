@@ -175,8 +175,7 @@ public class JFrame_PackageAdd extends javax.swing.JFrame {
 
             if (!isEdit) {
                 pModel.addPackage(name, price, lessons);
-                JOptionPane.showMessageDialog(null,
-                        "The New CoursePackage Data is Recorded Successfully");
+                JOptionPane.showMessageDialog(null, "The New CoursePackage Data is Recorded Successfully");
             } else {
                 int id = Integer.valueOf(IDTextField.getText());
                 pModel.editPackage(id, name, price, lessons);

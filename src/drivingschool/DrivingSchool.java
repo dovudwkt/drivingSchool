@@ -8,8 +8,6 @@ package drivingschool;
 
 import drivingschool.GUI.Menu;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author dovud
@@ -20,16 +18,6 @@ public class DrivingSchool {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-    
         new Menu().setVisible(true);
     }
-
-    public static void populateAllData() {
-//        AgreementRepo.populateData();
-        //            LessonRepo.populateData();
-//        PackageRepo.populateData();
-//        PaymentRepo.populateData();
-//        StudentRepo.populateData();
-    }
-
 }

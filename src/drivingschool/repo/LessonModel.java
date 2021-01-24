@@ -5,7 +5,6 @@
  */
 package drivingschool.repo;
 
-import drivingschool.GUI.JFrame_StudentAdd;
 import drivingschool.entity.Lesson;
 
 import java.sql.Connection;

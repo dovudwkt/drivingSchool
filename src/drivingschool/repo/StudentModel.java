@@ -149,7 +149,6 @@ public class StudentModel {
         } catch (SQLException ex) {
             Logger.getLogger(StudentModel.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return std;
     }
 }

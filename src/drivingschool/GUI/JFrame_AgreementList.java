@@ -5,7 +5,6 @@
  */
 package drivingschool.GUI;
 
-import java.io.IOException;
 import drivingschool.entity.Agreement;
 import drivingschool.repo.AgreementModel;
 import java.util.ArrayList;

@@ -10,12 +10,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-import drivingschool.repo.MySQLDumper;
 import java.sql.SQLException;
 
 /**
  *
- * @author btyo
+ * @author dovud
  */
 public class Menu extends javax.swing.JFrame {
 
@@ -256,9 +255,7 @@ public class Menu extends javax.swing.JFrame {
     private void addStudentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStudentBtnActionPerformed
         try {
             new JFrame_StudentAdd().show();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_addStudentBtnActionPerformed

@@ -22,26 +22,27 @@ import java.sql.SQLException;
  * @author dovud
  */
 public class DB {
-    private static String ip = "localhost";
-    private static String port = "3306";
-    private static String database = "drivingschool";
-    private static String user = "root";
-    private static String pass = "password";
-    private static String path = "backup.sql";
-    private static String url  = "jdbc:mysql://localhost:3306/drivingschool";
+
+    private static final String HOST = "localhost";
+    private static final String PORT = "3306";
+    private static final String DB_NAME = "drivingschool";
+    private static final String DB_USER = "root";
+    private static final String DB_PWD = "password";
+    private static final String BACKUP_PATH = "backup.sql";
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/drivingschool";
 
     public Connection connect() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection conn = (Connection) DriverManager.getConnection(url, user, pass);
+        Connection conn = (Connection) DriverManager.getConnection(JDBC_URL, DB_USER, DB_PWD);
 
         System.out.println("Connected to MYSQL");
         return conn;
     }
 
     public static void backup() {
-        String dumpCommand = "mysqldump " + database + " -h " + ip + " -u " + user + " -p" + pass;
+        String dumpCommand = "mysqldump " + DB_NAME + " -h " + HOST + " -u " + DB_USER + " -p" + DB_PWD;
         Runtime rt = Runtime.getRuntime();
-        File test = new File(path);
+        File test = new File(BACKUP_PATH);
         PrintStream ps;
 
         try {
@@ -51,7 +52,7 @@ public class DB {
             int ch;
             while ((ch = in.read()) != -1) {
                 ps.write(ch);
-                System.out.write(ch); //to view it by console
+                System.out.write(ch);
             }
 
             InputStream err = child.getErrorStream();
@@ -68,13 +69,13 @@ public class DB {
             Runtime rt = Runtime.getRuntime();
             System.out.println("Restore");
             // Call cmd of mysql:
-            String mysql = "mysql -u" + user + " -p" + pass + " " + database;
+            String mysql = "mysql -u" + DB_USER + " -p" + DB_PWD + " " + DB_NAME;
             Process child = rt.exec(mysql);
-            OutputStream out = child.getOutputStream();// Input from the console as an output stream
+            OutputStream out = child.getOutputStream();
             String inStr;
             StringBuffer sb = new StringBuffer("");
             String outStr;
-            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path), "utf8"));
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(BACKUP_PATH), "utf8"));
             while ((inStr = br.readLine()) != null) {
                 sb.append(inStr + "\r\n");
             }
